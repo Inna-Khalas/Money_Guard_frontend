@@ -13,7 +13,7 @@ const registrationSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
-    .min(6, 'At least 6 characters')
+    .min(8, 'At least 8 characters')
     .max(12, 'No more than 12 characters')
     .required('Required'),
   confirmPassword: Yup.string()
@@ -52,11 +52,13 @@ const RegistrationForm = () => {
 
   const onSubmit = async data => {
     setLoading(true);
+    const { confirmPassword: _, ...userData } = data;
+
     try {
-      await dispatch(register(data));
+      await dispatch(register(userData));
       toast.success('Registration successful');
-    } catch {
-      toast.error('Registration failed');
+    } catch (error) {
+      toast.error(error.message || 'Registration failed');
     } finally {
       setLoading(false);
     }

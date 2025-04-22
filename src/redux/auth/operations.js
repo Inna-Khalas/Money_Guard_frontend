@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export const goItApi = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://money-guard-backend-xmem.onrender.com',
 });
 
 // const setAuthHeader = (token) => {

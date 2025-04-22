@@ -8,6 +8,7 @@ import Layout from "../Layout";
 import RestrichedRoute from "../RestrichedRoute";
 import NotFound from "../pages/NotFound";
 import HomeTab from "../pages/HomeTab/HomeTab";
+import DashboardPage from "../pages/DashboardPage/DashboardPage";
 
 const App = () => {
   return (
@@ -31,6 +32,13 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<HomeTab />} />
             }
           />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute redirectTo="/dashboard" component={<DashboardPage />} />
+            }
+          />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

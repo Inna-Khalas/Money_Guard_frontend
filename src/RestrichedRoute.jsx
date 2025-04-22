@@ -1,7 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
-function RestrichedRoute({ component: Component, redirectTo = "/" }) {
-  const isLoggedIn = true; //заглушка
+function RestrichedRoute({ component: Component, redirectTo = '/' }) {
+  const isLoggedIn = false; //заглушка
 
   return isLoggedIn ? <Navigate to={redirectTo} /> : Component;
 }

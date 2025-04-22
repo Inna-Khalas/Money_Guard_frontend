@@ -1,8 +1,8 @@
 // import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from 'axios';
 
 export const goItApi = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: 'http://localhost:3000',
 });
 
 // const setAuthHeader = (token) => {
@@ -12,3 +12,14 @@ export const goItApi = axios.create({
 // const clearAuthHeader = () => {
 //   goItApi.defaults.headers.common.Authorization = "";
 // };
+
+export const register = userData => async () => {
+  try {
+    const response = await goItApi.post('/auth/register', userData);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Registration failed:', error.response.data);
+    throw new Error(error.response?.data?.message || 'Registration failed');
+  }
+};

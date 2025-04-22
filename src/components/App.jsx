@@ -8,12 +8,14 @@ import Layout from "../Layout";
 import RestrichedRoute from "../RestrichedRoute";
 import NotFound from "../pages/NotFound";
 import HomeTab from "../pages/HomeTab/HomeTab";
+import Balance from "./Balance/Balance";
 
 const App = () => {
   return (
     <>
       <Toaster />
       <Layout>
+        <Balance />
         <Routes>
           <Route
             path="/register"

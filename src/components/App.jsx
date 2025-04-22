@@ -8,12 +8,15 @@ import Layout from "../Layout";
 import RestrichedRoute from "../RestrichedRoute";
 import NotFound from "../pages/NotFound";
 import HomeTab from "../pages/HomeTab/HomeTab";
+import Balance from "./Balance/Balance";
+import DashboardPage from "../pages/DashboardPage/DashboardPage";
 
 const App = () => {
   return (
     <>
       <Toaster />
       <Layout>
+        <Balance />
         <Routes>
           <Route
             path="/register"
@@ -31,6 +34,13 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<HomeTab />} />
             }
           />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute redirectTo="/dashboard" component={<DashboardPage />} />
+            }
+          />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

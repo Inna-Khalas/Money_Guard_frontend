@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations.js';
+import { setAuth } from '../../redux/auth/slice.js';
+import { register as registerUser } from '../../redux/auth/operations.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -24,6 +25,7 @@ const registrationSchema = Yup.object().shape({
 const RegistrationForm = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register: formRegister,
@@ -35,34 +37,55 @@ const RegistrationForm = () => {
   });
 
   const passwordValue = watch('password');
-  const confirmPasswordValue = watch('confirmPassword');
 
   const getProgress = () => {
+    const confirmPasswordValue = watch('confirmPassword');
     if (!confirmPasswordValue) return 0;
     if (confirmPasswordValue === passwordValue) return 100;
     const matchLength = confirmPasswordValue
       .split('')
-      .reduce((acc, char, i) => {
-        return char === passwordValue[i] ? acc + 1 : acc;
-      }, 0);
+      .reduce((acc, char, i) => (char === passwordValue[i] ? acc + 1 : acc), 0);
     return Math.floor((matchLength / passwordValue.length) * 100);
   };
 
   const progress = getProgress();
-  const navigate = useNavigate();
 
   const onSubmit = async data => {
     setLoading(true);
+
+    const userData = { ...data };
+    delete userData.confirmPassword;
+
     try {
-      const resultAction = await dispatch(register(data));
-      if (register.fulfilled.match(resultAction)) {
+      const result = await registerUser(userData);
+
+      if (result?.data?.status === 201) {
+        dispatch(setAuth(result.data));
+
+        // Автоматичне логінування, якщо потрібно
+        /*
+      const loginData = {
+        email: userData.email,
+        password: userData.password, 
+      };
+
+      const loginResult = await loginUser(loginData); 
+      if (loginResult?.data?.accessToken) {
+        dispatch(setAuth({ ...loginResult.data }));
+        toast.success('Login successful');
+        navigate('/dashboard');
+      } else {
+        toast.error(loginResult?.message || 'Login failed');
+      }
+      */
+
         toast.success('Registration successful');
         navigate('/dashboard');
       } else {
-        toast.error(resultAction.payload || 'Registration failed');
+        toast.error(result?.message || 'Registration failed');
       }
-    } catch {
-      toast.error('Something went wrong');
+    } catch (error) {
+      toast.error(error.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }

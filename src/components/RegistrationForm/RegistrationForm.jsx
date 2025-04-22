@@ -4,7 +4,7 @@ import { register } from '../../redux/auth/operations.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import styles from './RegistrationForm.module.css';
@@ -49,16 +49,20 @@ const RegistrationForm = () => {
   };
 
   const progress = getProgress();
+  const navigate = useNavigate();
 
   const onSubmit = async data => {
     setLoading(true);
-    const { confirmPassword: _, ...userData } = data;
-
     try {
-      await dispatch(register(userData));
-      toast.success('Registration successful');
-    } catch (error) {
-      toast.error(error.message || 'Registration failed');
+      const resultAction = await dispatch(register(data));
+      if (register.fulfilled.match(resultAction)) {
+        toast.success('Registration successful');
+        navigate('/dashboard');
+      } else {
+        toast.error(resultAction.payload || 'Registration failed');
+      }
+    } catch {
+      toast.error('Something went wrong');
     } finally {
       setLoading(false);
     }

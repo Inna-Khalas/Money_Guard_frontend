@@ -1,4 +1,4 @@
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const goItApi = axios.create({
@@ -13,13 +13,16 @@ export const goItApi = axios.create({
 //   goItApi.defaults.headers.common.Authorization = "";
 // };
 
-export const register = userData => async () => {
-  try {
-    const response = await goItApi.post('/auth/register', userData);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Registration failed:', error.response.data);
-    throw new Error(error.response?.data?.message || 'Registration failed');
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await goItApi.post('/auth/register', userData);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.error || 'Registration failed'
+      );
+    }
   }
-};
+);

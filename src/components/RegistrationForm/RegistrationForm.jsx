@@ -12,7 +12,10 @@ import styles from './RegistrationForm.module.css';
 const registrationSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'At least 6 characters').required('Required'),
+  password: Yup.string()
+    .min(6, 'At least 6 characters')
+    .max(12, 'No more than 12 characters')
+    .required('Required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Confirm your password'),
@@ -26,9 +29,26 @@ const RegistrationForm = () => {
     register: formRegister,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(registrationSchema),
   });
+
+  const passwordValue = watch('password');
+  const confirmPasswordValue = watch('confirmPassword');
+
+  const getProgress = () => {
+    if (!confirmPasswordValue) return 0;
+    if (confirmPasswordValue === passwordValue) return 100;
+    const matchLength = confirmPasswordValue
+      .split('')
+      .reduce((acc, char, i) => {
+        return char === passwordValue[i] ? acc + 1 : acc;
+      }, 0);
+    return Math.floor((matchLength / passwordValue.length) * 100);
+  };
+
+  const progress = getProgress();
 
   const onSubmit = async data => {
     setLoading(true);
@@ -87,6 +107,10 @@ const RegistrationForm = () => {
           <span className={styles.error}>{errors.confirmPassword.message}</span>
         )}
       </label>
+
+      <div className={styles.progressContainer}>
+        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
+      </div>
 
       <button type="submit" className={styles.button} disabled={loading}>
         {loading ? 'Registering...' : 'Register'}

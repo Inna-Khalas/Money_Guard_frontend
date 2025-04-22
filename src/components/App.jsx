@@ -8,6 +8,7 @@ import Layout from "../Layout";
 import RestrichedRoute from "../RestrichedRoute";
 import NotFound from "../pages/NotFound";
 import HomeTab from "../pages/HomeTab/HomeTab";
+import Balance from "./Balance/Balance";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
     <>
       <Toaster />
       <Layout>
+        <Balance />
         <Routes>
           <Route
             path="/register"

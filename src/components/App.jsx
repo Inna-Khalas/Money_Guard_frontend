@@ -16,7 +16,7 @@ const App = () => {
     <>
       <Toaster />
       <Layout>
-        {/* <Balance /> */}
+        <Balance />
         <Routes>
           <Route
             path="/register"

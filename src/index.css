@@ -5,11 +5,60 @@
 @tailwind utilities;
 
 body {
-  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
-  color: #000000;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.1em;
   line-height: 1.5;
+
+  color: #fbfbfb;
+
+  /* background: #101010; */
+  background-color: #302f2f;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    font-family: inherit;
+    color: currentColor;
+    text-decoration: none;
+    margin: 0;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 .container {
@@ -19,20 +68,33 @@ body {
   padding: 0 16px;
 }
 
-@media (max-width: 320px) {
+@media (min-width: 320px) {
+  body {
+      background-image: url('/src/images/gradient-mobile.webp');
+  }
+
   .container {
     padding: 0 8px;
   }
+  
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
+  body {
+    background-image: url('/src/images/gradient-tablet.webp');
+}
+
   .container {
     padding: 0 16px;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
+  body {
+    background-image: url('/src/images/gradient-desktop.webp');
+}
   .container {
     padding: 0 32px;
   }
 }
+

@@ -1,5 +1,6 @@
 import styles from './RegistrationPage.module.css';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm.jsx';
+import mgLogo from '../../assets/icons/mg-logo.svg';
 
 const RegistrationPage = () => {
   return (
@@ -7,11 +8,16 @@ const RegistrationPage = () => {
       <div className={styles.background}></div>
 
       <div className={styles.container}>
-        <div className={styles.logoWrapper}>
-          <span className={styles.logoAccent}>M</span>oneyGuard
+        <div className={styles.logoBlock}>
+          <img
+            src={mgLogo}
+            alt="Money Guard Logo"
+            className={styles.logoIcon}
+          />
+          <span className={styles.logoWrapper}>
+            <span className={styles.logoAccent}>M</span>oneyGuard
+          </span>
         </div>
-
-        <h1 className={styles.title}>Sign Up</h1>
 
         <RegistrationForm />
       </div>

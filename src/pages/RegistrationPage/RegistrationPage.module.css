@@ -30,22 +30,26 @@
   box-sizing: border-box;
 }
 
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 60px;
+}
+
+.logoIcon {
+  width: 25px;
+  height: 25px;
+}
+
 .logoWrapper {
   font-family: 'Poppins', sans-serif;
   font-size: 32px;
   font-weight: 700;
   color: #4a56e2;
-  margin-bottom: 40px;
 }
 
 .logoAccent {
   color: #24cca7;
-}
-
-.title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 40px;
-  color: #000000;
 }

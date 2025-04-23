@@ -1,0 +1,51 @@
+.pageWrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f5f6fb;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('/src/assets/pic/gradient-blue.svg'),
+    url('/src/assets/pic/gradient-violet.svg');
+  background-repeat: no-repeat;
+  background-position: top left, bottom right;
+  background-size: 250px, 250px;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.logoWrapper {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #4a56e2;
+  margin-bottom: 40px;
+}
+
+.logoAccent {
+  color: #24cca7;
+}
+
+.title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  color: #000000;
+}

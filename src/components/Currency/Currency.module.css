@@ -1,46 +1,95 @@
+.container {
+  background-color: #101010dc;
+  width: 320px;
+  height: 428px;
+  background-image: url("./currency-mob-bg.png");
+}
 .wrapper {
-    background: rgba(74, 86, 226, 0.1);
-    width: 320px;
-    height: 214px;
-    border-radius: 0 0 8px 8px;
-    backdrop-filter: blur(100px);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  width: 320px;
+  height: 214px;
+  border-radius: 0 0 8px 8px;
+  backdrop-filter: blur(100px);
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
 }
 
 .title {
-    padding-left: 20px;
-    padding-right: 20px;
-    background: rgba(74, 86, 226, 0.1);
-    display: flex;
-    font-weight: 600;
-    font-size: 16px;
-    justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  justify-content: space-between;
+  color: #fff;
 }
 
 .data {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
 }
 
 .usd {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .eur {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .lineUsd {
-    margin-top: 8px;
-    margin-bottom: 0;
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 .lineEur {
-    margin-top: 12px;
-    margin-bottom: 0;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.diagram {
+  display: inline-block;
+  height: 88px;
+  width: 320px;
+  background-image: url("./diagram.svg");
+  background-repeat: no-repeat;
+}
+.line {
+  display: inline-block;
+  height: 88px;
+  width: 320px;
+  background-image: url("./line.svg");
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.leftDot {
+  display: inline-block;
+  background-image: url("./dot.svg");
+  height: 6px;
+  width: 6px;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 66%;
+  left: 13%;
+  transform: translate(-50%, -50%);
+}
+.rightDot {
+  display: inline-block;
+  background-image: url("./dot.svg");
+  height: 6px;
+  width: 6px;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 55%;
+  left: 77%;
+  transform: translate(-50%, -50%);
 }

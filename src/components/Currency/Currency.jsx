@@ -19,29 +19,34 @@ export default function Currency() {
     fetchData();
   }, []);
 
+
   // const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(fetchMonoThunk());
   // }, [dispatch])
   
   return (
-    <>
-      <div className={s.wrapper}>
-        <div className={s.title}>
-          <p>Currency</p><p>Purchase</p><p>Sale</p>
-        </div>
-        <div className={s.data}>
-          <div className={s.usd}>
-            <p className={s.lineUsd}>USD</p>
-            <p className={s.lineUsd}>{usd.rateBuy}</p>
-            <p className={s.lineUsd}>{usd.rateSell}</p>
+    <><div className={s.container}>
+        <div className={s.wrapper}>
+          <div className={s.title}>
+            <p>Currency</p><p>Purchase</p><p>Sale</p>
           </div>
-          <div className={s.eur}>
-            <p className={s.lineEur}>EUR</p>
-            <p className={s.lineEur}>{eur.rateBuy}</p>
-            <p className={s.lineEur}>{eur.rateSell}</p>
+          <div className={s.data}>
+            <div className={s.usd}>
+              <p className={s.lineUsd}>USD</p>
+              <p className={s.lineUsd}>{usd.rateBuy}</p>
+              <p className={s.lineUsd}>{usd.rateSell}</p>
+            </div>
+            <div className={s.eur}>
+              <p className={s.lineEur}>EUR</p>
+              <p className={s.lineEur}>{eur.rateBuy}</p>
+              <p className={s.lineEur}>{eur.rateSell}</p>
+            </div>        
           </div>
-          {/* <img src="./temp1.svg" alt="" /> */}
+          <span className={s.diagram}></span>
+          <span className={s.line}></span>
+          <span className={s.leftDot}></span>
+          <span className={s.rightDot}></span>
         </div>
       </div>
     </>

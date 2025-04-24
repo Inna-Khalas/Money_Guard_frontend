@@ -2,54 +2,96 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 400px;
+  max-width: 320px;
   margin: 0 auto;
+  gap: 20px;
 }
 
-.label {
-  margin-bottom: 10px;
+.inputWrapper {
+  position: relative;
+  width: 280px;
+}
+
+.iconWrapper {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.placeholder {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.active {
+  top: -10px;
+  font-size: 12px;
+  color: #24cca7; /* Колір активного тексту */
 }
 
 .input {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 280px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  padding: 10px 0 0 40px; /* Відступ для іконки */
+}
+
+.inputLarge {
+  height: 43px;
+}
+
+.underline {
+  display: block;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.input:focus + .underline {
+  background-color: #24cca7; /* Зміна кольору лінії під полем при фокусі */
 }
 
 .error {
   color: red;
   font-size: 12px;
-}
-
-.button {
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.button:disabled {
-  background-color: #ccc;
-}
-
-.link {
-  margin-top: 10px;
-  text-align: center;
+  margin-top: 2px;
 }
 
 .progressContainer {
+  width: 280px;
   height: 6px;
   background-color: #e0e0e0;
   border-radius: 4px;
-  margin-top: 4px;
   overflow: hidden;
+  margin-top: 8px;
 }
 
 .progressBar {
   height: 100%;
   background-color: #24cca7;
   transition: width 0.3s ease;
+}
+
+.button {
+  width: 280px;
+  height: 44px;
+  background-color: #4a56e2;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

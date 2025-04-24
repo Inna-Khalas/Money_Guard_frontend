@@ -1,153 +1,147 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setAuth } from '../../redux/auth/slice.js';
-import { register as registerUser } from '../../redux/auth/operations.js';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-
+import * as yup from 'yup';
 import styles from './RegistrationForm.module.css';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/auth/operations';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { setAuth } from '../../redux/auth/slice';
+import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
+import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
+import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
 
-const registrationSchema = Yup.object().shape({
-  name: Yup.string().required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string()
-    .min(8, 'At least 8 characters')
-    .max(12, 'No more than 12 characters')
-    .required('Required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm your password'),
+const registrationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Name is required')
+    .min(3, 'Name must be at least 3 characters')
+    .max(50, 'Name cannot be longer than 50 characters'),
+  email: yup
+    .string()
+    .email('Invalid email format')
+    .required('Email is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const {
     register: formRegister,
     handleSubmit,
-    formState: { errors },
     watch,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(registrationSchema),
+    mode: 'onChange',
   });
 
-  const passwordValue = watch('password');
-
-  const getProgress = () => {
-    const confirmPasswordValue = watch('confirmPassword');
-    if (!confirmPasswordValue) return 0;
-    if (confirmPasswordValue === passwordValue) return 100;
-    const matchLength = confirmPasswordValue
-      .split('')
-      .reduce((acc, char, i) => (char === passwordValue[i] ? acc + 1 : acc), 0);
-    return Math.floor((matchLength / passwordValue.length) * 100);
-  };
-
-  const progress = getProgress();
+  const password = watch('password') || '';
+  const confirmPassword = watch('confirmPassword') || '';
 
   const onSubmit = async data => {
-    setLoading(true);
-
-    const userData = { ...data };
-    delete userData.confirmPassword;
+    const { name, email, password } = data;
 
     try {
-      const result = await registerUser(userData);
+      const response = await register({ name, email, password });
 
-      if (result?.data?.status === 201) {
-        dispatch(setAuth(result.data));
-
-        // Автоматичне логінування, якщо потрібно
-        /*
-      const loginData = {
-        email: userData.email,
-        password: userData.password, 
-      };
-
-      const loginResult = await loginUser(loginData); 
-      if (loginResult?.data?.accessToken) {
-        dispatch(setAuth({ ...loginResult.data }));
-        toast.success('Login successful');
-        navigate('/dashboard');
-      } else {
-        toast.error(loginResult?.message || 'Login failed');
-      }
-      */
+      const { name: userName, email: userEmail } = response.data.data;
 
         toast.success('Registration successful');
         navigate('/login');
       } else {
         toast.error(result?.message || 'Registration failed');
       }
+      dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
+      toast.success('Registered successfully');
+      navigate('/dashboard');
     } catch (error) {
-      toast.error(error.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
+      toast.error(error.message || 'Registration failed');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <label className={styles.label}>
-        Name:
-        <input type="text" {...formRegister('name')} className={styles.input} />
-        {errors.name && (
-          <span className={styles.error}>{errors.name.message}</span>
-        )}
-      </label>
-
-      <label className={styles.label}>
-        Email:
-        <input
-          type="email"
-          {...formRegister('email')}
-          className={styles.input}
-        />
-        {errors.email && (
-          <span className={styles.error}>{errors.email.message}</span>
-        )}
-      </label>
-
-      <label className={styles.label}>
-        Password:
-        <input
-          type="password"
-          {...formRegister('password')}
-          className={styles.input}
-        />
-        {errors.password && (
-          <span className={styles.error}>{errors.password.message}</span>
-        )}
-      </label>
-
-      <label className={styles.label}>
-        Confirm Password:
-        <input
-          type="password"
-          {...formRegister('confirmPassword')}
-          className={styles.input}
-        />
-        {errors.confirmPassword && (
-          <span className={styles.error}>{errors.confirmPassword.message}</span>
-        )}
-      </label>
-
-      <div className={styles.progressContainer}>
-        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
-      </div>
-
-      <button type="submit" className={styles.button} disabled={loading}>
-        {loading ? 'Registering...' : 'Register'}
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
+      {['name', 'email', 'password', 'confirmPassword'].map(field => (
+        <label className={styles.inputWrapper} key={field}>
+          <div className={styles.iconWrapper}>
+            {field === 'name' && <img src={userIcon} alt="User Icon" />}
+            {field === 'email' && <img src={emailIcon} alt="Email Icon" />}
+            {field === 'password' && <img src={lockIcon} alt="Password Icon" />}
+            {field === 'confirmPassword' && (
+              <img src={lockIcon} alt="Confirm Password Icon" />
+            )}
+          </div>
+          <input
+            type={
+              field === 'password' || field === 'confirmPassword'
+                ? 'password'
+                : 'text'
+            }
+            {...formRegister(field)}
+            className={`${styles.input} ${
+              field === 'confirmPassword' ? styles.inputLarge : ''
+            }`}
+          />
+          <span
+            className={`${styles.placeholder} ${
+              watch(field) ? styles.active : ''
+            }`}
+          >
+            {field === 'confirmPassword'
+              ? 'Confirm password'
+              : field.charAt(0).toUpperCase() + field.slice(1)}
+          </span>
+          <span className={styles.underline}></span>
+          {errors[field] && (
+            <span className={styles.error}>{errors[field].message}</span>
+          )}
+          {field === 'confirmPassword' && (
+            <div className={styles.progressContainer}>
+              <div
+                className={styles.progressBar}
+                style={{
+                  width: `${
+                    password && confirmPassword
+                      ? Math.floor(
+                          (Array.from(confirmPassword).filter(
+                            (char, idx) => char === password[idx]
+                          ).length /
+                            password.length) *
+                            100
+                        )
+                      : 0
+                  }%`,
+                }}
+              />
+            </div>
+          )}
+        </label>
+      ))}
+      <button type="submit" className={styles.button}>
+        Register
       </button>
-
-      <p className={styles.link}>
-        Already have an account? <Link to="/login">Log in here</Link>.
-      </p>
+      <button
+        type="button"
+        className={styles.button}
+        onClick={() => navigate('/login')}
+      >
+        Log in
+      </button>
     </form>
   );
 };

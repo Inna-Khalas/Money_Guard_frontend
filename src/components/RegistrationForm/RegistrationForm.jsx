@@ -80,7 +80,7 @@ const RegistrationForm = () => {
       */
 
         toast.success('Registration successful');
-        navigate('/dashboard');
+        navigate('/login');
       } else {
         toast.error(result?.message || 'Registration failed');
       }

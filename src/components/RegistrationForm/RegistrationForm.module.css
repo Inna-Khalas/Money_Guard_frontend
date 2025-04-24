@@ -20,6 +20,10 @@
   max-height: 40px;
 }
 
+.inputWrapper:focus-within .underline {
+  background-color: rgba(255, 255, 255, 0.6); /* будь-який активний колір */
+}
+
 .iconWrapper {
   position: absolute;
   left: 12px;
@@ -59,6 +63,7 @@
   width: 280px;
   height: 32px;
   border: none;
+  outline: none;
   background: transparent;
   font-size: 18px;
   line-height: 40px;

@@ -28,7 +28,7 @@ const registrationSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .required('Confirm password is required'),
 });
 
 const RegistrationForm = () => {

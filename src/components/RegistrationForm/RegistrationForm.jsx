@@ -78,7 +78,11 @@ const RegistrationForm = () => {
     >
       {['name', 'email', 'password', 'confirmPassword'].map(field => (
         <label className={styles.inputWrapper} key={field}>
-          <div className={styles.iconWrapper}>
+          <div
+            className={`${styles.iconWrapper} ${
+              field === 'confirmPassword' ? styles.offsetFix : ''
+            }`}
+          >
             {field === 'name' && <img src={userIcon} alt="User Icon" />}
             {field === 'email' && <img src={emailIcon} alt="Email Icon" />}
             {field === 'password' && <img src={lockIcon} alt="Password Icon" />}
@@ -98,7 +102,7 @@ const RegistrationForm = () => {
           <span
             className={`${styles.placeholder} ${
               watch(field) ? styles.active : ''
-            }`}
+            } ${field === 'confirmPassword' ? styles.offsetFix : ''}`}
           >
             {field === 'confirmPassword'
               ? 'Confirm password'
@@ -132,6 +136,7 @@ const RegistrationForm = () => {
           )}
         </label>
       ))}
+
       <div className={styles.buttonGroup}>
         <button type="submit" className={styles.button}>
           Register

@@ -17,6 +17,7 @@
 .inputWrapper {
   position: relative;
   width: 280px;
+  max-height: 40px;
 }
 
 .iconWrapper {
@@ -99,7 +100,7 @@
   background-color: #e0e0e0;
   border-radius: 4px;
   overflow: hidden;
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 
 .progressBar {

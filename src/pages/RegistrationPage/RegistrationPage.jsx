@@ -1,10 +1,26 @@
+import styles from './RegistrationPage.module.css';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm.jsx';
+import mgLogo from '../../pages/RegistrationPage/pic/icons/mg-logo.svg';
 
 const RegistrationPage = () => {
   return (
-    <div>
-      <h2>Register</h2>
-      <RegistrationForm />
+    <div className={styles.pageWrapper}>
+      <div className={styles.background}></div>
+
+      <div className={styles.container}>
+        <div className={styles.logoBlock}>
+          <img
+            src={mgLogo}
+            alt="Money Guard Logo"
+            className={styles.logoIcon}
+          />
+          <span className={styles.logoWrapper}>
+            <span className={styles.logoAccent}>M</span>oneyGuard
+          </span>
+        </div>
+
+        <RegistrationForm />
+      </div>
     </div>
   );
 };

@@ -1,55 +1,55 @@
+/* RegistrationPage.module.css */
+
 .pageWrapper {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  background-color: #f5f6fb;
-  overflow: hidden;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .background {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/src/assets/pic/gradient-blue.svg'),
-    url('/src/assets/pic/gradient-violet.svg');
-  background-repeat: no-repeat;
-  background-position: top left, bottom right;
-  background-size: 250px, 250px;
-  z-index: 0;
+  background: url('../../pages/RegistrationPage/pic/background/mob-background.jpg')
+    center/cover no-repeat;
+  z-index: -1;
 }
 
 .container {
-  position: relative;
-  z-index: 1;
-  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logoBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 .logoIcon {
-  width: 25px;
-  height: 25px;
+  width: 128px; /* Control size of the logo */
+  height: 54px;
+  margin-bottom: 10px;
 }
 
 .logoWrapper {
-  font-family: 'Poppins', sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: #4a56e2;
+  font-weight: 400;
+  font-size: 19px;
+  color: #fbfbfb;
 }
 
 .logoAccent {
-  color: #24cca7;
+  color: #ffc727; /* Accent color for "M" */
 }

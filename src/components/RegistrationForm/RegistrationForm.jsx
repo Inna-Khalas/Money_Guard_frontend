@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 import { register as registerThunk } from '../../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import userIcon from '../../assets/icons/user.svg';
-import emailIcon from '../../assets/icons/email.svg';
-import lockIcon from '../../assets/icons/lock.svg';
+import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
+import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
+import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
 
 // Схема валідації
 const registrationSchema = yup.object().shape({
@@ -67,15 +67,6 @@ const RegistrationForm = () => {
     >
       {['name', 'email', 'password', 'confirmPassword'].map(field => (
         <label className={styles.inputWrapper} key={field}>
-          <span
-            className={`${styles.placeholder} ${
-              watch(field) ? styles.active : ''
-            }`}
-          >
-            {field === 'confirmPassword'
-              ? 'Confirm password'
-              : field.charAt(0).toUpperCase() + field.slice(1)}
-          </span>
           <div className={styles.iconWrapper}>
             {field === 'name' && <img src={userIcon} alt="User Icon" />}
             {field === 'email' && <img src={emailIcon} alt="Email Icon" />}
@@ -88,6 +79,15 @@ const RegistrationForm = () => {
               field === 'confirmPassword' ? styles.inputLarge : ''
             }`}
           />
+          <span
+            className={`${styles.placeholder} ${
+              watch(field) ? styles.active : ''
+            }`}
+          >
+            {field === 'confirmPassword'
+              ? 'Confirm password'
+              : field.charAt(0).toUpperCase() + field.slice(1)}
+          </span>
           <span className={styles.underline}></span>
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>
@@ -105,7 +105,6 @@ const RegistrationForm = () => {
           )}
         </label>
       ))}
-
       <button type="submit" className={styles.button}>
         Register
       </button>

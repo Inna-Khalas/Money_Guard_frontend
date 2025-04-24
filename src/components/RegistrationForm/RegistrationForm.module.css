@@ -12,6 +12,16 @@
   width: 280px;
 }
 
+.iconWrapper {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
 .placeholder {
   position: absolute;
   top: 10px;
@@ -25,7 +35,7 @@
 .active {
   top: -10px;
   font-size: 12px;
-  color: #24cca7;
+  color: #24cca7; /* Колір активного тексту */
 }
 
 .input {
@@ -34,7 +44,7 @@
   border: none;
   background: transparent;
   font-size: 14px;
-  padding: 10px 0 0 0;
+  padding: 10px 0 0 40px; /* Відступ для іконки */
 }
 
 .inputLarge {
@@ -46,6 +56,11 @@
   height: 2px;
   background-color: rgba(0, 0, 0, 0.2);
   margin-top: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.input:focus + .underline {
+  background-color: #24cca7; /* Зміна кольору лінії під полем при фокусі */
 }
 
 .error {
@@ -79,21 +94,4 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-}
-
-.inputWrapper {
-  position: relative;
-}
-.input {
-  padding-left: 40px;
 }

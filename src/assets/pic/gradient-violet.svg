@@ -1,9 +1,0 @@
-<svg width="250" height="250" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="125" cy="125" r="125" fill="url(#violetGradient)" />
-  <defs>
-    <linearGradient id="violetGradient" x1="0" y1="0" x2="250" y2="250" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FF6596"/>
-      <stop offset="1" stop-color="#FFB6B6"/>
-    </linearGradient>
-  </defs>
-</svg>

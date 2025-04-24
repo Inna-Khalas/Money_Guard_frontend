@@ -1,6 +1,6 @@
 import styles from './RegistrationPage.module.css';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm.jsx';
-import mgLogo from '../../assets/icons/mg-logo.svg';
+import mgLogo from '../../pages/RegistrationPage/pic/icons/mg-logo.svg';
 
 const RegistrationPage = () => {
   return (

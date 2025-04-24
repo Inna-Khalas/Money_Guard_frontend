@@ -57,6 +57,11 @@ const RegistrationForm = () => {
 
       const { name: userName, email: userEmail } = response.data.data;
 
+        toast.success('Registration successful');
+        navigate('/login');
+      } else {
+        toast.error(result?.message || 'Registration failed');
+      }
       dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
       toast.success('Registered successfully');
       navigate('/dashboard');

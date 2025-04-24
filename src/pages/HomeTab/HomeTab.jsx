@@ -1,3 +1,10 @@
+import Balance from '../../components/Balance/Balance';
+
 export default function HomeTab() {
-  return <div>HomeTab</div>;
+  return (
+    <div>
+      HomeTab
+      <Balance />
+    </div>
+  );
 }

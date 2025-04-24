@@ -54,10 +54,7 @@ const [showLogout, setShowLogout] = useState(false); // убрать потом
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute
-                redirectTo="/dashboard"
-                component={<DashboardPage />}
-              />
+              <PrivateRoute redirectTo="/login" component={<DashboardPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />

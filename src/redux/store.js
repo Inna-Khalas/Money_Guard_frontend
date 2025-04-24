@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./auth/slice";
-import storage from "redux-persist/lib/storage";
-import transactionsReducer from "./transactions/transactionsSlice";
-import categoriesReduser from "./categories/categoriesSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth/slice';
+import storage from 'redux-persist/lib/storage';
+import transactionsReducer from './transactions/transactionsSlice';
+import categoriesReduser from './categories/categoriesSlice';
+import loaderReducer from '../features/Loader/loaderSlice';
 
 import {
   persistStore,
@@ -13,23 +14,24 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
+} from 'redux-persist';
 
 const authPersistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
-  whitelist: ["token"],
+  whitelist: ['token'],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
+    loader: loaderReducer,
     categories: categoriesReduser,
     transactions: transactionsReducer,
     auth: persistedAuthReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

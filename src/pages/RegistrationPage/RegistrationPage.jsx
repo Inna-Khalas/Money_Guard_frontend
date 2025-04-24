@@ -15,8 +15,12 @@ const RegistrationPage = () => {
             className={styles.logoIcon}
           />
           <span className={styles.logoWrapper}>
-            <span className={styles.logoAccent}>M</span>oneyGuard
-          </span>
+            {'Money Guard'.split('').map((char, idx) => (
+              <span key={idx} className={styles.char}>
+                {char}
+              </span>
+            ))}
+          </span>{' '}
         </div>
 
         <RegistrationForm />

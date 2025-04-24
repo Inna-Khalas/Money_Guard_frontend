@@ -55,16 +55,15 @@ const RegistrationForm = () => {
     try {
       const response = await register({ name, email, password });
 
-      const { name: userName, email: userEmail } = response.data.data;
+      if (response?.data) {
+        const { name: userName, email: userEmail } = response.data.data;
 
         toast.success('Registration successful');
+        dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
         navigate('/login');
       } else {
-        toast.error(result?.message || 'Registration failed');
+        toast.error('Registration failed');
       }
-      dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
-      toast.success('Registered successfully');
-      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Registration failed');
     }
@@ -93,9 +92,7 @@ const RegistrationForm = () => {
                 : 'text'
             }
             {...formRegister(field)}
-            className={`${styles.input} ${
-              field === 'confirmPassword' ? styles.inputLarge : ''
-            }`}
+            className={styles.input}
           />
           <span
             className={`${styles.placeholder} ${
@@ -104,6 +101,8 @@ const RegistrationForm = () => {
           >
             {field === 'confirmPassword'
               ? 'Confirm password'
+              : field === 'email'
+              ? 'E-mail'
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
           <span className={styles.underline}></span>
@@ -132,16 +131,18 @@ const RegistrationForm = () => {
           )}
         </label>
       ))}
-      <button type="submit" className={styles.button}>
-        Register
-      </button>
-      <button
-        type="button"
-        className={styles.button}
-        onClick={() => navigate('/login')}
-      >
-        Log in
-      </button>
+      <div className={styles.buttonGroup}>
+        <button type="submit" className={styles.button}>
+          Register
+        </button>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.buttonSecondary}`}
+          onClick={() => navigate('/login')}
+        >
+          Log in
+        </button>
+      </div>
     </form>
   );
 };

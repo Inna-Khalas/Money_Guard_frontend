@@ -15,12 +15,9 @@ const RegistrationPage = () => {
             className={styles.logoIcon}
           />
           <span className={styles.logoWrapper}>
-            {'Money Guard'.split('').map((char, idx) => (
-              <span key={idx} className={styles.char}>
-                {char}
-              </span>
-            ))}
-          </span>{' '}
+            <span className={styles.word}>Money</span>
+            <span className={styles.word}>Guard</span>
+          </span>
         </div>
 
         <RegistrationForm />

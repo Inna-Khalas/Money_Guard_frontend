@@ -10,10 +10,11 @@ import NotFound from "../pages/NotFound";
 import HomeTab from "../pages/HomeTab/HomeTab";
 import Balance from "./Balance/Balance";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
-
+import Header from "./Header/Header";
 const App = () => {
   return (
     <>
+      <Header />
       <Toaster />
       <Layout>
         <Balance />
@@ -37,10 +38,13 @@ const App = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute redirectTo="/dashboard" component={<DashboardPage />} />
+              <PrivateRoute
+                redirectTo="/dashboard"
+                component={<DashboardPage />}
+              />
             }
           />
-          
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

@@ -1,0 +1,87 @@
+.header {
+  background: linear-gradient(90deg, #2e1746, #2e225f);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  fill: white;
+}
+
+.appName {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.profileButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.editIcon {
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  fill: white;
+}
+
+@media (min-width: 768px) {
+  .header {
+    height: 80px;
+    padding: 0 24px;
+  }
+
+  .profileButton {
+    gap: 12px;
+  }
+
+  .exitButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
+  .exitIcon {
+    width: 16px;
+    height: 16px;
+    fill: white;
+    margin-left: 6px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .header {
+    padding: 0 40px;
+  }
+
+  .exitButton {
+    font-size: 16px;
+  }
+
+  .profileButton {
+    font-size: 16px;
+  }
+}

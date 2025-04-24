@@ -1,3 +1,12 @@
+.pageWrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
 .background {
   position: absolute;
   top: 0;
@@ -57,6 +66,35 @@
   text-align: center;
 }
 
+.input {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  border: none; /* Забираємо рамку */
+  outline: none; /* Забираємо обведення при фокусі */
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  width: 280px;
+  height: 35px;
+  padding-left: 50px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input:focus {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8); /* Підсвічування нижньої лінії при фокусі */
+  box-shadow: none; /* Вилучаємо будь-яке обрамлення при фокусі */
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 24px;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
 @media screen and (min-width: 768px) {
   .container {
     width: 533px;
@@ -80,12 +118,22 @@
 
 @media screen and (min-width: 768px) {
   .logoBlock {
-    width: 160px;
+    width: 182px;
     margin-bottom: 60px;
   }
 
   .logoIcon {
     width: 36px;
     height: 36px;
+  }
+
+  .background {
+    background: url('../../pages/RegistrationPage/pic/background/tab-background.jpg')
+      center/cover no-repeat;
+  }
+
+  .container {
+    width: 533px;
+    height: 624px;
   }
 }

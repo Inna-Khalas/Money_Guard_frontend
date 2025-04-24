@@ -1,8 +1,14 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
 export const goItApi = axios.create({
   baseURL: 'https://money-guard-backend-xmem.onrender.com',
 });
+
+export const setToken = token => {
+  goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
 
 const setAuthHeader = token => {
   goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -11,6 +17,16 @@ const setAuthHeader = token => {
 const clearAuthHeader = () => {
   delete goItApi.defaults.headers.common.Authorization;
 };
+
+export const loginThunk = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
+  try {
+      const { data } = await goItApi.post('/api/auth/sign-in', credentials);
+      setToken(data.token);
+      return data.data;
+  } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
 goItApi.interceptors.response.use(
   response => response,

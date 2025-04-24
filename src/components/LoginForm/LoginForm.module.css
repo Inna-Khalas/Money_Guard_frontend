@@ -1,0 +1,246 @@
+.backdrop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/src/images/gradient-mobile.webp');
+}
+
+@media screen and (min-width: 320px) {
+
+}
+
+@media screen and (min-width: 768px)  {
+.backdrop {
+    background-image: url('/src/images/login-tablet.webp');
+}
+}
+
+@media screen and (min-width: 1280px) {
+.backdrop {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('/src/images/login-desktop.webp');
+}
+}
+
+/* logo */
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fbfbfb;
+    margin: 0;
+
+    img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+.textLogo{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+}
+
+@media screen and (min-width: 768px) {
+    .logo {
+        font-size: 26px;
+
+    img {
+        width: 36px;
+        height: 36px;
+        }
+.textLogo{
+    font-size: 26px;}
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .headerLogo {
+        font-size: 17px;
+
+        img {
+            width: 25px;
+            height: 23px;
+        }
+    }
+}
+
+
+/* modal */
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    width: 100%;
+    padding: 98px 20px;
+}
+
+@media screen and (min-width: 768px) {
+.modal {
+    border-radius: 8px;
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.35);
+    width: 533px;
+    height: 570px;
+    padding: 80px 62px;
+    background: rgba(255, 255, 255, 0.1);
+}
+}
+
+
+/* form login */
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 40px;
+    margin: 52px 0;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.inputGroup {
+    position: relative;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    width: 280px;
+    height: 35px;
+    padding-left: 50px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media screen and (min-width: 768px) {
+.input {
+    width: 409px;
+}
+}
+
+.inputIcon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 24px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.inputIconLast {
+    top: 35%;
+}
+
+.error {
+    color: #ffb627;
+    position: absolute;
+    top: 3.5em;
+    font-size: 0.7em;
+    padding-left: 50px;
+}
+
+.progressBarComponent {
+    width: auto;
+}
+
+.toggleBtn {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    padding: 0;
+    transform: translateY(-50%);
+}
+
+
+/* btn */
+
+.logButton {
+    width: 280px;
+    height: 50px;
+    border-radius: 20px;
+    box-shadow: 1px 9px 15px 0px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0.1em;
+}
+
+.multiColorButton {
+    color: rgba(251, 251, 251, 1);
+    background-image: none;
+    background: linear-gradient(96.76deg, #ffc727 -16.42%, #9e40ba 97.04%, #7000ff 150.71%);
+}
+
+.multiColorButton:hover,
+.multiColorButton:focus {
+    background-size: 200%;
+    background-position: right center;
+}
+
+.multiColorButton:active {
+    font-size: 19px;
+}
+
+.whiteButton {
+    color: #623f8b;
+    background: #fcfcfc;
+}
+
+.whiteButton:hover,
+.whiteButton:focus {
+    background-size: 200%;
+    background-position: right center;
+}
+
+.whiteButton:active {
+    font-size: 19px;
+}
+
+@media screen and (min-width: 768px) {
+    .formButton {
+        width: 300px;
+    }
+}

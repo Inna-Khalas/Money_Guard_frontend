@@ -105,7 +105,7 @@
   background-color: #e0e0e0;
   border-radius: 4px;
   overflow: hidden;
-  /* margin-top: 8px; */
+  margin-top: 1px;
 }
 
 .progressBar {

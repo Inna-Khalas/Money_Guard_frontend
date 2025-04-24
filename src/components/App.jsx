@@ -16,7 +16,7 @@ const App = () => {
     <>
       <Toaster />
       <Layout>
-        <Balance />
+        {/* <Balance /> */}
         <Routes>
           <Route
             path="/register"
@@ -37,10 +37,7 @@ const App = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute
-                redirectTo="/dashboard"
-                component={<DashboardPage />}
-              />
+              <PrivateRoute redirectTo="/login" component={<DashboardPage />} />
             }
           />
           <Route path="*" element={<NotFound />} />

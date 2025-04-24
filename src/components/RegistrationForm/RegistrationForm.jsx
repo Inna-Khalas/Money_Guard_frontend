@@ -55,16 +55,15 @@ const RegistrationForm = () => {
     try {
       const response = await register({ name, email, password });
 
-      const { name: userName, email: userEmail } = response.data.data;
+      if (response?.data) {
+        const { name: userName, email: userEmail } = response.data.data;
 
         toast.success('Registration successful');
+        dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
         navigate('/login');
       } else {
-        toast.error(result?.message || 'Registration failed');
+        toast.error('Registration failed');
       }
-      dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
-      toast.success('Registered successfully');
-      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Registration failed');
     }

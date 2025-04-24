@@ -15,8 +15,7 @@ const RegistrationPage = () => {
             className={styles.logoIcon}
           />
           <span className={styles.logoWrapper}>
-            <span className={styles.word}>Money</span>
-            <span className={styles.word}>Guard</span>
+            <span className={styles.word}>Money Guard</span>
           </span>
         </div>
 

@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: {
-    name: null,
-    email: null,
-  },
-  token: null,
+  accessToken: null,
+  refreshToken: null,
   isLoggedIn: false,
-  isRefreshing: false,
 };
 
 export const slice = createSlice({
@@ -15,15 +11,17 @@ export const slice = createSlice({
   initialState,
   reducers: {
     setAuth(state, action) {
-      state.user = {
-        name: action.payload.name,
-        email: action.payload.email,
-      };
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
       state.isLoggedIn = true;
+    },
+    logout(state) {
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.isLoggedIn = false;
     },
   },
 });
 
-export const { setAuth } = slice.actions;
+export const { setAuth, logout } = slice.actions;
 export default slice.reducer;

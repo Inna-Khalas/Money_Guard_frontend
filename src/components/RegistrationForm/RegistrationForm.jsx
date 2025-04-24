@@ -3,14 +3,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
-import { register as registerThunk } from '../../redux/auth/operations';
+import { register } from '../../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { setAuth } from '../../redux/auth/slice';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
 
-// Схема валідації
 const registrationSchema = yup.object().shape({
   name: yup
     .string()
@@ -24,7 +24,7 @@ const registrationSchema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
   confirmPassword: yup
     .string()
@@ -50,12 +50,18 @@ const RegistrationForm = () => {
   const confirmPassword = watch('confirmPassword') || '';
 
   const onSubmit = async data => {
+    const { name, email, password } = data;
+
     try {
-      await dispatch(registerThunk(data));
+      const response = await register({ name, email, password });
+
+      const { name: userName, email: userEmail } = response.data.data;
+
+      dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
       toast.success('Registered successfully');
       navigate('/dashboard');
-    } catch {
-      toast.error('Registration failed');
+    } catch (error) {
+      toast.error(error.message || 'Registration failed');
     }
   };
 
@@ -71,9 +77,16 @@ const RegistrationForm = () => {
             {field === 'name' && <img src={userIcon} alt="User Icon" />}
             {field === 'email' && <img src={emailIcon} alt="Email Icon" />}
             {field === 'password' && <img src={lockIcon} alt="Password Icon" />}
+            {field === 'confirmPassword' && (
+              <img src={lockIcon} alt="Confirm Password Icon" />
+            )}
           </div>
           <input
-            type={field.includes('password') ? 'password' : 'text'}
+            type={
+              field === 'password' || field === 'confirmPassword'
+                ? 'password'
+                : 'text'
+            }
             {...formRegister(field)}
             className={`${styles.input} ${
               field === 'confirmPassword' ? styles.inputLarge : ''
@@ -97,8 +110,17 @@ const RegistrationForm = () => {
               <div
                 className={styles.progressBar}
                 style={{
-                  width:
-                    password && confirmPassword === password ? '100%' : '0%',
+                  width: `${
+                    password && confirmPassword
+                      ? Math.floor(
+                          (Array.from(confirmPassword).filter(
+                            (char, idx) => char === password[idx]
+                          ).length /
+                            password.length) *
+                            100
+                        )
+                      : 0
+                  }%`,
                 }}
               />
             </div>

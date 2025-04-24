@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -11,11 +12,27 @@ import HomeTab from '../pages/HomeTab/HomeTab';
 import Balance from './Balance/Balance';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 
+import LogOut from '../components/LogOut/LogOut'; // потом убрать
+
 const App = () => {
+
+const [showLogout, setShowLogout] = useState(false); // убрать потом
+
+  const handleLogout = () => { //
+    alert('Logged out!'); //
+    setShowLogout(false); //
+  }; //
+
+
   return (
     <>
       <Toaster />
       <Layout>
+
+    <button onClick={() => setShowLogout(true)}>Open Logout Modal</button> {/*Убрать потом */}
+      {showLogout && <LogOut onClose={() => setShowLogout(false)} onLogout={handleLogout} />} {/* убрать потом*/}
+
+        
         <Balance />
         <Routes>
           <Route

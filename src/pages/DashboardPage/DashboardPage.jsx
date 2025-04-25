@@ -1,3 +1,4 @@
+import Navigation from '../../components/Navigation/Navigation';
 // import { useSelector } from 'react-redux';
 import { Loader } from '../../components/Loader/Loader';
 // import { selectisLoading } from '../../redux/transactions/selectors';
@@ -13,6 +14,7 @@ export default function DashboardPage() {
         <Loader />
       ) : ( */}
       <>
+    <Navigation />
         <HomeTab />
 
         <CurrencyTab />

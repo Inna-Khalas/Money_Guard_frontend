@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+
 // import { useEffect } from 'react';
 
 import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
@@ -12,6 +13,9 @@ import NotFound from '../pages/NotFound';
 import HomeTab from '../pages/HomeTab/HomeTab';
 import Balance from './Balance/Balance';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
+
+const App = () => {
+
 // import Loader from './Loader/Loader';
 
 import LogOut from '../components/LogOut/LogOut'; // потом убрать
@@ -52,7 +56,7 @@ const App = () => {
   }; //
 
   return (
-    <div>
+    <>
       <Toaster />
       <Layout>
         <button onClick={() => setShowLogout(true)}>Open Logout Modal</button>{' '}
@@ -91,6 +95,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
+    </>
 
       {/* {isLoading && <Loader />}
       {isError && <h2>Something went wrong! Try again...</h2>} */}

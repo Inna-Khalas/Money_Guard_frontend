@@ -1,10 +1,10 @@
-import Currency from "../../components/Currency/Currency";
+import CurrencyTab from "../CurrencyTab/CurrencyTab";
 
 export default function DashboardPage() {
   return (
     <>
       <div>
-        <Currency />
+        <CurrencyTab />
       </div>
     </>
   );

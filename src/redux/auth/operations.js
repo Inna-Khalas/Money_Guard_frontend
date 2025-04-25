@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { setAuth } from './slice';
+import { setAuth, logout } from './slice';
 
 export const goItApi = axios.create({
   baseURL: 'https://money-guard-backend-xmem.onrender.com',
@@ -18,16 +18,30 @@ export const loginThunk = createAsyncThunk(
   '/api/auth/sign-in',
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await goItApi.post('auth/login', credentials);
-      setAuthHeader(data.token);
-      thunkAPI.dispatch(setAuth({ ...data.data, token: data.token }));
+      const response = await goItApi.post('/auth/login', credentials);
+      const { accessToken, refreshToken } = response.data.data;
 
-      return data.data;
+      setAuthHeader(accessToken);
+      thunkAPI.dispatch(setAuth({ accessToken, refreshToken }));
+
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || 'Login failed'
+      );
     }
   }
 );
+
+// у redux/auth/operations.js
+export const register = async userData => {
+  try {
+    const response = await goItApi.post('/auth/register', userData);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Registration failed');
+  }
+};
 
 goItApi.interceptors.response.use(
   response => response,
@@ -41,15 +55,24 @@ goItApi.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
-        const refreshToken = JSON.parse(persistedAuth.token);
-        const res = await goItApi.post('/auth/refresh', { refreshToken });
+        const refreshTokenString = persistedAuth?.refreshToken;
 
-        const { accessToken } = res.data.data;
+        if (!refreshTokenString || refreshTokenString === 'null') {
+          throw new Error('No refresh token available');
+        }
+
+        const refreshToken = JSON.parse(refreshTokenString);
+
+        const refreshResponse = await goItApi.post('/auth/refresh', {
+          refreshToken,
+        });
+
+        const { accessToken } = refreshResponse.data.data;
         setAuthHeader(accessToken);
 
         const updatedAuth = {
           ...persistedAuth,
-          token: JSON.stringify(accessToken),
+          accessToken: JSON.stringify(accessToken),
         };
         localStorage.setItem('persist:auth', JSON.stringify(updatedAuth));
 
@@ -57,19 +80,12 @@ goItApi.interceptors.response.use(
         return goItApi(originalRequest);
       } catch (refreshError) {
         clearAuthHeader();
+        localStorage.removeItem('persist:auth');
+        logout();
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   }
 );
-
-export const register = async userData => {
-  try {
-    const response = await goItApi.post('/auth/register', userData);
-    return { data: response.data };
-  } catch (error) {
-    const err = error.response?.data?.error || 'Registration failed';
-    throw new Error(err);
-  }
-};

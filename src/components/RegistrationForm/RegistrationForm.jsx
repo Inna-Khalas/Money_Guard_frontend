@@ -3,10 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
+import { register, loginThunk } from '../../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { setAuth } from '../../redux/auth/slice';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
@@ -53,16 +52,18 @@ const RegistrationForm = () => {
     const { name, email, password } = data;
 
     try {
-      const response = await register({ name, email, password });
+      await register({ name, email, password });
 
-      if (response?.data) {
-        const { name: userName, email: userEmail } = response.data.data;
+      toast.success('Registration successful');
 
-        toast.success('Registration successful');
-        dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
-        navigate('/login');
+      // Автоматичний логін
+      const loginResult = await dispatch(loginThunk({ email, password }));
+      // console.log(loginResult);
+      if (loginResult.meta.requestStatus === 'fulfilled') {
+        navigate('/dashboard');
       } else {
-        toast.error('Registration failed');
+        toast.error('Auto login failed');
+        navigate('/login');
       }
     } catch (error) {
       toast.error(error.message || 'Registration failed');

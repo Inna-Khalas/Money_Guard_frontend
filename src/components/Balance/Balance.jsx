@@ -1,19 +1,27 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectBalance } from "../../redux/transactions/selectors";
-import { getBalance } from "../../redux/transactions/operations";
-import { useEffect } from "react";
-import s from "./Balance.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectBalance,
+  selectIsLoading,
+} from '../../redux/transactions/selectors';
+import { getBalance } from '../../redux/transactions/operations';
+import { useEffect } from 'react';
+import s from './Balance.module.css';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 export default function Balance() {
   const dispatch = useDispatch();
   const balance = useSelector(selectBalance);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
-    dispatch(getBalance());
-  }, [dispatch]);
+    if (isLoggedIn && !isLoading) {
+      dispatch(getBalance());
+    }
+  }, [dispatch, isLoggedIn, isLoading]);
 
-  const formatBalance = (amount) => {
-    if (typeof amount !== "number") return "0.00";
-    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$& ");
+  const formatBalance = amount => {
+    if (typeof amount !== 'number') return '0.00';
+    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ');
   };
 
   return (

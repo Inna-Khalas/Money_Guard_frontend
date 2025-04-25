@@ -10,14 +10,7 @@ import PrivateRoute from '../PrivateRoute';
 import Layout from '../Layout';
 import RestrichedRoute from '../RestrichedRoute';
 import NotFound from '../pages/NotFound';
-import HomeTab from '../pages/HomeTab/HomeTab';
-import Balance from './Balance/Balance';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
-
-const App = () => {
-
-// import Loader from './Loader/Loader';
-
 import LogOut from '../components/LogOut/LogOut'; // потом убрать
 // import { refreshThunk } from '../redux/auth/operations';
 // import { useDispatch } from 'react-redux';
@@ -27,25 +20,6 @@ const App = () => {
   // useEffect(() => {
   //   dispatch(refreshThunk());
   // }, [dispatch]);
-
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isError, setIsError] = useState(false);
-
-  // useEffect(() => {
-  //   const getLoadingData = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       setIsError(false);
-  //     } catch (error) {
-  //       setIsError(true);
-  //       console.log(error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   getLoadingData();
-  // });
 
   const [showLogout, setShowLogout] = useState(false); // убрать потом
 
@@ -68,38 +42,31 @@ const App = () => {
           />
         )}{' '}
         {/* убрать потом*/}
-        <Balance />
         <Routes>
           <Route
             path="/register"
-            element={<RestrichedRoute component={<RegistrationPage />} />}
+            element={<RestrichedRoute element={<RegistrationPage />} />}
           />
           <Route
             path="/login"
             element={
-              <RestrichedRoute redirectTo="/" component={<LoginPage />} />
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute redirectTo="/login" component={<HomeTab />} />
+              <RestrichedRoute
+                redirectTo="/dashboard"
+                element={<LoginPage />}
+              />
             }
           />
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute redirectTo="/login" component={<DashboardPage />} />
+              <PrivateRoute redirectTo="/login" element={<DashboardPage />} />
             }
           />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </>
-
-      {/* {isLoading && <Loader />}
-      {isError && <h2>Something went wrong! Try again...</h2>} */}
-    </div>
   );
 };
 

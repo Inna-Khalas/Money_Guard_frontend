@@ -1,10 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./auth/slice";
-import storage from "redux-persist/lib/storage";
-import transactionsReducer from "./transactions/transactionsSlice";
-import categoriesReduser from "./categories/categoriesSlice";
-import { monoBankReducer } from "./transactions/transactionsSlice";
-
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth/slice';
+import storage from 'redux-persist/lib/storage';
+import { transactionsReducer } from './transactions/transactionsSlice';
+import categoriesReduser from './categories/categoriesSlice';
+import { monoBankReducer } from './transactions/transactionsSlice';
 
 import {
   persistStore,

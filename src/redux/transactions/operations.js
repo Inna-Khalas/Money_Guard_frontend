@@ -1,12 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { goItApi } from "../auth/operations";
-import axios from "axios";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { goItApi } from '../auth/operations';
+import axios from 'axios';
 
 export const getBalance = createAsyncThunk(
-  "transactions/summary",
+  'transactions/summary',
   async (_, thunkAPI) => {
     try {
-      const { data } = await goItApi.get("transactions/summary");
+      const { data } = await goItApi.get('transactions/summary');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -14,8 +14,8 @@ export const getBalance = createAsyncThunk(
   }
 );
 
-
-export const fetchMonoCurrThunk = createAsyncThunk('dashboard/currency',
+export const fetchMonoCurrThunk = createAsyncThunk(
+  'dashboard/currency',
   async (_, thunkAPI) => {
     try {
       const { data } = await axios.get('https://api.monobank.ua/bank/currency');
@@ -24,4 +24,4 @@ export const fetchMonoCurrThunk = createAsyncThunk('dashboard/currency',
       return thunkAPI.rejectWithValue(error.message);
     }
   }
-)
+);

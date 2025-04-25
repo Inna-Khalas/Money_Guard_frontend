@@ -1,18 +1,9 @@
-// // import { Oval } from 'react-loader-spinner';
-// import s from './Loader.module.css';
+import { ClipLoader } from 'react-spinners';
 
-// export default function Loader() {
-//   return (
-//     <div className={s.loader}>
-//       <Oval
-//         visible={true}
-//         height="80"
-//         width="80"
-//         color="#734aef"
-//         ariaLabel="oval-loading"
-//         wrapperStyle={{}}
-//         wrapperClass=""
-//       />
-//     </div>
-//   );
-// }
+export const Loader = () => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+      <ClipLoader color="#734aef" size={70} />
+    </div>
+  );
+};

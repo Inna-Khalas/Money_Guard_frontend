@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import s from './LoginForm.module.css';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { MdOutlineMailOutline, MdLock } from 'react-icons/md';
+import { Toaster, toast } from 'react-hot-toast';
 
 const loginValSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -41,16 +42,33 @@ export const LoginForm = () => {
 
   const onSubmit = async data => {
     try {
-      await dispatch(loginThunk(data)).unwrap();
+      const userData = await dispatch(loginThunk(data)).unwrap();
+      localStorage.setItem('token', userData.token);
+      toast.success('Login successful!', {
+        style: {
+          border: '3px solid #734aef',
+          padding: '10px',
+          color: '#fbfbfb',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        },
+      });
       reset();
-      navigate('/');
+      navigate('/dashboard', { replace: true });
     } catch (error) {
-      alert('Login failed: ' + error.message);
+      toast.error('Incorrect email or password. Please try again.', {
+        style: {
+          border: '3px solid #F00000',
+          padding: '10px',
+          color: '#fbfbfb',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        },
+      });
     }
   };
 
   return (
     <div className={s.backdrop}>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className={s.modal}>
         <div className={s.logo}>
           <img src="/src/assets/favicon.svg" alt="Money Guard Logo" />

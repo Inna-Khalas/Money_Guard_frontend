@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
@@ -25,3 +26,5 @@ export const slice = createSlice({
 
 export const { setAuth, logout } = slice.actions;
 export default slice.reducer;
+
+

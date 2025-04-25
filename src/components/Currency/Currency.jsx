@@ -1,30 +1,27 @@
 import s from './Currency.module.css';
-import axios from 'axios';
-
-// import { fetchMonoThunk } from '../../redux/transactions/operations';
-// import { useDispatch } from 'react-redux';
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMonoCurrThunk } from '../../redux/transactions/operations';
+import { selectMonoBank } from '../../redux/transactions/selectors';
 
 export default function Currency() {
-  const [usd, setUsd] = useState([]);
-  const [eur, setEur] = useState([]);
+  const dispatch = useDispatch();
+  const data = useSelector(selectMonoBank);
 
   useEffect(() => {
-    async function fetchData () {
-      const response = await axios.get('https://api.monobank.ua/bank/currency');
-      setUsd(response.data[0]);
-      setEur(response.data[1]);
-    }
-    fetchData();
-  }, []);
+    dispatch(fetchMonoCurrThunk());
+  }, [dispatch])
 
+  function usdFinder(curr) {
+    return curr.currencyCodeA === 840;
+  }
+  const usd = data.monoData?.find(usdFinder);
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchMonoThunk());
-  // }, [dispatch])
-  
+  function eurFinder(curr) {
+    return curr.currencyCodeA === 978;
+  }
+  const eur = data.monoData?.find(eurFinder);
+
   return (
     <><div className={s.container}>
         <div className={s.wrapper}>
@@ -34,13 +31,13 @@ export default function Currency() {
           <div className={s.data}>
             <div className={s.usd}>
               <p className={s.lineUsd}>USD</p>
-              <p className={s.lineUsd}>{usd.rateBuy}</p>
-              <p className={s.lineUsd}>{usd.rateSell}</p>
+              <p className={s.lineUsd}>{usd?.rateBuy.toFixed(2)}</p>
+              <p className={s.lineUsd}>{usd?.rateSell.toFixed(2)}</p>
             </div>
             <div className={s.eur}>
               <p className={s.lineEur}>EUR</p>
-              <p className={s.lineEur}>{eur.rateBuy}</p>
-              <p className={s.lineEur}>{eur.rateSell}</p>
+              <p className={s.lineEur}>{eur?.rateBuy.toFixed(2)}</p>
+              <p className={s.lineEur}>{eur?.rateSell.toFixed(2)}</p>
             </div>        
           </div>
           <span className={s.diagram}></span>

@@ -43,7 +43,7 @@ export const LoginForm = () => {
     try {
       await dispatch(loginThunk(data)).unwrap();
       reset();
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       alert('Login failed: ' + error.message);
     }

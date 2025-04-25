@@ -15,12 +15,12 @@ export default function Currency() {
   function usdFinder(curr) {
     return curr.currencyCodeA === 840;
   }
-  const usd = data.find(usdFinder)
+  const usd = data.monoData?.find(usdFinder);
 
   function eurFinder(curr) {
     return curr.currencyCodeA === 978;
   }
-  const eur = data.find(eurFinder)
+  const eur = data.monoData?.find(eurFinder);
 
   return (
     <><div className={s.container}>

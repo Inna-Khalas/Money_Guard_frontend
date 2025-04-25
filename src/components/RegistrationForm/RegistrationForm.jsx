@@ -3,10 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
+import { register, loginThunk } from '../../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { setAuth } from '../../redux/auth/slice';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
@@ -53,13 +52,19 @@ const RegistrationForm = () => {
     const { name, email, password } = data;
 
     try {
-      const response = await register({ name, email, password });
+      await register({ name, email, password });
 
-      const { name: userName, email: userEmail } = response.data.data;
+      toast.success('Registration successful');
 
-      dispatch(setAuth({ name: userName, email: userEmail, token: '' }));
-      toast.success('Registered successfully');
-      navigate('/dashboard');
+      // Автоматичний логін
+      const loginResult = await dispatch(loginThunk({ email, password }));
+      // console.log(loginResult);
+      if (loginResult.meta.requestStatus === 'fulfilled') {
+        navigate('/dashboard');
+      } else {
+        toast.error('Auto login failed');
+        navigate('/login');
+      }
     } catch (error) {
       toast.error(error.message || 'Registration failed');
     }
@@ -88,9 +93,7 @@ const RegistrationForm = () => {
                 : 'text'
             }
             {...formRegister(field)}
-            className={`${styles.input} ${
-              field === 'confirmPassword' ? styles.inputLarge : ''
-            }`}
+            className={styles.input}
           />
           <span
             className={`${styles.placeholder} ${
@@ -99,6 +102,8 @@ const RegistrationForm = () => {
           >
             {field === 'confirmPassword'
               ? 'Confirm password'
+              : field === 'email'
+              ? 'E-mail'
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
           <span className={styles.underline}></span>
@@ -127,16 +132,18 @@ const RegistrationForm = () => {
           )}
         </label>
       ))}
-      <button type="submit" className={styles.button}>
-        Register
-      </button>
-      <button
-        type="button"
-        className={styles.button}
-        onClick={() => navigate('/login')}
-      >
-        Log in
-      </button>
+      <div className={styles.buttonGroup}>
+        <button type="submit" className={styles.button}>
+          Register
+        </button>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.buttonSecondary}`}
+          onClick={() => navigate('/login')}
+        >
+          Log in
+        </button>
+      </div>
     </form>
   );
 };

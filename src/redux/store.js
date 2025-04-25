@@ -5,6 +5,7 @@ import transactionsReducer from "./transactions/transactionsSlice";
 import categoriesReduser from "./categories/categoriesSlice";
 import { monoBankReducer } from "./transactions/transactionsSlice";
 
+
 import {
   persistStore,
   persistReducer,
@@ -14,12 +15,12 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
+} from 'redux-persist';
 
 const authPersistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
-  whitelist: ["token"],
+  whitelist: ['accessToken', 'refreshToken', 'isLoggedIn'],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
@@ -31,7 +32,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     monoBank: monoBankReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

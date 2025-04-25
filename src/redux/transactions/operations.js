@@ -1,12 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { goItApi } from "../auth/operations";
-import axios from "axios";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { goItApi } from '../auth/operations';
+import axios from 'axios';
 
 export const getBalance = createAsyncThunk(
-  "transactions/summary",
+  'transactions/summary',
   async (_, thunkAPI) => {
     try {
-      const { data } = await goItApi.get("transactions/summary");
+      const { data } = await goItApi.get('transactions/summary');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -14,8 +14,8 @@ export const getBalance = createAsyncThunk(
   }
 );
 
-
-export const fetchMonoCurrThunk = createAsyncThunk('dashboard/currency',
+export const fetchMonoCurrThunk = createAsyncThunk(
+  'dashboard/currency',
   async (_, thunkAPI) => {
     const storage_key = 'monoResponse';
     const defaultDataState = { creationDate: 0, monoData: '' };
@@ -29,14 +29,15 @@ export const fetchMonoCurrThunk = createAsyncThunk('dashboard/currency',
         geatheredData.creationDate = Date.now();
         geatheredData.monoData = data;
         localStorage.setItem(storage_key, JSON.stringify(geatheredData));
-        const savedData = localStorage.getItem(storage_key);  
+        const savedData = localStorage.getItem(storage_key);  // ось що я маю на увазі
         return JSON.parse(savedData);
       } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
       }
     } else {
-      const savedData = localStorage.getItem(storage_key);
-      return JSON.parse(savedData);
+      const savedData = localStorage.getItem(storage_key); // мені здається це лишне  
+      return JSON.parse(savedData); // тут ти вже повертаешь те що берешь з локал стор  на 32 рядку
     }
   }
 );
+

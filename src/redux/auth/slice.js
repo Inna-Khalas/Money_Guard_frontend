@@ -6,8 +6,8 @@ const initialState = {
     email: null,
   },
   token: null,
-  isLoggedIn: false,
-  isRefreshing: false,
+  isLoggedIn: true, // chagged
+  isRefreshing: false, 
 };
 
 export const slice = createSlice({
@@ -27,3 +27,5 @@ export const slice = createSlice({
 
 export const { setAuth } = slice.actions;
 export default slice.reducer;
+
+

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getBalance } from "./operations";
+import { createSlice } from '@reduxjs/toolkit';
+import { getBalance, fetchMonoCurrThunk } from './operations';
 
 const initialState = {
   items: [],
@@ -9,23 +9,43 @@ const initialState = {
 };
 
 export const slice = createSlice({
-  name: "transactions",
+  name: 'transactions',
   initialState,
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getBalance.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(getBalance.pending, statusPending)
       .addCase(getBalance.fulfilled, (state, action) => {
         state.isLoading = false;
         state.balance = action.payload.balance;
       })
-      .addCase(getBalance.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+      .addCase(getBalance.rejected, statusRejected);
   },
 });
+export const transactionsReducer = slice.reducer;
+// ----------------------------------------------------------------------
+const statusRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+const statusPending = state => {
+  // стандартизирующе функции подойдут для всех rejects and pendings
+  state.isLoading = true;
+  state.error = null;
+};
 
-export default slice.reducer;
+const monoSlice = createSlice({
+  name: 'monoBank',
+  initialState,
+  extraReducers: builder => {
+    builder
+      .addCase(fetchMonoCurrThunk.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(fetchMonoCurrThunk.rejected, statusRejected)
+      .addCase(fetchMonoCurrThunk.pending, statusPending);
+  },
+});
+export const monoBankReducer = monoSlice.reducer;
+// ----------------------------------------------------------------------

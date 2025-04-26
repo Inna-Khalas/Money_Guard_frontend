@@ -1,0 +1,139 @@
+.pageWrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../../pages/RegistrationPage/pic/background/mob-background.jpg')
+    center/cover no-repeat;
+  z-index: -1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 23px 20px;
+  width: 320px;
+  height: 568px;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 128px;
+  margin-bottom: 40px;
+}
+
+.logoIcon {
+  width: 25px;
+  height: 25px;
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  color: #fbfbfb;
+  font-size: 19px;
+}
+
+.word {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #fff;
+}
+
+.char {
+  flex: 1;
+  text-align: center;
+}
+
+.input {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  border: none; /* Забираємо рамку */
+  outline: none; /* Забираємо обведення при фокусі */
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  width: 280px;
+  height: 35px;
+  padding-left: 50px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input:focus {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8); /* Підсвічування нижньої лінії при фокусі */
+  box-shadow: none; /* Вилучаємо будь-яке обрамлення при фокусі */
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 24px;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 533px;
+    height: 570px;
+    padding: 80px 62px;
+    border-radius: 8px;
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .logoWrapper {
+    font-size: 26px;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .logoWrapper {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .logoBlock {
+    width: 182px;
+    margin-bottom: 60px;
+  }
+
+  .logoIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .background {
+    background: url('../../pages/RegistrationPage/pic/background/tab-background.jpg')
+      center/cover no-repeat;
+  }
+
+  .container {
+    width: 533px;
+    height: 624px;
+  }
+}

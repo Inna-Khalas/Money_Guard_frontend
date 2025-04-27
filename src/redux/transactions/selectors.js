@@ -7,3 +7,5 @@ export const selectError = state => state.monoBank.error;
 
 export const selectisLoading = state =>
   state.transactions.isLoading || state.monoBank.isLoading;
+
+export const selectAllTransactions = state => state.transactions.items;

@@ -21,7 +21,7 @@
 }
 
 .inputWrapper:focus-within .underline {
-  background-color: rgba(255, 255, 255, 0.6); /* будь-який активний колір */
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .iconWrapper {
@@ -39,7 +39,6 @@
   filter: brightness(0) invert(0.6);
 }
 
-/* Floating placeholder */
 .placeholder {
   position: absolute;
   left: 56px;

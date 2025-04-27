@@ -4,14 +4,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: url('../../pages/RegistrationPage/pic/background/page-bg_320.webp')
-    center/cover/no-repeat;
-  backdrop-filter: blur(100px);
-  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.1);
+    center/cover no-repeat;
+  z-index: -1;
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,6 +31,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .logoBlock {
@@ -62,8 +71,8 @@
 .input {
   font-family: 'Poppins', sans-serif;
   display: flex;
-  border: none; /* Забираємо рамку */
-  outline: none; /* Забираємо обведення при фокусі */
+  border: none;
+  outline: none;
   background: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   width: 280px;
@@ -73,8 +82,8 @@
 }
 
 .input:focus {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.8); /* Підсвічування нижньої лінії при фокусі */
-  box-shadow: none; /* Вилучаємо будь-яке обрамлення при фокусі */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: none;
 }
 
 .inputIcon {
@@ -89,18 +98,20 @@
 }
 
 @media screen and (min-width: 768px) {
+  .background {
+    background: url('../../pages/RegistrationPage/pic/background/page-bg_768.webp')
+      center/cover no-repeat;
+  }
+
   .container {
     width: 533px;
     max-width: 533px;
     height: 624px;
     padding: 40px 62px;
     border-radius: 8px;
-    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.35);
-  }
-
-  .pageWrapper {
-    background: url('../../pages/RegistrationPage/pic/background/page-bg_768.webp')
-      center/cover no-repeat;
+    backdrop-filter: blur(100px);
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .logoBlock {
@@ -119,7 +130,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .pageWrapper {
+  .background {
     background: url('../../pages/RegistrationPage/pic/background/page-bg_1280.webp')
       center/cover no-repeat;
   }

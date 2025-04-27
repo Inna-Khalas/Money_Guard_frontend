@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "./header.module.css";
-import favicon from "../../assets/favicon.svg";
-import group from "./Group 7.svg";
-import clsx from "clsx";
+import React from 'react';
+import styles from './Header.module.css';
+import favicon from '../../assets/favicon.svg';
+import group from './Group 7.svg';
+import clsx from 'clsx';
 
 const Header = () => {
   return (

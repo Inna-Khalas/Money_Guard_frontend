@@ -1,3 +1,4 @@
+import Header from "./Header/Header";
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -31,6 +32,7 @@ const App = () => {
 
   return (
     <>
+      <Header />
       <Toaster />
       <Layout>
         <button onClick={() => setShowLogout(true)}>Open Logout Modal</button>{' '}

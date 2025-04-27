@@ -1,3 +1,31 @@
+import { useSelector } from 'react-redux';
+import TransactionsItem from '../TransactionsItem/TransactionsItem';
+import styles from './TransactionsList.module.css';
+import { selectAllTransactions } from '../../redux/transactions/selectors';
+
 export default function TransactionsList() {
-  return <div>TransactionsList</div>;
+  const transactions = useSelector(selectAllTransactions);
+
+  if (!transactions.length) {
+    return <p className={styles.emptyText}>No transactions yet</p>;
+  }
+
+  return (
+    <table className={styles.transactionsTable}>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Comment</th>
+          <th>Sum</th>
+        </tr>
+      </thead>
+      <tbody>
+        {transactions.map(transaction => (
+          <TransactionsItem key={transaction.id} transaction={transaction} />
+        ))}
+      </tbody>
+    </table>
+  );
 }

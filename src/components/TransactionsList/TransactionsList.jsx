@@ -7,7 +7,11 @@ export default function TransactionsList() {
   const transactions = useSelector(selectAllTransactions);
 
   if (!transactions.length) {
-    return <p className={styles.emptyText}>No transactions yet</p>;
+    return (
+      <div>
+        <p className={styles.emptyText}>No transactions yet</p>
+      </div>
+    );
   }
 
   return (

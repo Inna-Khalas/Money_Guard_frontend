@@ -15,12 +15,12 @@ export default function Currency() {
   function usdFinder(curr) {
     return curr.currencyCodeA === 840;
   }
-  const usd = data.find(usdFinder)
+  const usd = data.monoData?.find(usdFinder);
 
   function eurFinder(curr) {
     return curr.currencyCodeA === 978;
   }
-  const eur = data.find(eurFinder)
+  const eur = data.monoData?.find(eurFinder);
 
   return (
     <><div className={s.container}>
@@ -42,8 +42,12 @@ export default function Currency() {
           </div>
           <span className={s.diagram}></span>
           <span className={s.line}></span>
-          <span className={s.leftDot}></span>
-          <span className={s.rightDot}></span>
+          <div className={s.diagramNumberContainer}>
+            <div className={s.usdDot}>{usd?.rateSell.toFixed(2)}</div>
+            <div className={s.eurDot}>{eur?.rateSell.toFixed(2)}</div>
+          </div>        
+          <div className={s.rightDot}></div>
+          <div className={s.leftDot}></div>
         </div>
       </div>
     </>

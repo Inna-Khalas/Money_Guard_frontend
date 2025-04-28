@@ -1,10 +1,20 @@
+import { useMedia } from '../../hooks/useMedia';
 import Balance from '../../components/Balance/Balance';
+import TransactionsList from '../../components/TransactionsList/TransactionsList';
+import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
 
-export default function HomeTab() {
-  return (
-    <div>
-      HomeTab
-      <Balance />
-    </div>
-  );
-}
+import s from './HomeTab.module.css';
+
+const HomeTab = () => {
+    const { isMobile } = useMedia();
+
+    return (
+        <div className={s.homeTab}>
+            {isMobile && <Balance />}
+            <TransactionsList />
+            <ButtonAddTransactions />
+        </div>
+    );
+};
+
+export default HomeTab;

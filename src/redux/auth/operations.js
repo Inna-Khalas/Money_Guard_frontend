@@ -4,6 +4,7 @@ import { setAuth, logout } from './slice';
 
 export const goItApi = axios.create({
   baseURL: 'https://money-guard-backend-xmem.onrender.com',
+   //baseURL: 'http://localhost:3000',
 });
 
 const setAuthHeader = token => {
@@ -42,6 +43,41 @@ export const register = async userData => {
     throw new Error(error.response?.data?.message || 'Registration failed');
   }
 };
+
+// -------- LogOut
+
+export const logoutThunk = createAsyncThunk(
+  'auth/logout',
+  async (_, thunkAPI) => {
+    try {
+      const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
+      const accessTokenString = persistedAuth?.accessToken;
+      const accessToken = accessTokenString?.replace(/^"|"$/g, ''); // Убираем лишние кавычки
+
+      if (accessToken) {
+        goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      }
+
+      try {
+        await goItApi.post('/auth/logout'); // 🔥 Пытаемся выйти на сервере
+      } catch (serverError) {
+        console.warn('Server logout failed, proceeding with local logout.', serverError.message);
+        
+      }
+
+      
+      thunkAPI.dispatch(logout());
+      localStorage.removeItem('persist:auth');
+      delete goItApi.defaults.headers.common.Authorization;
+
+    } catch (error) {
+      console.error('Client logout failed:', error);
+      return thunkAPI.rejectWithValue('Logout failed.');
+    }
+  }
+);
+
+// -------
 
 goItApi.interceptors.response.use(
   response => response,
@@ -82,6 +118,9 @@ goItApi.interceptors.response.use(
         clearAuthHeader();
         localStorage.removeItem('persist:auth');
         logout();
+        
+        
+       // window.location.reload(); --- можно это добавить вместо простого логАута на строке выше
         return Promise.reject(refreshError);
       }
     }

@@ -4,12 +4,15 @@ import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useState, useEffect } from 'react';
 
 import { register, loginThunk } from '../../redux/auth/operations';
 import styles from './RegistrationForm.module.css';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
+import eyeIcon from '../../pages/RegistrationPage/pic/icons/eye-open.svg';
+import eyeOffIcon from '../../pages/RegistrationPage/pic/icons/eye-closed.svg';
 
 const registrationSchema = yup.object().shape({
   name: yup
@@ -32,9 +35,13 @@ const registrationSchema = yup.object().shape({
     .required('Confirm password is required'),
 });
 
+const STORAGE_KEY = 'registration-form-data';
+
 const RegistrationForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
   const {
     register: formRegister,
@@ -44,10 +51,25 @@ const RegistrationForm = () => {
   } = useForm({
     resolver: yupResolver(registrationSchema),
     mode: 'onChange',
+    defaultValues: savedData,
   });
 
   const password = watch('password') || '';
   const confirmPassword = watch('confirmPassword') || '';
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(prev => !prev);
+
+  useEffect(() => {
+    const subscription = watch(values => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const onSubmit = async data => {
     const { name, email, password } = data;
@@ -55,15 +77,12 @@ const RegistrationForm = () => {
     try {
       await register({ name, email, password });
       toast.success('Registration successful');
-      const loginResult = await dispatch(loginThunk({ email, password }));
-      if (loginResult.meta.requestStatus === 'fulfilled') {
-        navigate('/dashboard');
-      } else {
-        toast.error('Auto login failed');
-        navigate('/login');
-      }
+      await dispatch(loginThunk({ email, password })).unwrap();
+      localStorage.removeItem(STORAGE_KEY);
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Registration failed');
+      navigate('/login');
     }
   };
 
@@ -87,15 +106,28 @@ const RegistrationForm = () => {
               <img src={lockIcon} alt="Confirm Password Icon" />
             )}
           </div>
+
           <input
             type={
-              field === 'password' || field === 'confirmPassword'
-                ? 'password'
+              field === 'password'
+                ? showPassword
+                  ? 'text'
+                  : 'password'
+                : field === 'confirmPassword'
+                ? showConfirmPassword
+                  ? 'text'
+                  : 'password'
                 : 'text'
             }
             {...formRegister(field)}
             className={styles.input}
+            autoComplete={
+              field === 'password' || field === 'confirmPassword'
+                ? 'new-password'
+                : 'off'
+            }
           />
+
           <span
             className={`${styles.placeholder} ${
               watch(field) ? styles.active : ''
@@ -107,10 +139,13 @@ const RegistrationForm = () => {
               ? 'E-mail'
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
+
           <span className={styles.underline}></span>
+
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>
           )}
+
           {field === 'confirmPassword' && (
             <div className={styles.progressContainer}>
               <div
@@ -130,6 +165,28 @@ const RegistrationForm = () => {
                 }}
               />
             </div>
+          )}
+
+          {(field === 'password' || field === 'confirmPassword') && (
+            <button
+              type="button"
+              className={styles.passwordToggle}
+              onClick={
+                field === 'password'
+                  ? togglePasswordVisibility
+                  : toggleConfirmPasswordVisibility
+              }
+              tabIndex={-1}
+            >
+              <img
+                src={
+                  (field === 'password' ? showPassword : showConfirmPassword)
+                    ? eyeOffIcon
+                    : eyeIcon
+                }
+                alt="Toggle visibility"
+              />
+            </button>
           )}
         </label>
       ))}

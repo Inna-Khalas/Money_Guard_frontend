@@ -16,7 +16,7 @@ const clearAuthHeader = () => {
 };
 
 export const loginThunk = createAsyncThunk(
-  '/api/auth/sign-in',
+  '/api/auth/login',
   async (credentials, thunkAPI) => {
     try {
       const response = await goItApi.post('/auth/login', credentials);

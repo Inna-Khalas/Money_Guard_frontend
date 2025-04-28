@@ -57,7 +57,7 @@ export const LoginForm = () => {
     } catch (error) {
       toast.error('Incorrect email or password. Please try again.', {
         style: {
-          border: '3px solid #F00000',
+          border: '3px solid rgba(255, 255, 255, 0.1)',
           padding: '10px',
           color: '#fbfbfb',
           backgroundColor: 'rgba(255, 255, 255, 0.4)',
@@ -77,11 +77,11 @@ export const LoginForm = () => {
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputs}>
             <div className={s.inputGroup}>
-              <svg className={s.inputIcon} width="12" height="12">
-                {' '}
-                <MdOutlineMailOutline />
-                {/* <use href={`${}#${name}`}> </use> */}
-              </svg>
+            <div className={s.inputWrapper}> 
+            <MdOutlineMailOutline className={s.inputIcon}/>
+              {/* <svg className={s.inputIcon} width="12" height="12">
+                <use href={`${}#${name}`}> </use>
+              </svg> */}
               <input
                 type="email"
                 name="email"
@@ -89,17 +89,18 @@ export const LoginForm = () => {
                 {...register('email')}
                 className={s.input}
               />
+              </div>
               {errors.email && (
-                <span className={s.inputError}>{errors.email.message}</span>
+                <p className={s.inputError}>{errors.email.message}</p>
               )}
             </div>
 
             <div className={s.inputGroup}>
-              <svg className={s.inputIcon} width="12" height="12">
-                {' '}
-                <MdLock />
-                {/* <use href={`${}#${name}`}></use> */}
-              </svg>
+            <div className={s.inputWrapper}> 
+            <MdLock className={s.inputIcon}/>
+              {/* <svg className={s.inputIcon} width="12" height="12">
+                <use href={`${}#${name}`}></use>
+              </svg> */}
               <input
                 type={isPassword}
                 name="password"
@@ -107,6 +108,7 @@ export const LoginForm = () => {
                 {...register('password')}
                 className={s.input}
               />
+              </div>
               {isPassword && (
                 <button
                   type="button"
@@ -117,7 +119,7 @@ export const LoginForm = () => {
                 </button>
               )}
               {errors.password && (
-                <span className={s.inputError}>{errors.password.message}</span>
+                <p className={s.inputError}>{errors.password.message}</p>
               )}
             </div>
           </div>

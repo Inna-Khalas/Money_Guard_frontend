@@ -4,6 +4,10 @@ import { Loader } from '../../components/Loader/Loader';
 // import { selectisLoading } from '../../redux/transactions/selectors';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
+import { useMedia } from '../../hooks/useMedia';
+import s from './DashboardPage.module.css';
+
+
 
 import { useState, useEffect } from 'react';
 import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
@@ -13,6 +17,7 @@ import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEdi
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
+  const { isMobile } = useMedia();
 
  /*Стейт для управления открытием модалки */
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,6 +75,7 @@ export default function DashboardPage() {
             onClose={() => setShowEdit(false)}
           />
         )}
+
       </>
       {/* )} */}
     </>

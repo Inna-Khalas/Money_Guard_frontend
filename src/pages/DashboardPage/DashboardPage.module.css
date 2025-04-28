@@ -1,0 +1,29 @@
+.dashBoardContainer {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .dashBoardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+  .navHomeContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .dashBoardContainer {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

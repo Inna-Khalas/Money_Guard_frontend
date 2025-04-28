@@ -12,7 +12,8 @@ import Layout from '../Layout';
 import RestrichedRoute from '../RestrichedRoute';
 import NotFound from '../pages/NotFound';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
-//import LogOut from '../components/LogOut/LogOut'; // потом убрать
+
+import CurrencyTab from "../pages/CurrencyTab/CurrencyTab";
 // import { refreshThunk } from '../redux/auth/operations';
 // import { useDispatch } from 'react-redux';
 
@@ -52,6 +53,12 @@ const App = () => {
             path="/dashboard"
             element={
               <PrivateRoute redirectTo="/login" element={<DashboardPage />} />
+            }
+          />
+          <Route
+            path="/currency"
+            element={
+              <PrivateRoute redirectTo="/currency" element={<CurrencyTab />} />
             }
           />
 

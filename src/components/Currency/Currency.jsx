@@ -42,8 +42,12 @@ export default function Currency() {
           </div>
           <span className={s.diagram}></span>
           <span className={s.line}></span>
-          <span className={s.leftDot}></span>
-          <span className={s.rightDot}></span>
+          <div className={s.diagramNumberContainer}>
+            <div className={s.usdDot}>{usd?.rateSell.toFixed(2)}</div>
+            <div className={s.eurDot}>{eur?.rateSell.toFixed(2)}</div>
+          </div>        
+          <div className={s.rightDot}></div>
+          <div className={s.leftDot}></div>
         </div>
       </div>
     </>

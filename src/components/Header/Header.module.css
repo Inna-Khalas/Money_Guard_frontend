@@ -49,9 +49,9 @@
   fill: rgba(255, 255, 255, 0.6);
 }
 
-.hidden {
+/*.hidden {
   display: none;
-}
+}*/
 
 @media (min-width: 768px) {
   .header {

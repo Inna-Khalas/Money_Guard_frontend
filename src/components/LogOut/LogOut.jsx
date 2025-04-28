@@ -1,69 +1,77 @@
-import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import './LogOut.css'; 
 
-// Функция запроса logout на бэкенд
-const logoutRequest = async (token) => {
-  try {
-    const response = await fetch('https://money-guard-backend-xmem.onrender.com/logout', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.ok;
-  } catch (error) {
-    console.error('Logout failed:', error);
-    return false;
-  }
-};
+
+import { useEffect, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
+import { toast } from 'react-hot-toast';
+import { useDispatch } from "react-redux"; 
+import { logoutThunk } from "../../redux/auth/operations"; 
+import "./LogOut.css";
+import MoLogo from "../../pages/RegistrationPage/pic/icons/mg-logo.svg"; 
+
+
+
 
 const LogOut = ({ onClose, onLogout }) => {
-  
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+  const [isVisible, setIsVisible] = useState(false); // 📦 Стейт анимации
+  const dispatch = useDispatch(); // ➡️ Используем Redux dispatch
+
+
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 300); 
   }, [onClose]);
 
-  
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [handleClose]);
+
+
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      handleClose();
     }
   };
 
-  // Обработка кнопки Logout
-  const handleLogout = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      alert('No token found');
-      return;
-    }
 
-    const success = await logoutRequest(token);
-    if (success) {
-      localStorage.removeItem('accessToken');
-      onLogout(); //  может  navigate('/login') или setUser(null)
-    } else {
-      alert('Logout failed. Please try again.');
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutThunk()).unwrap(); 
+      onLogout();
+    } catch (error) {
+      toast.error('Logout failed. Please try again.');
+      console.error("Logout error:", error); 
     }
   };
 
   return createPortal(
-    <div className="modal-overlay" onClick={handleBackdropClick}>
-      <div className="modal-content logout-modal">
-        <button className="close-button" onClick={onClose}>
-          <span className="inside-button"></span>
-        </button>
-        <h2>Are you sure you want to log out?</h2>
+    <div className={`logout-overlay ${isVisible ? "show" : ""}`} onClick={handleBackdropClick}>
+      <div className={`logout-content logout-modal ${isVisible ? "show" : ""}`}>
+        <img src={MoLogo} alt="Money Guard Logo" className="logout-logo" />
+        <h2 className="logout-title">Money Guard</h2>
+        <p className="logout-question">Are you sure you want to log out?</p>
+
         <div className="form-buttons">
-          <button className="logout-btn" onClick={handleLogout}>Logout</button>
-          <button className="cancel-btn" onClick={onClose}>Cancel</button>
+          <button type="submit" onClick={handleLogout}>
+            LOGOUT
+          </button>
+          <button type="button" onClick={handleClose}>
+            CANCEL
+          </button>
         </div>
       </div>
     </div>,

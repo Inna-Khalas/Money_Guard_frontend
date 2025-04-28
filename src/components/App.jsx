@@ -1,5 +1,5 @@
 import Header from "./Header/Header";
-import React, { useState } from 'react';
+//import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -12,7 +12,7 @@ import Layout from '../Layout';
 import RestrichedRoute from '../RestrichedRoute';
 import NotFound from '../pages/NotFound';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
-import LogOut from '../components/LogOut/LogOut'; // потом убрать
+//import LogOut from '../components/LogOut/LogOut'; // потом убрать
 // import { refreshThunk } from '../redux/auth/operations';
 // import { useDispatch } from 'react-redux';
 
@@ -22,28 +22,18 @@ const App = () => {
   //   dispatch(refreshThunk());
   // }, [dispatch]);
 
-  const [showLogout, setShowLogout] = useState(false); // убрать потом
 
-  const handleLogout = () => {
-    //
-    alert('Logged out!'); //
-    setShowLogout(false); //
-  }; //
+
+
+
+
 
   return (
     <>
       <Header />
       <Toaster />
       <Layout>
-        <button onClick={() => setShowLogout(true)}>Open Logout Modal</button>{' '}
-        {/*Убрать потом */}
-        {showLogout && (
-          <LogOut
-            onClose={() => setShowLogout(false)}
-            onLogout={handleLogout}
-          />
-        )}{' '}
-        {/* убрать потом*/}
+        
         <Routes>
           <Route
             path="/register"

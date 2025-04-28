@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logoutThunk } from './operations'; //  logoutThunk для обработки через extraReducers
 
 const initialState = {
-
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
+  isLoading: false, 
+  error: null,      
 };
 
 export const slice = createSlice({
@@ -20,11 +22,29 @@ export const slice = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       state.isLoggedIn = false;
+      state.error = null; 
     },
+  },
+  extraReducers: (builder) => { 
+    builder
+      .addCase(logoutThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.accessToken = null;
+        state.refreshToken = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(logoutThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || 'Logout error';
+      });
   },
 });
 
 export const { setAuth, logout } = slice.actions;
+
+
 export default slice.reducer;
-
-

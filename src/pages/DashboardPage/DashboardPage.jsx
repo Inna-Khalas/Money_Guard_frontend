@@ -1,17 +1,19 @@
-import Navigation from '../../components/Navigation/Navigation';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useMedia } from '../../hooks/useMedia';
+import { fetchTransactions } from '../../redux/transactions/operations';
 import { Loader } from '../../components/Loader/Loader';
+import Navigation from '../../components/Navigation/Navigation';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
-import { useMedia } from '../../hooks/useMedia';
-import s from './DashboardPage.module.css';
-
 import Header from '../../components/Header/Header';
 import Balance from '../../components/Balance/Balance';
-import { Outlet, useLocation } from 'react-router-dom';
 import StatisticsTab from '../StatisticsTab/StatisticsTab';
-import { useEffect } from 'react';
-import { fetchTransactions } from '../../redux/transactions/operations';
-import { useDispatch } from 'react-redux';
+
+import s from './DashboardPage.module.css';
+
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);

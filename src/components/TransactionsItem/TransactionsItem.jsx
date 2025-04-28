@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styles from './TransactionsItem.module.css';
+
 import { deleteTransaction } from '../../redux/transactions/operations';
 import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
+
+import styles from './TransactionsItem.module.css';
+
 
 export default function TransactionsItem({ transaction }) {
   const { id, date, type, category, comment, sum } = transaction;

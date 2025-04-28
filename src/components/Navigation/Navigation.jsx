@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import s from './Navigation.module.css';
 import clsx from 'clsx';
 import { useMedia } from '../../hooks/useMedia';
 import { MdHome } from 'react-icons/md';
 import { SlGraph } from 'react-icons/sl';
 import { FaDollarSign } from 'react-icons/fa6';
+
+import s from './Navigation.module.css';
+
 
 const Navigation = () => {
   const { isMobile } = useMedia();

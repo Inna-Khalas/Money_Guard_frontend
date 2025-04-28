@@ -1,6 +1,10 @@
 import { useSelector } from 'react-redux';
+
 import { selectBalance } from '../../redux/transactions/selectors';
+
 import s from './Balance.module.css';
+
+
 export default function Balance() {
   const balance = useSelector(selectBalance);
 

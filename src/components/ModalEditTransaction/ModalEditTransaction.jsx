@@ -1,9 +1,10 @@
-
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+
 import EditTransactionForm from '../EditTransactionForm/EditTransactionForm'; 
+
 import './ModalEditTransaction.css'; 
+
 
 const ModalEditTransaction = ({ onClose, transaction }) => {
   const [transactionType, setTransactionType] = useState(transaction?.type || 'income'); 

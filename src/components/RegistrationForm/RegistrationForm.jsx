@@ -7,12 +7,14 @@ import { toast } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 
 import { register, loginThunk } from '../../redux/auth/operations';
-import styles from './RegistrationForm.module.css';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
 import eyeIcon from '../../pages/RegistrationPage/pic/icons/eye-open.svg';
 import eyeOffIcon from '../../pages/RegistrationPage/pic/icons/eye-closed.svg';
+
+import styles from './RegistrationForm.module.css';
+
 
 const registrationSchema = yup.object().shape({
   name: yup

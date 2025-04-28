@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import styles from './Header.module.css';
+import clsx from 'clsx';
+
 import favicon from '../../assets/favicon.svg';
 import group from './Group 7.svg';
-import clsx from 'clsx';
 import LogOut from '../LogOut/LogOut';
 
+import styles from './Header.module.css';
+
+
 const Header = () => {
- const [showLogout, setShowLogout] = useState(false); //  стейт для открытия модалки
+ const [showLogout, setShowLogout] = useState(false);
 
   const handleLogout = () => {
-    console.log('User logged out!'); //  dispatch очистки стора или toast уведомление
+    console.log('User logged out!');
     setShowLogout(false);
   };
 

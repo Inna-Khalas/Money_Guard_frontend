@@ -1,23 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectBalance,
-  selectIsLoading,
-} from '../../redux/transactions/selectors';
-import { getBalance } from '../../redux/transactions/operations';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectBalance } from '../../redux/transactions/selectors';
 import s from './Balance.module.css';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
 export default function Balance() {
-  const dispatch = useDispatch();
   const balance = useSelector(selectBalance);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isLoading = useSelector(selectIsLoading);
-
-  useEffect(() => {
-    if (isLoggedIn && !isLoading) {
-      dispatch(getBalance());
-    }
-  }, [dispatch, isLoggedIn, isLoading]);
 
   const formatBalance = amount => {
     if (typeof amount !== 'number') return '0.00';

@@ -1,53 +1,31 @@
 import Navigation from '../../components/Navigation/Navigation';
-// import { useSelector } from 'react-redux';
 import { Loader } from '../../components/Loader/Loader';
-// import { selectisLoading } from '../../redux/transactions/selectors';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
 import { useMedia } from '../../hooks/useMedia';
 import s from './DashboardPage.module.css';
 
-import { useState, useEffect } from 'react';
-import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
-import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
-import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
 import Header from '../../components/Header/Header';
 import Balance from '../../components/Balance/Balance';
 import { Outlet, useLocation } from 'react-router-dom';
 import StatisticsTab from '../StatisticsTab/StatisticsTab';
+import { useEffect } from 'react';
+import { fetchTransactions } from '../../redux/transactions/operations';
+import { useDispatch } from 'react-redux';
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
   const { isMobile } = useMedia();
-
-  /*Стейт для управления открытием модалки */
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const homeActive = location.pathname === '/dashboard/home';
-  console.log(homeActive);
-
   const statisticActive = location.pathname === '/dashboard/statistics';
+  const currencyActive = location.pathname === '/dashboard/currency';
 
-  /* 🎯 Моковая транзакция для редактирования */
-  const mockTransaction = {
-    type: 'income',
-    sum: '0.00',
-    date: '',
-    comment: '',
-    category: '',
-  };
-
-  /* Блокировка скролла страницы при открытии модалки */
   useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [isModalOpen]);
-
+    dispatch(fetchTransactions());
+  }, [dispatch]);
   return (
     <>
       {/* {isLoading ? (
@@ -61,35 +39,20 @@ export default function DashboardPage() {
               <Navigation />
               {!isMobile && <Balance />}
             </div>
-            {!isMobile && <CurrencyTab />}
+            {!isMobile ? (
+              <CurrencyTab />
+            ) : (
+              currencyActive && isMobile && <CurrencyTab />
+            )}
           </div>
           <div className={s.tabContainer}>
             {homeActive && <HomeTab />}
             {statisticActive && <StatisticsTab />}
           </div>
+          {/* <div className={s.tabContainer}>
+            <Outlet />
+          </div> */}
         </div>
-        {/*  модалки добавления транзакции */}
-        <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
-
-        {/* окно модалки добавления */}
-        {isModalOpen && (
-          <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
-        )}
-
-        {/* открытия модалки редактирования */}
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <button onClick={() => setShowEdit(true)}>Open Edit Modal</button>
-        </div>
-
-        {/*  окно модалки редактирования */}
-        {showEdit && (
-          <ModalEditTransaction
-            transaction={mockTransaction}
-            onClose={() => setShowEdit(false)}
-          />
-        )}
-
-        {/* <Outlet /> */}
       </>
       {/* )} */}
     </>

@@ -31,7 +31,7 @@
     padding: 8px 40px;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   .container {
     width: 480px;
     padding: 1px 56px;

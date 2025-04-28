@@ -39,6 +39,20 @@ export const slice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload;
+
+        let income = 0;
+        let expense = 0;
+        const balance = action.payload.data;
+
+        balance.forEach(transaction => {
+          if (transaction.type === 'income') {
+            income += transaction.value;
+          } else if (transaction.type === 'expense') {
+            expense += transaction.value;
+          }
+        });
+
+        state.balance = income - expense;
       })
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction

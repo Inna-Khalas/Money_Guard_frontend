@@ -3,7 +3,6 @@ import authReducer from './auth/slice';
 import storage from 'redux-persist/lib/storage';
 import transactionsReducer from './transactions/transactionsSlice';
 import categoriesReduser from './categories/categoriesSlice';
-import loaderReducer from './loader/loaderSlice';
 
 import {
   persistStore,
@@ -26,7 +25,6 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    loader: loaderReducer,
     categories: categoriesReduser,
     transactions: transactionsReducer,
     auth: persistedAuthReducer,

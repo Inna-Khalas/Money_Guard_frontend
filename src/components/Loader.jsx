@@ -2,7 +2,12 @@ import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 
 const Loader = () => {
-  const isLoading = useSelector(state => state.loader.isLoading);
+  const authLoading = useSelector(state => state.auth.isLoading);
+  const categoriesLoading = useSelector(state => state.categories.isLoading);
+  const transactionsLoading = useSelector(
+    state => state.transactions.isLoading
+  );
+  const isLoading = authLoading || categoriesLoading || transactionsLoading;
 
   if (!isLoading) return null;
   return (

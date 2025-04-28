@@ -8,6 +8,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoading: false,
 };
 
 export const slice = createSlice({
@@ -22,8 +23,11 @@ export const slice = createSlice({
       state.token = action.payload.token;
       state.isLoggedIn = true;
     },
+    setLoading(state, action) {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { setAuth } = slice.actions;
+export const { setAuth, setLoading } = slice.actions;
 export default slice.reducer;

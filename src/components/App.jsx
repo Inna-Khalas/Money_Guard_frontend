@@ -14,7 +14,6 @@ import DashboardPage from '../pages/DashboardPage/DashboardPage';
 const App = () => {
   return (
     <>
-      <Loader />
       <Toaster />
       <Layout>
         <Balance />

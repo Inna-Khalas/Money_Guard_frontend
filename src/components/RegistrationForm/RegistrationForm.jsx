@@ -4,12 +4,15 @@ import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 
 import { register, loginThunk } from '../../redux/auth/operations';
 import styles from './RegistrationForm.module.css';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
+import eyeIcon from '../../pages/RegistrationPage/pic/icons/eye-open.svg';
+import eyeOffIcon from '../../pages/RegistrationPage/pic/icons/eye-closed.svg';
 
 const registrationSchema = yup.object().shape({
   name: yup
@@ -49,6 +52,13 @@ const RegistrationForm = () => {
   const password = watch('password') || '';
   const confirmPassword = watch('confirmPassword') || '';
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(prev => !prev);
+
   const onSubmit = async data => {
     const { name, email, password } = data;
 
@@ -83,10 +93,17 @@ const RegistrationForm = () => {
               <img src={lockIcon} alt="Confirm Password Icon" />
             )}
           </div>
+
           <input
             type={
-              field === 'password' || field === 'confirmPassword'
-                ? 'password'
+              field === 'password'
+                ? showPassword
+                  ? 'text'
+                  : 'password'
+                : field === 'confirmPassword'
+                ? showConfirmPassword
+                  ? 'text'
+                  : 'password'
                 : 'text'
             }
             {...formRegister(field)}
@@ -97,6 +114,8 @@ const RegistrationForm = () => {
                 : 'off'
             }
           />
+
+          {/* Плейсхолдер */}
           <span
             className={`${styles.placeholder} ${
               watch(field) ? styles.active : ''
@@ -108,10 +127,16 @@ const RegistrationForm = () => {
               ? 'E-mail'
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
+
+          {/* Підкреслення */}
           <span className={styles.underline}></span>
+
+          {/* Помилки */}
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>
           )}
+
+          {/* Прогрес-бар підтвердження пароля */}
           {field === 'confirmPassword' && (
             <div className={styles.progressContainer}>
               <div
@@ -131,6 +156,29 @@ const RegistrationForm = () => {
                 }}
               />
             </div>
+          )}
+
+          {/* Кнопка показу/приховування пароля */}
+          {(field === 'password' || field === 'confirmPassword') && (
+            <button
+              type="button"
+              className={styles.passwordToggle}
+              onClick={
+                field === 'password'
+                  ? togglePasswordVisibility
+                  : toggleConfirmPasswordVisibility
+              }
+              tabIndex={-1}
+            >
+              <img
+                src={
+                  (field === 'password' ? showPassword : showConfirmPassword)
+                    ? eyeOffIcon
+                    : eyeIcon
+                }
+                alt="Toggle visibility"
+              />
+            </button>
           )}
         </label>
       ))}

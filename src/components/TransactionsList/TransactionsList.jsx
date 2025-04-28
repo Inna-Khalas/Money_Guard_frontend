@@ -8,7 +8,7 @@ export default function TransactionsList() {
 
   if (!transactions.length) {
     return (
-      <div>
+      <div className={styles.transactionsListContainer}>
         <p className={styles.emptyText}>No transactions yet</p>
       </div>
     );

@@ -1,9 +1,10 @@
-
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+
 import AddTransactionForm from '../AddTransactionForm/AddTransactionForm';
+
 import './ModalAddTransaction.css';
+
 
 const ModalAddTransaction = ({ onClose }) => {
   const [transactionType, setTransactionType] = useState('income');

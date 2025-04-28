@@ -1,20 +1,17 @@
-
-
 import { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { toast } from 'react-hot-toast';
 import { useDispatch } from "react-redux"; 
+
 import { logoutThunk } from "../../redux/auth/operations"; 
-import "./LogOut.css";
+
 import MoLogo from "../../pages/RegistrationPage/pic/icons/mg-logo.svg"; 
-
-
+import "./LogOut.css";
 
 
 const LogOut = ({ onClose, onLogout }) => {
-  const [isVisible, setIsVisible] = useState(false); // 📦 Стейт анимации
-  const dispatch = useDispatch(); // ➡️ Используем Redux dispatch
-
+  const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = useCallback(() => {
     setIsVisible(false);

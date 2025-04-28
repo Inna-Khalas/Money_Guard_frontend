@@ -1,8 +1,11 @@
-import s from './Currency.module.css';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 import { fetchMonoCurrThunk } from '../../redux/transactions/operations';
 import { selectMonoBank } from '../../redux/transactions/selectors';
+
+import s from './Currency.module.css';
+
 
 export default function Currency() {
   const dispatch = useDispatch();

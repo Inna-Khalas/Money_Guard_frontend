@@ -1,12 +1,14 @@
 import { useMedia } from '../../hooks/useMedia';
-import Balance from '../../components/Balance/Balance';
+import { useEffect, useState } from 'react';
+
 import TransactionsList from '../../components/TransactionsList/TransactionsList';
 import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
-
-import s from './HomeTab.module.css';
-import { useEffect, useState } from 'react';
+import Balance from '../../components/Balance/Balance';
 import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
 import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
+
+import s from './HomeTab.module.css';
+
 
 const HomeTab = () => {
   const { isMobile } = useMedia();

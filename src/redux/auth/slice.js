@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logoutThunk } from './operations'; //  logoutThunk для обработки через extraReducers
+import { logoutThunk } from './operations';
 
 const initialState = {
   accessToken: null,

@@ -1,5 +1,6 @@
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+
 import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import PrivateRoute from '../PrivateRoute';
@@ -10,6 +11,7 @@ import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import HomeTab from '../pages/HomeTab/HomeTab';
 import StatisticsTab from '../pages/StatisticsTab/StatisticsTab';
 import CurrencyTab from '../pages/CurrencyTab/CurrencyTab';
+
 
 const App = () => {
   return (

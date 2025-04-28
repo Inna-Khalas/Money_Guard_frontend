@@ -34,7 +34,6 @@ export const slice = createSlice({
         state.balance = action.payload.balance;
       })
       .addCase(getBalance.rejected, statusRejected)
-      // fetchTransactions
       .addCase(fetchTransactions.pending, statusPending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -55,7 +54,6 @@ export const slice = createSlice({
         state.balance = income - expense;
       })
       .addCase(fetchTransactions.rejected, statusRejected)
-      // deleteTransaction
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter(item => item.id !== action.payload);
       });

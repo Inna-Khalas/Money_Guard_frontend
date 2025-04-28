@@ -6,15 +6,15 @@ import ButtonAddTransactions from '../../components/ButtonAddTransactions/Button
 import s from './HomeTab.module.css';
 
 const HomeTab = () => {
-    const { isMobile } = useMedia();
+  const { isMobile } = useMedia();
 
-    return (
-        <div className={s.homeTab}>
-            {isMobile && <Balance />}
-            <TransactionsList />
-            <ButtonAddTransactions />
-        </div>
-    );
+  return (
+    <div className={s.homeTab}>
+      {isMobile && <Balance />}
+      <TransactionsList />
+      <ButtonAddTransactions />
+    </div>
+  );
 };
 
 export default HomeTab;

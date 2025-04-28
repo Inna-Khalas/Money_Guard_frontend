@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import styles from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
-import { register, loginThunk } from '../../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+
+import { register, loginThunk } from '../../redux/auth/operations';
+import styles from './RegistrationForm.module.css';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
@@ -53,12 +54,8 @@ const RegistrationForm = () => {
 
     try {
       await register({ name, email, password });
-
       toast.success('Registration successful');
-
-      // Автоматичний логін
       const loginResult = await dispatch(loginThunk({ email, password }));
-      // console.log(loginResult);
       if (loginResult.meta.requestStatus === 'fulfilled') {
         navigate('/dashboard');
       } else {

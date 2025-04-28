@@ -5,6 +5,11 @@
   padding-right: 20px;
 }
 
+.dashBoardContainer + .add-transaction-button {
+  display: flex;
+  flex-direction: row;
+}
+
 @media screen and (min-width: 768px) {
   .dashBoardContainer {
     display: flex;

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -29,35 +29,35 @@ h4,
 h5,
 h6,
 p {
-    margin: 0;
+  margin: 0;
 }
 
 p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
-    font-family: inherit;
-    color: currentColor;
-    text-decoration: none;
-    margin: 0;
+  font-family: inherit;
+  color: currentColor;
+  text-decoration: none;
+  margin: 0;
 }
 
 button {
-    font-family: inherit;
-    cursor: pointer;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 img {
-    display: block;
-    max-width: 100%;
-    height: auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 .container {
@@ -67,21 +67,24 @@ img {
   padding: 0 16px;
 }
 
+.layout {
+  display: flex;
+  flex-direction: row;
+}
 @media (min-width: 320px) {
   body {
-      background-image: url('/src/images/gradient-mobile.webp');
+    background-image: url('/src/images/gradient-mobile.webp');
   }
 
   .container {
     padding: 0 8px;
   }
-  
 }
 
 @media (min-width: 768px) {
   body {
     background-image: url('/src/images/gradient-tablet.webp');
-}
+  }
 
   .container {
     padding: 0 16px;
@@ -91,7 +94,7 @@ img {
 @media (min-width: 1280px) {
   body {
     background-image: url('/src/images/gradient-desktop.webp');
-}
+  }
   .container {
     padding: 0 32px;
   }

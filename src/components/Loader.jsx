@@ -12,7 +12,7 @@ const Loader = () => {
   if (!isLoading) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-      <ClipLoader color="#734aef" size={70} />
+      <ClipLoader color="#ffb627" size={70} />
     </div>
   );
 };

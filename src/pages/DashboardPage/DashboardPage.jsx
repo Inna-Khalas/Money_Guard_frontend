@@ -9,9 +9,38 @@ import s from './DashboardPage.module.css';
 
 
 
+import { useState, useEffect } from 'react';
+import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
+import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
+import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
+
+
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
   const { isMobile } = useMedia();
+
+ /*Стейт для управления открытием модалки */
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+
+/* 🎯 Моковая транзакция для редактирования */
+  const mockTransaction = {
+    type: 'income',
+    sum: "0.00",
+    date: '',
+    comment: '',
+    category: ''
+  };
+
+/* Блокировка скролла страницы при открытии модалки */
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isModalOpen]);
+
 
   return (
     <>
@@ -19,14 +48,34 @@ export default function DashboardPage() {
         <Loader />
       ) : ( */}
       <>
-        <div className={s.dashBoardContainer}>
-          <div className={s.navHomeContainer}>
-            <Navigation />
-              <HomeTab />
-          </div>
-           {!isMobile && <CurrencyTab />}
+    <Navigation />
+        <HomeTab />
+
+      <CurrencyTab />
+
+        {/*  модалки добавления транзакции */}
+        <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
+
+        {/* окно модалки добавления */}
+        {isModalOpen && (
+          <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
+        )}
+
+        {/* открытия модалки редактирования */}
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <button onClick={() => setShowEdit(true)}>
+            Open Edit Modal
+          </button>
         </div>
-        
+
+        {/*  окно модалки редактирования */}
+        {showEdit && (
+          <ModalEditTransaction
+            transaction={mockTransaction}
+            onClose={() => setShowEdit(false)}
+          />
+        )}
+
       </>
       {/* )} */}
     </>

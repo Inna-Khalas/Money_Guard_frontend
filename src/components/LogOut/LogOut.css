@@ -1,117 +1,169 @@
-.modal-overlay {
-    margin-top: 60px;
+
+.logout-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.logout-content {
+  transform: scale(0.95); 
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+.logout-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.logout-content.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
+
+.logout-overlay {
   position: fixed;
-  inset: 0;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  backdrop-filter: blur(7px);
+  background: rgba(34, 13, 91, 0.23);
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(7px);
-  background: rgba(34, 13, 91, 0.23);
-  z-index: 9999;
+  z-index: 9990;
 }
+
+
+.logout-content {
+  max-width: 320px;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  padding: 28px 20px;
+  box-sizing: border-box;
+  overflow: auto;
+  border-radius: 8px;
+}
+
 
 .logout-modal {
-  background: linear-gradient(180deg, #4B3F72 0%, #2C2B55 100%);
-  padding: 239px 20px 238px 20px;
-  width: 90%;
-  max-width: 320px;
-  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px 20px;
   text-align: center;
-  position: relative;
 }
 
-/* Закрывающая кнопка */
-.close-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
 
-.inside-button::before,
-.inside-button::after {
-  content: "";
-  position: absolute;
-  background-color: white;
-  width: 16px;
-  height: 1px;
-  border-radius: 2px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.inside-button::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.inside-button::after {
-  transform: translate(-50%, -50%) rotate(315deg);
-}
-
-/* Заголовок */
-.logout-modal h2 {
-  color: white;
-  font-size: 18px;
-  margin: 0px 0 40px;
+.logout-title {
+  font-family: var(--font-family);
   font-weight: 400;
-  padding: 0 30px;
-  text-align: center;
+  font-size: 26px;
+  color: var(--white);
+  margin-bottom: 52px;
+  display: none;
 }
 
-/* Кнопки */
+
+.logout-question {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 40px;
+  padding: 0 30px;
+}
+
+
 .form-buttons {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
 }
 
-/* Кнопка Logout */
-.logout-btn {
+
+.form-buttons button[type="submit"],
+.form-buttons button[type="button"] {
+  max-width: 280px;
+  width: 100%;
+  height: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.form-buttons button[type="submit"] {
   background: linear-gradient(90deg, #ffb627, #a259ff);
-  border: none;
-  border-radius: 24px;
-  height: 48px;
-  font-weight: 700;
-  font-size: 16px;
   color: white;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  opacity: 0.9;
-}
-
-.logout-btn:focus {
-  outline: 2px solid #24cca7;
-  outline-offset: 2px;
-}
-
-/* Кнопка Cancel */
-.cancel-btn {
-  background: white;
   border: none;
-  border-radius: 24px;
-  height: 48px;
-  font-weight: 700;
-  font-size: 16px;
+  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.form-buttons button[type="submit"]:hover {
+  background: linear-gradient(167deg, #ffc727 0%, #9e40ba 61.46%, #7000ff 90.54%);
+}
+
+
+.form-buttons button[type="button"] {
+  background: white;
   color: #4b3f72;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
+  border: none;
 }
 
-.cancel-btn:hover {
-  background-color: #f2f2f2;
+
+.form-buttons button[type="button"]:hover {
+  box-shadow: 1px 9px 15px rgba(0, 0, 0, 0.2);
 }
 
-.cancel-btn:focus {
-  outline: 2px solid #a259ff;
-  outline-offset: 2px;
+
+.logout-logo {
+  display: none;
+}
+
+
+@media screen and (min-width: 768px) {
+  .logout-logo {
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+  }
+
+  .logout-title {
+    display: block;
+    font-size: 26px;
+  }
+
+  .logout-content {
+    max-width: 533px;
+    padding: 60px 117px;
+    overflow: visible;
+    background: linear-gradient(
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.1)
+    ), rgba(115, 74, 239, 0.51);
+    box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  .logout-question {
+    padding: 0;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 52px;
+  }
+
+  .form-buttons button[type="submit"],
+  .form-buttons button[type="button"] {
+    max-width: 300px;
+  }
 }

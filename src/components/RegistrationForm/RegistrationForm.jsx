@@ -55,15 +55,11 @@ const RegistrationForm = () => {
     try {
       await register({ name, email, password });
       toast.success('Registration successful');
-      const loginResult = await dispatch(loginThunk({ email, password }));
-      if (loginResult.meta.requestStatus === 'fulfilled') {
-        navigate('/dashboard');
-      } else {
-        toast.error('Auto login failed');
-        navigate('/login');
-      }
+      await dispatch(loginThunk({ email, password })).unwrap();
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Registration failed');
+      navigate('/login');
     }
   };
 
@@ -95,6 +91,11 @@ const RegistrationForm = () => {
             }
             {...formRegister(field)}
             className={styles.input}
+            autoComplete={
+              field === 'password' || field === 'confirmPassword'
+                ? 'new-password'
+                : 'off'
+            }
           />
           <span
             className={`${styles.placeholder} ${

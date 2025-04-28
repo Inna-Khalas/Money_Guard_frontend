@@ -4,8 +4,8 @@ import { Loader } from '../../components/Loader/Loader';
 // import { selectisLoading } from '../../redux/transactions/selectors';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
-import { useMedia } from '../../hooks/useMedia';
-import s from './DashboardPage.module.css';
+import { useMedia } from '../../hooks/useMedia';  
+import s from './DashboardPage.module.css'; 
 
 
 
@@ -17,20 +17,14 @@ import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEdi
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
-  const { isMobile } = useMedia();
+  const { isMobile } = useMedia(); 
 
  /*Стейт для управления открытием модалки */
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  const [editTransaction, setEditTransaction] = useState(null); 
+  
 
-/* 🎯 Моковая транзакция для редактирования */
-  const mockTransaction = {
-    type: 'income',
-    sum: "0.00",
-    date: '',
-    comment: '',
-    category: ''
-  };
+
 
 /* Блокировка скролла страницы при открытии модалки */
   useEffect(() => {
@@ -49,7 +43,7 @@ export default function DashboardPage() {
       ) : ( */}
       <>
     <Navigation />
-        <HomeTab />
+        <HomeTab onEdit={(transaction) => setEditTransaction(transaction)} />
 
       <CurrencyTab />
 
@@ -61,18 +55,13 @@ export default function DashboardPage() {
           <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
         )}
 
-        {/* открытия модалки редактирования */}
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <button onClick={() => setShowEdit(true)}>
-            Open Edit Modal
-          </button>
-        </div>
+        
 
-        {/*  окно модалки редактирования */}
-        {showEdit && (
-          <ModalEditTransaction
-            transaction={mockTransaction}
-            onClose={() => setShowEdit(false)}
+        {/* Модалка редактирования транзакции */}
+          {editTransaction && (
+            <ModalEditTransaction
+              transaction={editTransaction}
+              onClose={() => setEditTransaction(null)}
           />
         )}
 

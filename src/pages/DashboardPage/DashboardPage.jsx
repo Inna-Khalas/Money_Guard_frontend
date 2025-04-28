@@ -7,32 +7,32 @@ import HomeTab from '../HomeTab/HomeTab';
 import { useMedia } from '../../hooks/useMedia';
 import s from './DashboardPage.module.css';
 
-
-
 import { useState, useEffect } from 'react';
 import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
 import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
 import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
-
+import Header from '../../components/Header/Header';
+import Balance from '../../components/Balance/Balance';
+import { Outlet } from 'react-router-dom';
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
   const { isMobile } = useMedia();
 
- /*Стейт для управления открытием модалки */
+  /*Стейт для управления открытием модалки */
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-/* 🎯 Моковая транзакция для редактирования */
+  /* 🎯 Моковая транзакция для редактирования */
   const mockTransaction = {
     type: 'income',
-    sum: "0.00",
+    sum: '0.00',
     date: '',
     comment: '',
-    category: ''
+    category: '',
   };
 
-/* Блокировка скролла страницы при открытии модалки */
+  /* Блокировка скролла страницы при открытии модалки */
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = 'hidden';
@@ -41,18 +41,21 @@ export default function DashboardPage() {
     }
   }, [isModalOpen]);
 
-
   return (
     <>
       {/* {isLoading ? (
         <Loader />
       ) : ( */}
       <>
-    <Navigation />
-        <HomeTab />
-
-      <CurrencyTab />
-
+        <Header />
+        <div className={s.dashBoardContainer}>
+          <div className={s.navHomeContainer}>
+            <Navigation />
+            {!isMobile && <Balance />}
+            {/* <HomeTab /> */}
+          </div>
+          {!isMobile && <CurrencyTab />}
+        </div>
         {/*  модалки добавления транзакции */}
         <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
 
@@ -63,9 +66,7 @@ export default function DashboardPage() {
 
         {/* открытия модалки редактирования */}
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <button onClick={() => setShowEdit(true)}>
-            Open Edit Modal
-          </button>
+          <button onClick={() => setShowEdit(true)}>Open Edit Modal</button>
         </div>
 
         {/*  окно модалки редактирования */}
@@ -76,6 +77,7 @@ export default function DashboardPage() {
           />
         )}
 
+        <Outlet />
       </>
       {/* )} */}
     </>

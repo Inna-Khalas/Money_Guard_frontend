@@ -1,10 +1,5 @@
-import Header from "./Header/Header";
-//import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-
-// import { useEffect } from 'react';
-
 import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import PrivateRoute from '../PrivateRoute';
@@ -12,34 +7,22 @@ import Layout from '../Layout';
 import RestrichedRoute from '../RestrichedRoute';
 import NotFound from '../pages/NotFound';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
-
-import CurrencyTab from "../pages/CurrencyTab/CurrencyTab";
-// import { refreshThunk } from '../redux/auth/operations';
-// import { useDispatch } from 'react-redux';
+import HomeTab from '../pages/HomeTab/HomeTab';
+import StatisticsTab from '../pages/StatisticsTab/StatisticsTab';
+import CurrencyTab from '../pages/CurrencyTab/CurrencyTab';
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(refreshThunk());
-  // }, [dispatch]);
-
-
-
-
-
-
-
   return (
     <>
-      <Header />
       <Toaster />
       <Layout>
-        
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route
             path="/register"
             element={<RestrichedRoute element={<RegistrationPage />} />}
           />
+
           <Route
             path="/login"
             element={
@@ -54,13 +37,11 @@ const App = () => {
             element={
               <PrivateRoute redirectTo="/login" element={<DashboardPage />} />
             }
-          />
-          <Route
-            path="/currency"
-            element={
-              <PrivateRoute redirectTo="/currency" element={<CurrencyTab />} />
-            }
-          />
+          >
+            <Route path="home" element={<HomeTab />} />
+            <Route path="statistics" element={<StatisticsTab />}></Route>
+            <Route path="currency" element={<CurrencyTab />}></Route>
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>

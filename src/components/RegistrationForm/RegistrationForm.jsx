@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { register, loginThunk } from '../../redux/auth/operations';
 import styles from './RegistrationForm.module.css';
@@ -35,9 +35,13 @@ const registrationSchema = yup.object().shape({
     .required('Confirm password is required'),
 });
 
+const STORAGE_KEY = 'registration-form-data';
+
 const RegistrationForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
   const {
     register: formRegister,
@@ -47,6 +51,7 @@ const RegistrationForm = () => {
   } = useForm({
     resolver: yupResolver(registrationSchema),
     mode: 'onChange',
+    defaultValues: savedData,
   });
 
   const password = watch('password') || '';
@@ -59,6 +64,13 @@ const RegistrationForm = () => {
   const toggleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(prev => !prev);
 
+  useEffect(() => {
+    const subscription = watch(values => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const onSubmit = async data => {
     const { name, email, password } = data;
 
@@ -66,6 +78,7 @@ const RegistrationForm = () => {
       await register({ name, email, password });
       toast.success('Registration successful');
       await dispatch(loginThunk({ email, password })).unwrap();
+      localStorage.removeItem(STORAGE_KEY);
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Registration failed');
@@ -115,7 +128,6 @@ const RegistrationForm = () => {
             }
           />
 
-          {/* Плейсхолдер */}
           <span
             className={`${styles.placeholder} ${
               watch(field) ? styles.active : ''
@@ -128,15 +140,12 @@ const RegistrationForm = () => {
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
 
-          {/* Підкреслення */}
           <span className={styles.underline}></span>
 
-          {/* Помилки */}
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>
           )}
 
-          {/* Прогрес-бар підтвердження пароля */}
           {field === 'confirmPassword' && (
             <div className={styles.progressContainer}>
               <div
@@ -158,7 +167,6 @@ const RegistrationForm = () => {
             </div>
           )}
 
-          {/* Кнопка показу/приховування пароля */}
           {(field === 'password' || field === 'confirmPassword') && (
             <button
               type="button"

@@ -6,7 +6,7 @@ export const getBalance = createAsyncThunk(
   'transactions/summary',
   async (_, thunkAPI) => {
     try {
-      const { data } = await goItApi.get('transactions/summary');
+      const { data } = await goItApi.get('/transactions/summary');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -52,6 +52,8 @@ export const fetchTransactions = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await goItApi.get('/transactions');
+      console.log(response.data);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

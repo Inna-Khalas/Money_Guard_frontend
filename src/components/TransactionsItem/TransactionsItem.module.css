@@ -53,3 +53,58 @@
 .sumNegative {
   color: rgba(255, 134, 141, 1);
 }
+
+/* Mobile card */
+.transactionCard {
+  display: none;
+}
+
+/* Mobile adaptation (320px) */
+@media screen and (max-width: 480px) {
+  /* Hide table */
+  .transactionItem {
+    display: none;
+  }
+
+  /* Show card */
+  .transactionCard {
+    display: block;
+    background: linear-gradient(90deg, #3b2672 0%, #2e1a56 100%);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 12px auto;
+    width: 90%;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .transactionCard p {
+    margin: 6px 0;
+  }
+
+  .transactionCard strong {
+    display: inline-block;
+    width: 90px;
+  }
+
+  .cardActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .deleteBtn {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+
+  .editBtn {
+    padding: 6px;
+  }
+
+  .editBtn img {
+    width: 14px;
+    height: 14px;
+  }
+}

@@ -13,8 +13,6 @@ export default function TransactionsItem({ transaction, onEdit }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async () => {
-    console.log('Deleting transaction with ID:', _id);
-
     try {
       const resultAction = await dispatch(deleteTransaction(_id));
 
@@ -50,17 +48,18 @@ export default function TransactionsItem({ transaction, onEdit }) {
     return 'Unknown';
   };
 
+  const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  });
+
   return (
     <>
+      {/* Version for table (desktop/tablet) */}
       <tr className={styles.transactionItem}>
-        <td>
-          {new Date(date).toLocaleDateString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit',
-          })}
-        </td>
-        <td>{type === 'income' ? '+' : '-'} </td>
+        <td>{formattedDate}</td>
+        <td>{type === 'income' ? '+' : '-'}</td>
         <td>{getCategoryName()}</td>
         <td>{comment}</td>
         <td
@@ -83,7 +82,40 @@ export default function TransactionsItem({ transaction, onEdit }) {
           </button>
         </td>
       </tr>
-
+      {/* Version for mobile devices (card layout) */}
+      <div className={styles.transactionCard}>
+        <p>
+          <strong>Date:</strong> {formattedDate}
+        </p>
+        <p>
+          <strong>Type:</strong> {type === 'income' ? '+' : '-'}
+        </p>
+        <p>
+          <strong>Category:</strong> {getCategoryName()}
+        </p>
+        <p>
+          <strong>Comment:</strong> {comment}
+        </p>
+        <p
+          className={
+            type === 'income' ? styles.sumPositive : styles.sumNegative
+          }
+        >
+          <strong>Sum:</strong> {value}
+        </p>
+        <div className={styles.cardActions}>
+          <button
+            type="button"
+            className={styles.deleteBtn}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <button type="button" className={styles.editBtn} onClick={handleEdit}>
+            <img src={pencil} alt="Edit" width="11" height="11" />
+          </button>
+        </div>
+      </div>
       {isModalOpen && (
         <ModalEditTransaction
           onClose={handleCloseModal}

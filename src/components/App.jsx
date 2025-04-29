@@ -12,7 +12,6 @@ import HomeTab from '../pages/HomeTab/HomeTab';
 import StatisticsTab from '../pages/StatisticsTab/StatisticsTab';
 import CurrencyTab from '../pages/CurrencyTab/CurrencyTab';
 
-
 const App = () => {
   return (
     <>

@@ -54,7 +54,7 @@ export const addTransaction = createAsyncThunk(
     try {
       //  POST-запрос на создание новой транзакции
       const { data } = await goItApi.post('/transactions', transactionData);
-      
+
       //  Возвращаем именно объект транзакции (не весь ответ, а data.data)
       return data.data;
     } catch (error) {
@@ -74,13 +74,14 @@ export const editTransaction = createAsyncThunk(
       const { data } = await goItApi.put(`/transactions/${id}`, updatedData);
       return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
     }
   }
 );
 
 //--
-
 
 //fetchTransactions
 export const fetchTransactions = createAsyncThunk(

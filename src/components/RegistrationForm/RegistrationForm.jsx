@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { register } from '../../redux/auth/operations';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
@@ -39,6 +39,7 @@ const STORAGE_KEY = 'registration-form-data';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
+  const watchRef = useRef(null);
 
   const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
@@ -67,6 +68,7 @@ const RegistrationForm = () => {
     const subscription = watch(values => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
     });
+    watchRef.current = subscription;
     return () => subscription.unsubscribe();
   }, [watch]);
 
@@ -77,7 +79,9 @@ const RegistrationForm = () => {
       await register({ name, email, password });
       toast.success('Registration successful');
 
+      watchRef.current?.unsubscribe();
       localStorage.removeItem(STORAGE_KEY);
+
       navigate('/login', { state: { email } });
     } catch (error) {
       const message = error?.error || error?.message || 'Registration failed';

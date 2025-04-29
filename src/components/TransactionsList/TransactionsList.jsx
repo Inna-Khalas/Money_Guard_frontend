@@ -7,34 +7,46 @@ export default function TransactionsList({ onEdit }) {
   const transactions = useSelector(selectAllTransactions);
 
   if (!transactions.length) {
-    return (
-      <div>
-        <p className={styles.emptyText}>No transactions yet</p>
-      </div>
-    );
+    return <p className={styles.emptyText}>No transactions yet</p>;
   }
 
   return (
-    <table className={styles.transactionsTable}>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Category</th>
-          <th>Comment</th>
-          <th>Sum</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
+    <>
+      {/* Version for table (desktop/tablet) */}
+      <table className={styles.transactionsTable}>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Comment</th>
+            <th>Sum</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map(transaction => (
+            <TransactionsItem
+              key={transaction._id || transaction.id}
+              transaction={transaction}
+              onEdit={onEdit}
+              isMobile={false}
+            />
+          ))}
+        </tbody>
+      </table>
+
+      {/* Version for mobile devices (card layout) */}
+      <div className={styles.transactionCards}>
         {transactions.map(transaction => (
           <TransactionsItem
-            key={transaction._id || transaction.id}
+            key={(transaction._id || transaction.id) + '-card'}
             transaction={transaction}
             onEdit={onEdit}
+            isMobile={true}
           />
         ))}
-      </tbody>
-    </table>
+      </div>
+    </>
   );
 }

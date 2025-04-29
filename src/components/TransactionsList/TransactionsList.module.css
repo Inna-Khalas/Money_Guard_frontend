@@ -33,9 +33,42 @@
   color: #ffffff;
   margin-top: 40px;
   font-size: 18px;
+}
 
-  .transactionsListContainer {
-    width: 280px;
-    margin: 0 auto;
+/* Container for cards */
+.transactionCards {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+/* Styles for mobile card */
+.transactionCard {
+  background-color: rgba(82, 59, 126, 0.6);
+  border-radius: 12px;
+  padding: 16px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.transactionCard p {
+  margin: 4px 0;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Show cards and hide table on small screens */
+@media screen and (max-width: 480px) {
+  .transactionsTable {
+    display: none;
+  }
+
+  .transactionCards {
+    display: flex;
   }
 }

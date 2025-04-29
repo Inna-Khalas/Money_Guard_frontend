@@ -3,14 +3,15 @@ import { useDispatch } from 'react-redux';
 import styles from './TransactionsItem.module.css';
 import { deleteTransaction } from '../../redux/transactions/operations';
 import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
+import pencil from './edit.svg';
 
 export default function TransactionsItem({ transaction }) {
-  const { id, date, type, category, comment, sum } = transaction;
+  const { _id, date, type, category, comment, sum } = transaction;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = () => {
-    dispatch(deleteTransaction(id));
+    dispatch(deleteTransaction(_id));
   };
 
   const handleEditClick = () => {
@@ -23,25 +24,29 @@ export default function TransactionsItem({ transaction }) {
 
   return (
     <>
-      <div
-        className={`${styles.transactionItem} ${
-          type === 'income' ? styles.bgCoral : styles.bgOrange
-        }`}
-      >
-        <div className={styles.transactionInfo}>
-          <p>{date}</p>
-          <p>{type}</p>
-          <p>{category}</p>
-          <p>{comment}</p>
-          <p>{sum}</p>
-        </div>
-        <div className={styles.transactionActions}>
+      <tr className={styles.transactionItem}>
+        {new Date(date).toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        })}
+        <td>{type}</td>
+        <td>{category}</td>
+        <td>{comment}</td>
+        <td
+          className={
+            type === 'income' ? styles.sumPositive : styles.sumNegative
+          }
+        >
+          {sum}
+        </td>
+        <td className={styles.transactionActions}>
           <button
             type="button"
             className={styles.editBtn}
             onClick={handleEditClick}
           >
-            <img src="./pencil.svg" alt="Edit" width="11" height="11"></img>;
+            <img src={pencil} alt="Edit" width="11" height="11" />
           </button>
           <button
             type="button"
@@ -50,8 +55,8 @@ export default function TransactionsItem({ transaction }) {
           >
             Delete
           </button>
-        </div>
-      </div>
+        </td>
+      </tr>
 
       {isModalOpen && (
         <ModalEditTransaction

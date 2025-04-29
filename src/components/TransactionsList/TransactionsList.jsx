@@ -27,7 +27,7 @@ export default function TransactionsList() {
       </thead>
       <tbody>
         {transactions.map(transaction => (
-          <TransactionsItem key={transaction.id} transaction={transaction} />
+          <TransactionsItem key={transaction._id} transaction={transaction} />
         ))}
       </tbody>
     </table>

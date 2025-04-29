@@ -4,11 +4,8 @@ import { setAuth, logout } from './slice';
 
 export const goItApi = axios.create({
   baseURL: 'https://money-guard-backend-xmem.onrender.com',
-   //baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3000',
 });
-
-
-// ставим токен, если он есть в ЛокалСторедж - нужен каждый раз при запросе на бек адд Транз - 
 
 const persistedAuthRaw = localStorage.getItem('persist:auth');
 if (persistedAuthRaw) {
@@ -20,8 +17,6 @@ if (persistedAuthRaw) {
     goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   }
 }
-
-
 
 const setAuthHeader = token => {
   goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -60,7 +55,22 @@ export const register = async userData => {
   }
 };
 
+export const fetchCurrentUser = createAsyncThunk(
+  'auth/fetchCurrentUser',
+  async (_, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const token = state.auth.accessToken;
+      setAuthHeader(token);
 
+      const { data } = await goItApi.get('/auth/current/user');
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 // -------- LogOut
 
@@ -68,7 +78,6 @@ export const logoutThunk = createAsyncThunk(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      //данные авторизации из Локалсторедж
       const persistedAuthRaw = localStorage.getItem('persist:auth');
       if (!persistedAuthRaw) {
         console.warn('No persisted auth found.');
@@ -87,10 +96,8 @@ export const logoutThunk = createAsyncThunk(
 
       const accessToken = accessTokenString.replace(/^"|"$/g, '');
 
-      
       goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
-      //  выйти на сервере
       try {
         await goItApi.post('/auth/logout');
         console.info('✅ Server logout successful');
@@ -101,15 +108,14 @@ export const logoutThunk = createAsyncThunk(
         );
       }
 
-      // 
+      //
       thunkAPI.dispatch(logout());
       localStorage.removeItem('persist:auth');
 
-      // 
+      //
       delete goItApi.defaults.headers.common.Authorization;
-
     } catch (error) {
-      // 
+      //
       console.error('🚨 Full logout failure:', error);
       return thunkAPI.rejectWithValue('Logout failed.');
     }
@@ -117,7 +123,6 @@ export const logoutThunk = createAsyncThunk(
 );
 
 // -------
-
 
 goItApi.interceptors.response.use(
   response => response,
@@ -158,8 +163,7 @@ goItApi.interceptors.response.use(
         clearAuthHeader();
         localStorage.removeItem('persist:auth');
         logout();
-        
-      //  window.location.reload(); //--- можно это добавить вместо простого логАута на строке выше
+
         return Promise.reject(refreshError);
       }
     }

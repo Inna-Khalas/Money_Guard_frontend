@@ -39,23 +39,28 @@ const StatisticsDashboard = () => {
 
   const handleMonthChange = selectData => {
     setSelectedMonth(selectData.value);
-    dispatch(SummaryStatistics({ month: selectData.value, year: selectedYear }));
+    dispatch(
+      SummaryStatistics({ month: selectData.value, year: selectedYear })
+    );
   };
 
   const handleYearChange = selectData => {
     setSelectedYear(selectData.value);
-    dispatch(SummaryStatistics({ month: selectedMonth, year: selectData.value }));
+    dispatch(
+      SummaryStatistics({ month: selectedMonth, year: selectData.value })
+    );
   };
 
   useEffect(() => {
     dispatch(SummaryStatistics({ month: selectedMonth, year: selectedYear }));
   }, [dispatch, selectedMonth, selectedYear]);
 
-  const availableMonths = selectedYear < currentYear
-    ? months
-    : selectedYear === currentYear
-    ? months.filter(month => month.value <= currentMonth)
-    : [];
+  const availableMonths =
+    selectedYear < currentYear
+      ? months
+      : selectedYear === currentYear
+      ? months.filter(month => month.value <= currentMonth)
+      : [];
 
   const DropdownIndicator = ({ selectProps, ...rest }) => (
     <components.DropdownIndicator {...rest}>
@@ -68,12 +73,12 @@ const StatisticsDashboard = () => {
   );
 
   const customStyles = {
-    container: (base) => ({
+    container: base => ({
       ...base,
       fontFamily: "'Poppins-Regular', sans-serif",
       width: notMobile ? '50%' : '100%',
     }),
-    control: (base) => ({
+    control: base => ({
       ...base,
       backgroundColor: 'rgba(74, 86, 226, 0.1)',
       border: '1px solid rgba(255, 255, 255, 0.6)',
@@ -83,19 +88,20 @@ const StatisticsDashboard = () => {
       cursor: 'pointer',
       paddingRight: '13px',
     }),
-    singleValue: (base) => ({
+    singleValue: base => ({
       ...base,
       color: '#fbfbfb',
       fontSize: '16px',
     }),
-    placeholder: (base) => ({
+    placeholder: base => ({
       ...base,
       color: 'rgba(255, 255, 255, 0.6)',
       fontSize: '16px',
     }),
-    menu: (base) => ({
+    menu: base => ({
       ...base,
-      background: 'linear-gradient(0deg, #533DBA 0%, #50309A 43%, #6A46A5 73%, #855DAF 100%)',
+      background:
+        'linear-gradient(0deg, #533DBA 0%, #50309A 43%, #6A46A5 73%, #855DAF 100%)',
       borderRadius: '8px',
       boxShadow: '0px 4px 60px 0px rgba(0, 0, 0, 0.25)',
       fontFamily: "'Poppins-Regular', sans-serif",
@@ -109,7 +115,7 @@ const StatisticsDashboard = () => {
       color: isFocused ? '#FF868D' : '#FBFBFB',
       cursor: 'pointer',
     }),
-    menuList: (base) => ({
+    menuList: base => ({
       ...base,
       scrollbarWidth: 'thin',
       scrollbarColor: '#bfb4dd transparent',

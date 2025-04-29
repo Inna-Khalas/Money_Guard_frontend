@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logoutThunk } from './operations';
+import { fetchCurrentUser, logoutThunk } from './operations';
 
 const initialState = {
+  user: { name: '', email: '' },
+
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
@@ -44,6 +46,18 @@ export const slice = createSlice({
       .addCase(logoutThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || 'Logout error';
+      })
+      .addCase(fetchCurrentUser.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

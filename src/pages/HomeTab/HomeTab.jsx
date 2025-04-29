@@ -1,18 +1,59 @@
 import { useMedia } from '../../hooks/useMedia';
-import Balance from '../../components/Balance/Balance';
+import { useEffect, useState } from 'react';
+
 import TransactionsList from '../../components/TransactionsList/TransactionsList';
 import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
+import Balance from '../../components/Balance/Balance';
+import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
+import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
 
 import s from './HomeTab.module.css';
 
+
 const HomeTab = () => {
   const { isMobile } = useMedia();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isModalOpen]);
+
+  const mockTransaction = {
+    type: 'income',
+    sum: '0.00',
+    date: '',
+    comment: '',
+    category: '',
+  };
+
+// export default function HomeTab({ onEdit }) { //  Принимаем onEdit
+//   return (
+//     <div>
+//       <Balance />
+//       <TransactionsList onEdit={onEdit} /> {/*  Пробрасываем дальше */}
   return (
     <div className={s.homeTab}>
       {isMobile && <Balance />}
       <TransactionsList />
-      <ButtonAddTransactions />
+      <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
+      {isModalOpen && (
+        <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
+      )}
+      <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <button onClick={() => setShowEdit(true)}>Open Edit Modal</button>
+      </div>
+
+      {showEdit && (
+        <ModalEditTransaction
+          transaction={mockTransaction}
+          onClose={() => setShowEdit(false)}
+        />
+      )}
     </div>
   );
 };

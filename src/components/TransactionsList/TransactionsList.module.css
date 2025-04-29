@@ -33,4 +33,9 @@
   color: #ffffff;
   margin-top: 40px;
   font-size: 18px;
+  
+.transactionsListContainer {
+  width: 280px;
+  margin: 0 auto;
+
 }

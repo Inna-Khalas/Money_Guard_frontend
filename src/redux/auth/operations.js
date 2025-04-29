@@ -7,6 +7,22 @@ export const goItApi = axios.create({
    //baseURL: 'http://localhost:3000',
 });
 
+
+// ставим токен, если он есть в ЛокалСторедж - нужен каждый раз при запросе на бек адд Транз - 
+
+const persistedAuthRaw = localStorage.getItem('persist:auth');
+if (persistedAuthRaw) {
+  const persistedAuth = JSON.parse(persistedAuthRaw);
+  const accessTokenString = persistedAuth?.accessToken;
+  const accessToken = accessTokenString?.replace(/^"|"$/g, '');
+
+  if (accessToken) {
+    goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  }
+}
+
+
+
 const setAuthHeader = token => {
   goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
@@ -44,40 +60,64 @@ export const register = async userData => {
   }
 };
 
+
+
 // -------- LogOut
 
 export const logoutThunk = createAsyncThunk(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
+      //данные авторизации из Локалсторедж
+      const persistedAuthRaw = localStorage.getItem('persist:auth');
+      if (!persistedAuthRaw) {
+        console.warn('No persisted auth found.');
+        thunkAPI.dispatch(logout());
+        return;
+      }
+
+      const persistedAuth = JSON.parse(persistedAuthRaw);
       const accessTokenString = persistedAuth?.accessToken;
-      const accessToken = accessTokenString?.replace(/^"|"$/g, ''); // Убираем лишние кавычки
 
-      if (accessToken) {
-        goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      if (!accessTokenString) {
+        console.warn('No access token found.');
+        thunkAPI.dispatch(logout());
+        return;
       }
 
-      try {
-        await goItApi.post('/auth/logout'); // 🔥 Пытаемся выйти на сервере
-      } catch (serverError) {
-        console.warn('Server logout failed, proceeding with local logout.', serverError.message);
-        
-      }
+      const accessToken = accessTokenString.replace(/^"|"$/g, '');
 
       
+      goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+      //  выйти на сервере
+      try {
+        await goItApi.post('/auth/logout');
+        console.info('✅ Server logout successful');
+      } catch (serverError) {
+        console.warn(
+          'Server logout failed, fallback to local logout.',
+          serverError?.response?.data?.message || serverError.message
+        );
+      }
+
+      // 
       thunkAPI.dispatch(logout());
       localStorage.removeItem('persist:auth');
+
+      // 
       delete goItApi.defaults.headers.common.Authorization;
 
     } catch (error) {
-      console.error('Client logout failed:', error);
+      // 
+      console.error('🚨 Full logout failure:', error);
       return thunkAPI.rejectWithValue('Logout failed.');
     }
   }
 );
 
 // -------
+
 
 goItApi.interceptors.response.use(
   response => response,
@@ -119,8 +159,7 @@ goItApi.interceptors.response.use(
         localStorage.removeItem('persist:auth');
         logout();
         
-        
-       // window.location.reload(); --- можно это добавить вместо простого логАута на строке выше
+      //  window.location.reload(); //--- можно это добавить вместо простого логАута на строке выше
         return Promise.reject(refreshError);
       }
     }

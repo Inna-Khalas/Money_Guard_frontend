@@ -10,17 +10,18 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: #101010 url('/src/images/gradient-mobile.webp');
+  background-image: url('/src/images/gradient-mobile.webp');
 }
 
 @media only screen and (min-resolution: 192dpi) {
   .backdrop {
-    background-image: url('/src/images/login-modal-mob@2x.webp');
+    background-image: url('/src/images/gradient-mobile@2x.webp');
   }
 }
 
 @media screen and (min-width: 768px) {
   .backdrop {
+    background-color: #101010;
     background-image: url('/src/images/login-tablet.webp');
   }
 }
@@ -107,17 +108,19 @@
 
 @media screen and (min-width: 768px) {
   .modal {
+    position: relative;
     border-radius: 8px;
     box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.35);
     width: 533px;
     height: 570px;
     padding: 80px 62px;
     background: rgba(255, 255, 255, 0.1);
+    background-position: -60px -60px;
+    background-size: 125% 125%;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(100px);
     background-image: url('/src/images/login-modal-desk@1x.webp'),
       url('/src/images/login-modal-circle-desk@1x.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
   }
 }
 

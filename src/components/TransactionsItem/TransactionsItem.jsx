@@ -3,7 +3,10 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './TransactionsItem.module.css';
-import { deleteTransaction } from '../../redux/transactions/operations';
+import {
+  deleteTransaction,
+  fetchTransactions,
+} from '../../redux/transactions/operations';
 import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
 import pencil from './edit.svg';
 
@@ -15,6 +18,7 @@ export default function TransactionsItem({ transaction, onEdit }) {
   const handleDelete = async () => {
     try {
       await dispatch(deleteTransaction(_id)).unwrap();
+      await dispatch(fetchTransactions());
       toast.success('Transaction deleted successfully!');
     } catch (error) {
       toast.error('Failed to delete transaction');

@@ -5,7 +5,7 @@ import {
   fetchTransactions,
   deleteTransaction,
   addTransaction,
-  editTransaction
+  editTransaction,
 } from './operations';
 
 const initialState = {
@@ -31,9 +31,9 @@ export const slice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getBalance.pending, statusPending)
-      .addCase(getBalance.fulfilled, (state, action) => {
+      .addCase(getBalance.fulfilled, state => {
         state.isLoading = false;
-        state.balance = action.payload.balance;
+        // state.balance = action.payload.balance;
       })
       .addCase(getBalance.rejected, statusRejected)
       .addCase(fetchTransactions.pending, statusPending)
@@ -58,7 +58,7 @@ export const slice = createSlice({
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-       state.items = state.items.filter(item => item.id !== action.payload);
+        state.items = state.items.filter(item => item.id !== action.payload);
       })
       // addTransaction
       .addCase(addTransaction.pending, statusPending)
@@ -71,19 +71,19 @@ export const slice = createSlice({
       //  editTR
       .addCase(editTransaction.pending, statusPending)
       .addCase(editTransaction.fulfilled, (state, action) => {
-        const index = state.items.findIndex(item => item._id === action.payload._id);
+        const index = state.items.findIndex(
+          item => item._id === action.payload._id
+        );
         if (index !== -1) {
           state.items[index] = action.payload;
         }
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(editTransaction.rejected, statusRejected)
-
-  }
+      .addCase(editTransaction.rejected, statusRejected);
+  },
 });
-  
-    
+
 export const transactionsReducer = slice.reducer;
 // ----------------------------------------------------------------------
 

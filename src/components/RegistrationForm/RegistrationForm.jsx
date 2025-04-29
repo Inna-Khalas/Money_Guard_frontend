@@ -137,7 +137,7 @@ const RegistrationForm = () => {
           <span
             className={`${styles.placeholder} ${
               watch(field) ? styles.active : ''
-            } ${field === 'confirmPassword' ? styles.offsetFix : ''}`}
+            }`}
           >
             {field === 'confirmPassword'
               ? 'Confirm password'

@@ -2,7 +2,7 @@
   background-color: #101010dc;
   width: 320px;
   height: 428px;
-  background-image: url("./currency-mob-bg.png");
+  background-image: url('./currency-mob-bg.png');
 }
 .wrapper {
   width: 320px;
@@ -15,11 +15,13 @@
 .title {
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 13px;
+  height: 50px;
   background: rgba(255, 255, 255, 0.2);
   display: flex;
   font-weight: 600;
   font-size: 16px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   justify-content: space-between;
   color: #fff;
 }
@@ -27,7 +29,8 @@
 .data {
   padding-left: 20px;
   padding-right: 20px;
-  font-family: "Poppins", sans-serif;
+  margin-bottom: 6px;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: #fff;
@@ -57,14 +60,14 @@
   display: inline-block;
   height: 88px;
   width: 320px;
-  background-image: url("./diagram.svg");
+  background-image: url('./diagram.svg');
   background-repeat: no-repeat;
 }
 .line {
   display: inline-block;
   height: 88px;
   width: 320px;
-  background-image: url("./line.svg");
+  background-image: url('./line.svg');
   background-repeat: no-repeat;
   position: absolute;
   top: 75%;
@@ -73,7 +76,7 @@
 }
 .leftDot {
   display: inline-block;
-  background-image: url("./dot.svg");
+  background-image: url('./dot.svg');
   height: 6px;
   width: 6px;
   background-repeat: no-repeat;
@@ -84,7 +87,7 @@
 }
 .rightDot {
   display: inline-block;
-  background-image: url("./dot.svg");
+  background-image: url('./dot.svg');
   height: 6px;
   width: 6px;
   background-repeat: no-repeat;
@@ -92,4 +95,127 @@
   top: 55%;
   left: 77%;
   transform: translate(-50%, -50%);
+}
+.eurDot {
+  opacity: 0;
+}
+.usdDot {
+  opacity: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    background-color: #101010dc;
+    width: 336px;
+    height: 214px;
+    background-image: url('./currency-mob-bg.png');
+    border-radius: 0 0 8px 8px;
+  }
+  .wrapper {
+    width: 336px;
+  }
+  .diagram {
+    background-image: url('./diagram-tab.svg');
+    width: 336px;
+    top: 59%;
+    background-repeat: no-repeat;
+    position: absolute;
+  }
+  .line {
+    background-image: url('./line-tab.svg');
+    width: 336px;
+    top: 76%;
+    background-repeat: no-repeat;
+    position: absolute;
+  }
+  .leftDot {
+    top: 67%;
+  }
+  .rightDot {
+    top: 56%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .container {
+    /* background-color: #101010dc; */
+    width: 480px;
+    height: 380px;
+    /* background-image: url('./currency-mob-bg.png'); */
+    border-radius: 0 0 8px 8px;
+  }
+  .wrapper {
+    width: 480px;
+    height: 380px;
+  }
+  .title {
+    padding-left: 62px;
+    padding-right: 131px;
+    padding-top: 16px;
+    height: 56px;
+  }
+  .data {
+    padding-left: 82px;
+    padding-right: 131px;
+    margin-bottom: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+  }
+  .lineUsd {
+    margin-top: 24px;
+  }
+  .lineEur {
+    margin-top: 24px;
+  }
+  .diagram {
+    background-image: url('./diagram-desc.svg');
+    width: 480px;
+    height: 167px;
+    top: 59%;
+  }
+  .line {
+    background-image: url('./line-desc.svg');
+    width: 480px;
+    height: 102px;
+    top: 65%;
+  }
+  .leftDot {
+    background-image: url('./dot-desc.svg');
+    height: 9px;
+    width: 9px;
+    top: 61%;
+  }
+  .rightDot {
+    background-image: url('./dot-desc.svg');
+    height: 9px;
+    width: 9px;
+    top: 52%;
+  }
+  .diagramNumberContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 271px;
+    padding-left: 47px;
+  }
+  .eurDot {
+    opacity: 100;
+    padding-top: 16px;
+    width: 34px;
+    height: 18px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #ff868d;
+  }
+  .usdDot {
+    opacity: 100;
+    padding-top: 50px;
+    width: 34px;
+    height: 18px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #ff868d;
+  }
 }

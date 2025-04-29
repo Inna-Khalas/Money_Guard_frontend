@@ -1,0 +1,110 @@
+.header {
+  height: 60px;
+  width: 320px;
+  background: linear-gradient(90deg, #2e1746, #2e225f);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: white;
+  margin: 0 auto;
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 13px;
+  height: 16px;
+  margin-right: 8px;
+  fill: white;
+}
+
+.appName {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profileButton {
+  background: none;
+  border: none;
+  padding: 0px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.editIcon {
+  width: 14px;
+  height: 14px;
+  fill: rgba(255, 255, 255, 0.6);
+}
+
+/*.hidden {
+  display: none;
+}*/
+
+@media (min-width: 768px) {
+  .header {
+    height: 80px;
+    padding: 0 24px;
+    width: 768px;
+  }
+
+  .logo {
+    width: 24px;
+    height: 23px;
+  }
+
+  .appName {
+    font-size: 17px;
+  }
+
+  .profileButton {
+    gap: 12px;
+  }
+
+  .exitButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
+  .exitIcon {
+    width: 16px;
+    height: 16px;
+    fill: white;
+    margin-left: 6px;
+  }
+
+  .hidden {
+    display: block;
+  }
+}
+
+@media (min-width: 1280px) {
+  .header {
+    padding: 0 40px;
+    width: 1280px;
+  }
+
+  .profileButton {
+    font-size: 16px;
+  }
+}

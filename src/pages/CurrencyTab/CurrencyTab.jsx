@@ -1,3 +1,11 @@
+import Currency from "../../components/Currency/Currency";
+
 export default function CurrencyTab() {
-  return <div>CurrencyTab</div>;
+  return (
+    <>
+      <div>
+        <Currency />
+      </div>
+    </>
+  );
 }

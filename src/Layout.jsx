@@ -5,8 +5,6 @@ import Loader from './components/Loader';
 function Layout({ children }) {
   return (
     <div>
-      <Loader />
-      <AppBar />
       <Suspense fallback={null}>{children}</Suspense>
     </div>
   );

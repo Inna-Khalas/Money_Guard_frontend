@@ -1,6 +1,7 @@
-import styles from './RegistrationPage.module.css';
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm.jsx';
+
 import mgLogo from '../../pages/RegistrationPage/pic/icons/mg-logo.svg';
+import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
   return (
@@ -15,7 +16,7 @@ const RegistrationPage = () => {
             className={styles.logoIcon}
           />
           <span className={styles.logoWrapper}>
-            <span className={styles.logoAccent}>M</span>oneyGuard
+            <span className={styles.word}>Money Guard</span>
           </span>
         </div>
 

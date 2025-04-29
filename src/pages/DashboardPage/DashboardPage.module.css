@@ -1,0 +1,47 @@
+.dashBoardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .dashBoardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 704px;
+  }
+  .leftSide {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+  }
+  .navHomeContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .dashBoardContainer {
+    width: 1280px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 0;
+  }
+  .leftSide {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tabContainer {
+    padding-top: 46px;
+
+    background-image: url(./left-side-decor.svg);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
+}

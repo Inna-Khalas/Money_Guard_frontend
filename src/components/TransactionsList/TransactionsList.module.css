@@ -1,0 +1,41 @@
+.transactionsTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  color: #fff;
+  padding: 20px;
+  text-align: left;
+}
+
+.transactionsTable thead {
+  background-color: transparent;
+}
+
+.transactionsTable thead tr {
+  background-color: rgba(82, 59, 126, 0.6);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.transactionsTable thead tr th {
+  padding: 12px 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.transactionsTable thead tr:first-child {
+  border-radius: 8px;
+}
+
+.emptyText {
+  text-align: center;
+  color: #ffffff;
+  margin-top: 40px;
+  font-size: 18px;
+
+  .transactionsListContainer {
+    width: 280px;
+    margin: 0 auto;
+  }
+}

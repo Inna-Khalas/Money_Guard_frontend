@@ -1,0 +1,131 @@
+
+
+
+.edit-transaction-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  backdrop-filter: blur(7px);
+  background: rgba(34, 13, 91, 0.23);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9990;
+}
+
+.edit-transaction-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.edit-transaction-content.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
+
+.edit-transaction-content {
+  max-width: 320px;
+  width: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #734aef;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  padding: 32px 20px;
+  box-sizing: border-box;
+  height: 600px;
+  overflow: auto;
+  border-radius: 8px;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+.edit-transaction-content.expense-mode {
+  padding: 20px 20px 64px 20px;
+}
+
+
+.close-button {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+
+.inside-button::before,
+.inside-button::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  width: 16px;
+  height: 1px;
+  border-radius: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inside-button::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.inside-button::after {
+  transform: translate(-50%, -50%) rotate(315deg);
+}
+
+
+.edit-transaction-content h2 {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  margin-bottom: 32px;
+}
+
+
+.edit-transaction-content.expense-mode h2 {
+  margin-bottom: 40px;
+}
+
+
+@media screen and (min-width: 768px) {
+  .close-button {
+    display: block;
+  }
+
+  .edit-transaction-content {
+    max-width: 540px;
+    height: auto;
+    padding: 40px 73px;
+    overflow: visible;
+  }
+
+  .edit-transaction-content h2 {
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+
+  .edit-transaction-content.expense-mode {
+    padding: 40px 73px;
+  }
+
+  .edit-transaction-content.expense-mode h2 {
+    margin-bottom: 40px;
+  }
+}

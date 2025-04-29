@@ -39,7 +39,6 @@ h2 {
   .content {
     flex-direction: row;
     width: 100%;
-    padding: 0 32px;
     align-items: flex-start;
   }
   h2 {
@@ -48,7 +47,7 @@ h2 {
     margin-bottom: 20px;
   }
   .table {
-    width: 360px;
+    width: 336px;
     padding: 0;
   }
 }
@@ -56,7 +55,7 @@ h2 {
 @media only screen and (min-width: 768px) and (max-width: 1278px) {
   .table {
     margin-top: -45px;
-    width: 360px;
+    width: 336px;
   }
 }
 

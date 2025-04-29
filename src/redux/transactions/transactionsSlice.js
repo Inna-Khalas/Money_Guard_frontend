@@ -15,6 +15,21 @@ const initialState = {
   error: null,
 };
 
+const calculateBalance = transactions => {
+  let income = 0;
+  let expense = 0;
+
+  transactions.forEach(transaction => {
+    if (transaction.type === 'income') {
+      income += transaction.value;
+    } else if (transaction.type === 'expense') {
+      expense += transaction.value;
+    }
+  });
+
+  return income - expense;
+};
+
 const statusRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
@@ -40,20 +55,7 @@ export const slice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload.data;
-
-        let income = 0;
-        let expense = 0;
-        const balance = action.payload.data;
-
-        balance.forEach(transaction => {
-          if (transaction.type === 'income') {
-            income += transaction.value;
-          } else if (transaction.type === 'expense') {
-            expense += transaction.value;
-          }
-        });
-
-        state.balance = income - expense;
+        state.balance = calculateBalance(state.items);
       })
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction
@@ -62,6 +64,7 @@ export const slice = createSlice({
         state.items = state.items.filter(
           transaction => transaction._id !== transactionId
         );
+        state.balance = calculateBalance(state.items);
       })
       .addCase(deleteTransaction.rejected, (state, action) => {
         state.error = action.payload;
@@ -70,11 +73,12 @@ export const slice = createSlice({
       // addTransaction
       .addCase(addTransaction.pending, statusPending)
       .addCase(addTransaction.fulfilled, (state, action) => {
-        state.items.push(action.payload); // Добавляем в конец списка
+        state.items.push(action.payload);
         state.isLoading = false;
         state.error = null;
+        state.balance = calculateBalance(state.items);
       })
-      .addCase(addTransaction.rejected, statusRejected) // Обработать ошибку
+      .addCase(addTransaction.rejected, statusRejected)
       //  editTR
       .addCase(editTransaction.pending, statusPending)
       .addCase(editTransaction.fulfilled, (state, action) => {
@@ -86,6 +90,7 @@ export const slice = createSlice({
         }
         state.isLoading = false;
         state.error = null;
+        state.balance = calculateBalance(state.items);
       })
       .addCase(editTransaction.rejected, statusRejected);
   },

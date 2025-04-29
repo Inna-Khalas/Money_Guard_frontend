@@ -22,9 +22,9 @@ const setAuthHeader = token => {
   goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-const clearAuthHeader = () => {
-  delete goItApi.defaults.headers.common.Authorization;
-};
+// const clearAuthHeader = () => {
+//   delete goItApi.defaults.headers.common.Authorization;
+// };
 
 export const loginThunk = createAsyncThunk(
   '/api/auth/login',
@@ -124,50 +124,50 @@ export const logoutThunk = createAsyncThunk(
 
 // -------
 
-goItApi.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      localStorage.getItem('persist:auth')
-    ) {
-      originalRequest._retry = true;
-      try {
-        const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
-        const refreshTokenString = persistedAuth?.refreshToken;
+// goItApi.interceptors.response.use(
+//   response => response,
+//   async error => {
+//     const originalRequest = error.config;
+//     if (
+//       error.response?.status === 401 &&
+//       !originalRequest._retry &&
+//       localStorage.getItem('persist:auth')
+//     ) {
+//       originalRequest._retry = true;
+//       try {
+//         const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
+//         const refreshTokenString = persistedAuth?.refreshToken;
 
-        if (!refreshTokenString || refreshTokenString === 'null') {
-          throw new Error('No refresh token available');
-        }
+//         if (!refreshTokenString || refreshTokenString === 'null') {
+//           throw new Error('No refresh token available');
+//         }
 
-        const refreshToken = JSON.parse(refreshTokenString);
+//         const refreshToken = JSON.parse(refreshTokenString);
 
-        const refreshResponse = await goItApi.post('/auth/refresh', {
-          refreshToken,
-        });
+//         const refreshResponse = await goItApi.post('/auth/refresh', {
+//           refreshToken,
+//         });
 
-        const { accessToken } = refreshResponse.data.data;
-        setAuthHeader(accessToken);
+//         const { accessToken } = refreshResponse.data.data;
+//         setAuthHeader(accessToken);
 
-        const updatedAuth = {
-          ...persistedAuth,
-          accessToken: JSON.stringify(accessToken),
-        };
-        localStorage.setItem('persist:auth', JSON.stringify(updatedAuth));
+//         const updatedAuth = {
+//           ...persistedAuth,
+//           accessToken: JSON.stringify(accessToken),
+//         };
+//         localStorage.setItem('persist:auth', JSON.stringify(updatedAuth));
 
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        return goItApi(originalRequest);
-      } catch (refreshError) {
-        clearAuthHeader();
-        localStorage.removeItem('persist:auth');
-        logout();
+//         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+//         return goItApi(originalRequest);
+//       } catch (refreshError) {
+//         clearAuthHeader();
+//         localStorage.removeItem('persist:auth');
+//         logout();
 
-        return Promise.reject(refreshError);
-      }
-    }
+//         return Promise.reject(refreshError);
+//       }
+//     }
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );

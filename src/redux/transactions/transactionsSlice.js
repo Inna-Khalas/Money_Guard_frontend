@@ -39,7 +39,7 @@ export const slice = createSlice({
       .addCase(fetchTransactions.pending, statusPending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload;
+        state.items = action.payload.data;
 
         let income = 0;
         let expense = 0;
@@ -57,9 +57,9 @@ export const slice = createSlice({
       })
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction
-      //.addCase(deleteTransaction.fulfilled, (state, action) => {
-       // state.items = state.items.filter(item => item.id !== action.payload);
-      //})
+      .addCase(deleteTransaction.fulfilled, (state, action) => {
+       state.items = state.items.filter(item => item.id !== action.payload);
+      })
       // addTransaction
       .addCase(addTransaction.pending, statusPending)
       .addCase(addTransaction.fulfilled, (state, action) => {

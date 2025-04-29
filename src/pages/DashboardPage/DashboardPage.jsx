@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMedia } from '../../hooks/useMedia';
 import { fetchTransactions } from '../../redux/transactions/operations';
@@ -8,24 +8,22 @@ import { Loader } from '../../components/Loader/Loader';
 import Navigation from '../../components/Navigation/Navigation';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
-import { useMedia } from '../../hooks/useMedia';  
-import s from './DashboardPage.module.css'; 
+import s from './DashboardPage.module.css';
 
 import Header from '../../components/Header/Header';
 import Balance from '../../components/Balance/Balance';
 import StatisticsTab from '../StatisticsTab/StatisticsTab';
-
-import s from './DashboardPage.module.css';
-
+import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
+import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
+import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
 
 export default function DashboardPage() {
   // const isLoading = useSelector(selectisLoading);
-  const { isMobile } = useMedia(); 
+  const { isMobile } = useMedia();
 
- /*Стейт для управления открытием модалки */
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [editTransaction, setEditTransaction] = useState(null); 
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editTransaction, setEditTransaction] = useState(null);
+
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -36,32 +34,29 @@ export default function DashboardPage() {
   useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
+
   return (
     <>
       {/* {isLoading ? (
         <Loader />
       ) : ( */}
       <>
-//     <Navigation />
-//         <HomeTab onEdit={(transaction) => setEditTransaction(transaction)} />
+        <Navigation />
+        {homeActive && (
+          <HomeTab onEdit={transaction => setEditTransaction(transaction)} />
+        )}
+        {currencyActive && <CurrencyTab />}
 
-//       <CurrencyTab />
+        <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
 
-//         {/*  модалки добавления транзакции */}
-//         <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
+        {isModalOpen && (
+          <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
+        )}
 
-//         {/* окно модалки добавления */}
-//         {isModalOpen && (
-//           <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
-//         )}
-
-        
-
-        {/* Модалка редактирования транзакции */}
-          {editTransaction && (
-            <ModalEditTransaction
-              transaction={editTransaction}
-              onClose={() => setEditTransaction(null)}
+        {editTransaction && (
+          <ModalEditTransaction
+            transaction={editTransaction}
+            onClose={() => setEditTransaction(null)}
           />
         )}
 
@@ -72,11 +67,7 @@ export default function DashboardPage() {
               <Navigation />
               {!isMobile && <Balance />}
             </div>
-            {!isMobile ? (
-              <CurrencyTab />
-            ) : (
-              currencyActive && isMobile && <CurrencyTab />
-            )}
+            {!isMobile ? <CurrencyTab /> : currencyActive && <CurrencyTab />}
           </div>
           <div className={s.tabContainer}>
             {homeActive && <HomeTab />}

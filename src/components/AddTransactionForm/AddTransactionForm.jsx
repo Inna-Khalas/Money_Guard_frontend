@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addTransaction } from '../../redux/transactions/operations';
 import './AddTransactionForm.css';
-
 
 const schema = Yup.object().shape({
   type: Yup.string().required('Transaction type is required'),
@@ -18,22 +17,29 @@ const schema = Yup.object().shape({
       then: (schema) => schema.required('Category is required').notOneOf(['', null], 'Select a category'),
       otherwise: (schema) => schema.notRequired(),
     }),
+
   comment: Yup.string().required('Comment is required'),
 });
 
-
 const CATEGORIES = [
-  'Main expenses', 'Products', 'Car', 'Self care',
-  'Child care', 'Household products', 'Education',
-  'Leisure', 'Other expenses', 'Entertainment'
+  'Main expenses',
+  'Products',
+  'Car',
+  'Self care',
+  'Child care',
+  'Household products',
+  'Education',
+  'Leisure',
+  'Other expenses',
+  'Entertainment',
 ];
 
 const AddTransactionForm = ({ onClose, onTypeChange }) => {
+  
   const [type, setType] = useState('income'); // 🎯 тип транзакции
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const dropdownRef = useRef();
-
   const dispatch = useDispatch();
 
   const {
@@ -42,9 +48,10 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     setValue,
     formState: { errors },
     resetField,
+
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { type: 'income' }
+    defaultValues: { type: 'income' },
   });
 
   const onSubmit = async (data) => {
@@ -68,8 +75,9 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     }
   };
 
+
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = e => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
       }
@@ -88,6 +96,7 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
   };
 
   const handleSelectCategory = (cat) => {
+
     setSelectedCategory(cat);
     setValue('category', cat, { shouldValidate: true }); 
     setDropdownOpen(false);
@@ -100,6 +109,7 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {/*  Переключатель типа транзакции */}
       <div className="transaction-toggle-wrapper">
         <span 
+
           className={`toggle-label ${type === 'income' ? 'active-income' : ''}`}
           onClick={() => {
             setType('income');
@@ -113,11 +123,16 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
         </span>
 
         <div className="toggle-switch-core" onClick={toggleType}>
-          <div className={`circle-toggle ${type === 'expense' ? 'move-right red' : 'yellow'}`} />
+          <div
+            className={`circle-toggle ${
+              type === 'expense' ? 'move-right red' : 'yellow'
+            }`}
+          />
         </div>
 
         <span 
           className={`toggle-label ${type === 'expense' ? 'active-expense' : ''}`}
+
           onClick={() => {
             setType('expense');
             setValue('type', 'expense');
@@ -134,10 +149,13 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       </div>
 
       {/* Выпадающий список категории */}
+
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
-          <div 
-            className={`custom-select-display ${selectedCategory ? 'selected' : ''} ${dropdownOpen ? 'open' : ''}`} 
+          <div
+            className={`custom-select-display ${
+              selectedCategory ? 'selected' : ''
+            } ${dropdownOpen ? 'open' : ''}`}
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {selectedCategory || 'Select a category'}
@@ -165,6 +183,7 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {/*  Ввод суммы и даты */}
       <div className="amount-date-wrapper">
         <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
+
         {errors.sum && <p className="error">{errors.sum.message}</p>}
 
         <input type="date" {...register('date')} />
@@ -176,9 +195,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {errors.comment && <p className="error">{errors.comment.message}</p>}
 
       {/*  Кнопки */}
+
       <div className="form-buttons">
         <button type="submit">Add</button>
-        <button type="button" onClick={onClose}>Cancel</button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
       </div>
     </form>
   );

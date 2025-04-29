@@ -1,17 +1,20 @@
 .dashBoardContainer {
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 320px;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) {
   .dashBoardContainer {
     display: flex;
+    flex-direction: column;
+    width: 704px;
+  }
+  .leftSide {
+    display: flex;
     flex-direction: row;
     gap: 32px;
-    padding-left: 36px;
-    padding-right: 36px;
   }
   .navHomeContainer {
     display: flex;
@@ -21,9 +24,24 @@
 
 @media screen and (min-width: 1280px) {
   .dashBoardContainer {
+    width: 1280px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding-left: 0;
     padding-right: 0;
+    gap: 0;
+  }
+  .leftSide {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tabContainer {
+    padding-top: 46px;
+    padding-left: 69px;
+    width: 715px;
+    background-image: url(./left-side-decor.svg);
+    background-repeat: no-repeat;
+    background-position: 0 0;
   }
 }

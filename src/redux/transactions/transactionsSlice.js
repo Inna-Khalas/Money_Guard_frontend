@@ -36,11 +36,24 @@ export const slice = createSlice({
         state.balance = action.payload.balance;
       })
       .addCase(getBalance.rejected, statusRejected)
-      // fetchTransactions
       .addCase(fetchTransactions.pending, statusPending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload;
+
+        let income = 0;
+        let expense = 0;
+        const balance = action.payload.data;
+
+        balance.forEach(transaction => {
+          if (transaction.type === 'income') {
+            income += transaction.value;
+          } else if (transaction.type === 'expense') {
+            expense += transaction.value;
+          }
+        });
+
+        state.balance = income - expense;
       })
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction
@@ -66,10 +79,7 @@ export const slice = createSlice({
         state.error = null;
       })
       .addCase(editTransaction.rejected, statusRejected)
-       // deleteTransaction
-      .addCase(deleteTransaction.fulfilled, (state, action) => {
-    state.items = state.items.filter(item => item._id !== action.payload); 
-      });
+
   }
 });
   

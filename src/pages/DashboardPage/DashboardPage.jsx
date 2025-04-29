@@ -1,18 +1,21 @@
-import Navigation from '../../components/Navigation/Navigation';
-// import { useSelector } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useMedia } from '../../hooks/useMedia';
+import { fetchTransactions } from '../../redux/transactions/operations';
 import { Loader } from '../../components/Loader/Loader';
-// import { selectisLoading } from '../../redux/transactions/selectors';
+import Navigation from '../../components/Navigation/Navigation';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
 import { useMedia } from '../../hooks/useMedia';  
 import s from './DashboardPage.module.css'; 
 
+import Header from '../../components/Header/Header';
+import Balance from '../../components/Balance/Balance';
+import StatisticsTab from '../StatisticsTab/StatisticsTab';
 
-
-import { useState, useEffect } from 'react';
-import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
-import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
-import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
+import s from './DashboardPage.module.css';
 
 
 export default function DashboardPage() {
@@ -20,40 +23,37 @@ export default function DashboardPage() {
   const { isMobile } = useMedia(); 
 
  /*Стейт для управления открытием модалки */
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editTransaction, setEditTransaction] = useState(null); 
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [editTransaction, setEditTransaction] = useState(null); 
   
+  const dispatch = useDispatch();
+  const location = useLocation();
 
+  const homeActive = location.pathname === '/dashboard/home';
+  const statisticActive = location.pathname === '/dashboard/statistics';
+  const currencyActive = location.pathname === '/dashboard/currency';
 
-
-/* Блокировка скролла страницы при открытии модалки */
   useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [isModalOpen]);
-
-
+    dispatch(fetchTransactions());
+  }, [dispatch]);
   return (
     <>
       {/* {isLoading ? (
         <Loader />
       ) : ( */}
       <>
-    <Navigation />
-        <HomeTab onEdit={(transaction) => setEditTransaction(transaction)} />
+//     <Navigation />
+//         <HomeTab onEdit={(transaction) => setEditTransaction(transaction)} />
 
-      <CurrencyTab />
+//       <CurrencyTab />
 
-        {/*  модалки добавления транзакции */}
-        <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
+//         {/*  модалки добавления транзакции */}
+//         <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
 
-        {/* окно модалки добавления */}
-        {isModalOpen && (
-          <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
-        )}
+//         {/* окно модалки добавления */}
+//         {isModalOpen && (
+//           <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
+//         )}
 
         
 
@@ -65,6 +65,27 @@ export default function DashboardPage() {
           />
         )}
 
+        <Header />
+        <div className={s.dashBoardContainer}>
+          <div className={s.leftSide}>
+            <div className={s.navHomeContainer}>
+              <Navigation />
+              {!isMobile && <Balance />}
+            </div>
+            {!isMobile ? (
+              <CurrencyTab />
+            ) : (
+              currencyActive && isMobile && <CurrencyTab />
+            )}
+          </div>
+          <div className={s.tabContainer}>
+            {homeActive && <HomeTab />}
+            {statisticActive && <StatisticsTab />}
+          </div>
+          {/* <div className={s.tabContainer}>
+            <Outlet />
+          </div> */}
+        </div>
       </>
       {/* )} */}
     </>

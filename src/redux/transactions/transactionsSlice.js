@@ -58,8 +58,15 @@ export const slice = createSlice({
       .addCase(fetchTransactions.rejected, statusRejected)
       // deleteTransaction
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter(item => item.id !== action.payload);
+        const transactionId = action.payload;
+        state.items = state.items.filter(
+          transaction => transaction._id !== transactionId
+        );
       })
+      .addCase(deleteTransaction.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+
       // addTransaction
       .addCase(addTransaction.pending, statusPending)
       .addCase(addTransaction.fulfilled, (state, action) => {

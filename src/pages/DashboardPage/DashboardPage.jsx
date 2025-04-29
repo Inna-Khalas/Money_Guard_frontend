@@ -1,9 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
 import { useMedia } from '../../hooks/useMedia';
-import { fetchTransactions } from '../../redux/transactions/operations';
 import Navigation from '../../components/Navigation/Navigation';
 import CurrencyTab from '../CurrencyTab/CurrencyTab';
 import HomeTab from '../HomeTab/HomeTab';
@@ -12,19 +9,23 @@ import s from './DashboardPage.module.css';
 import Header from '../../components/Header/Header';
 import Balance from '../../components/Balance/Balance';
 import StatisticsTab from '../StatisticsTab/StatisticsTab';
+import { useEffect } from 'react';
+import { fetchTransactions } from '../../redux/transactions/operations';
+import { useDispatch } from 'react-redux';
 
 export default function DashboardPage() {
   const { isMobile } = useMedia();
   const dispatch = useDispatch();
-  const location = useLocation();
 
-  const homeActive = location.pathname === '/dashboard/home';
-  const statisticActive = location.pathname === '/dashboard/statistics';
-  const currencyActive = location.pathname === '/dashboard/currency';
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
+
+  const homeActive = location.pathname === '/dashboard/home';
+  const statisticActive = location.pathname === '/dashboard/statistics';
+  const currencyActive = location.pathname === '/dashboard/currency';
 
   return (
     <>
@@ -50,3 +51,4 @@ export default function DashboardPage() {
     </>
   );
 }
+

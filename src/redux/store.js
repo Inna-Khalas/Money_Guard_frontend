@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import { transactionsReducer } from './transactions/transactionsSlice';
 import categoriesReduser from './categories/categoriesSlice';
 import { monoBankReducer } from './transactions/transactionsSlice';
+import { statisticsReducer } from './statistics/slice';
 
 import {
   persistStore,
@@ -30,6 +31,7 @@ export const store = configureStore({
     transactions: transactionsReducer,
     auth: persistedAuthReducer,
     monoBank: monoBankReducer,
+    statistics: statisticsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

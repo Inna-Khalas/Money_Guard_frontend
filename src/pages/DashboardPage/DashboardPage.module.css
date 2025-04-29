@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 320px;
   margin: 0 auto;
+  gap: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -38,8 +39,7 @@
   }
   .tabContainer {
     padding-top: 46px;
-    padding-left: 69px;
-    width: 715px;
+
     background-image: url(./left-side-decor.svg);
     background-repeat: no-repeat;
     background-position: 0 0;

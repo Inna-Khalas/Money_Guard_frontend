@@ -8,7 +8,7 @@ import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
 import pencil from './edit.svg';
 
 export default function TransactionsItem({ transaction, onEdit }) {
-  const { _id, date, type, category, comment, sum } = transaction;
+  const { _id, date, type, category, comment, value } = transaction;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -60,10 +60,7 @@ export default function TransactionsItem({ transaction, onEdit }) {
             year: '2-digit',
           })}
         </td>
-        <td>
-          {type === 'income' ? '+' : '-'}{' '}
-          
-        </td>
+        <td>{type === 'income' ? '+' : '-'} </td>
         <td>{getCategoryName()}</td>
         <td>{comment}</td>
         <td
@@ -71,7 +68,7 @@ export default function TransactionsItem({ transaction, onEdit }) {
             type === 'income' ? styles.sumPositive : styles.sumNegative
           }
         >
-          {sum} 
+          {value}
         </td>
         <td className={styles.transactionActions}>
           <button type="button" className={styles.editBtn} onClick={handleEdit}>

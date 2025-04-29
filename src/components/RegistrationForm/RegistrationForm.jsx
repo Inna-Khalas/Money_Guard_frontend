@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 
-import { register, loginThunk } from '../../redux/auth/operations';
+import { register } from '../../redux/auth/operations';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
@@ -39,7 +38,6 @@ const registrationSchema = yup.object().shape({
 const STORAGE_KEY = 'registration-form-data';
 
 const RegistrationForm = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -78,14 +76,12 @@ const RegistrationForm = () => {
     try {
       await register({ name, email, password });
       toast.success('Registration successful');
-      await dispatch(loginThunk({ email, password })).unwrap();
+
       localStorage.removeItem(STORAGE_KEY);
-      navigate('/dashboard/home');
+      navigate('/login', { state: { email } });
     } catch (error) {
       const message = error?.error || error?.message || 'Registration failed';
-
       toast.error(message);
-
       if (error?.status === 409) return;
 
       navigate('/login');

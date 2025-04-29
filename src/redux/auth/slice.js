@@ -5,8 +5,9 @@ const initialState = {
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,
-  isLoading: false, 
-  error: null,      
+  isRefreshing: false,
+  isLoading: false,
+  error: null,
 };
 
 export const slice = createSlice({
@@ -18,20 +19,23 @@ export const slice = createSlice({
       state.refreshToken = action.payload.refreshToken;
       state.isLoggedIn = true;
     },
+    setLoading(state, action) {
+      state.isLoading = action.payload;
+    },
     logout(state) {
       state.accessToken = null;
       state.refreshToken = null;
       state.isLoggedIn = false;
-      state.error = null; 
+      state.error = null;
     },
   },
-  extraReducers: (builder) => { 
+  extraReducers: builder => {
     builder
-      .addCase(logoutThunk.pending, (state) => {
+      .addCase(logoutThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(logoutThunk.fulfilled, (state) => {
+      .addCase(logoutThunk.fulfilled, state => {
         state.isLoading = false;
         state.accessToken = null;
         state.refreshToken = null;
@@ -44,7 +48,5 @@ export const slice = createSlice({
   },
 });
 
-export const { setAuth, logout } = slice.actions;
-
-
+export const { setAuth, setLoading, logout } = slice.actions;
 export default slice.reducer;

@@ -46,6 +46,42 @@ export const fetchMonoCurrThunk = createAsyncThunk(
   }
 );
 
+//---- addTR
+
+export const addTransaction = createAsyncThunk(
+  'transactions/add', // название экшена
+  async (transactionData, thunkAPI) => {
+    try {
+      //  POST-запрос на создание новой транзакции
+      const { data } = await goItApi.post('/transactions', transactionData);
+      
+      //  Возвращаем именно объект транзакции (не весь ответ, а data.data)
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+//----
+
+//-- editTR
+export const editTransaction = createAsyncThunk(
+  'transactions/edit',
+  async ({ id, updatedData }, thunkAPI) => {
+    try {
+      const { data } = await goItApi.put(`/transactions/${id}`, updatedData);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
+//--
+
+
 //fetchTransactions
 export const fetchTransactions = createAsyncThunk(
   'transactions/fetchAll',
@@ -66,10 +102,12 @@ export const deleteTransaction = createAsyncThunk(
   'transactions/delete',
   async (transactionId, thunkAPI) => {
     try {
-      await axios.delete(`/transactions/${transactionId}`);
-      return transactionId;
+      await goItApi.delete(`/transactions/${transactionId}`); //  исправил на goItApi вместо axios
+      return transactionId; //  Вернем только ID
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
     }
   }
 );

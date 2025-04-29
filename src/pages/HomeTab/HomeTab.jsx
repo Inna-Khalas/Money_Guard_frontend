@@ -31,6 +31,11 @@ const HomeTab = () => {
     category: '',
   };
 
+// export default function HomeTab({ onEdit }) { //  Принимаем onEdit
+//   return (
+//     <div>
+//       <Balance />
+//       <TransactionsList onEdit={onEdit} /> {/*  Пробрасываем дальше */}
   return (
     <div className={s.homeTab}>
       {isMobile && <Balance />}

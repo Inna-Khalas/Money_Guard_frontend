@@ -1,16 +1,12 @@
-
-
-
-
 .add-transaction-button {
-  position: fixed ;
-  bottom: 20px ;
-  right: 20px ;
-  width: 44px; 
-  height: 44px; 
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
   background: linear-gradient(135deg, #ff7c7c, #ffb5b5);
   color: white;
-  font-size: 30px; 
+  font-size: 30px;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -22,7 +18,7 @@
 
 .add-transaction-button::before,
 .add-transaction-button::after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: white;
   width: 20px;
@@ -45,9 +41,9 @@
   background: linear-gradient(135deg, #ff4c4c, #ff8f8f);
 }
 
-@media screen and (min-width: 768px){
-  .add-transaction-button{
-    bottom: 40px ;
-  right: 40px ;
+@media screen and (min-width: 768px) {
+  .add-transaction-button {
+    bottom: 40px;
+    right: 40px;
   }
 }

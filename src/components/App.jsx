@@ -1,12 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
+import RestrichedRoute from '../RestrichedRoute';
+import PrivateRoute from '../PrivateRoute';
+
+import Layout from '../Layout';
+import NotFound from '../pages/NotFound';
+
 import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import PrivateRoute from '../PrivateRoute';
-import Layout from '../Layout';
-import RestrichedRoute from '../RestrichedRoute';
-import NotFound from '../pages/NotFound';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import HomeTab from '../pages/HomeTab/HomeTab';
 import StatisticsTab from '../pages/StatisticsTab/StatisticsTab';

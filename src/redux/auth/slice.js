@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { fetchCurrentUser, logoutThunk } from './operations';
 
 const initialState = {
   user: { name: '', email: '' },
-
   accessToken: null,
   refreshToken: null,
   isLoggedIn: false,

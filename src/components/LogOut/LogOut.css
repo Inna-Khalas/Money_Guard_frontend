@@ -147,10 +147,22 @@
     max-width: 533px;
     padding: 60px 117px;
     overflow: visible;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.1)
-    ), rgba(115, 74, 239, 0.51);
+    /* background: linear-gradient(
+  180deg,
+  #503aa9 0%,
+  #4c37b0 20%,
+  #4d3ab0 45%,
+  #5b4590 75%,
+  #5e44a5 100%
+);*/
+background: linear-gradient(
+  180deg,
+  rgba(80, 58, 169, 0.73) 0%,
+  rgba(76, 55, 176, 0.73) 20%,
+  rgba(77, 58, 176, 0.73) 45%,
+  rgba(91, 69, 144, 0.73) 75%,
+  rgba(94, 68, 165, 0.73) 100%
+);
     box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
   }
 

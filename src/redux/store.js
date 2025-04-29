@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/slice';
 import storage from 'redux-persist/lib/storage';
 import { transactionsReducer } from './transactions/transactionsSlice';
-import categoriesReduser from './categories/categoriesSlice';
+//import categoriesReduser from './categories/categoriesSlice';
+import categoriesReducer from './categories/categoriesSlice'; //  Правильное название: "Reducer" а не "Reduser"
 import { monoBankReducer } from './transactions/transactionsSlice';
 import { statisticsReducer } from './statistics/slice';
 
@@ -27,7 +28,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    categories: categoriesReduser,
+    categories: categoriesReducer,
     transactions: transactionsReducer,
     auth: persistedAuthReducer,
     monoBank: monoBankReducer,

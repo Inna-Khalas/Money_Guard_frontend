@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector  } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './TransactionsItem.module.css';
@@ -37,16 +37,30 @@ export default function TransactionsItem({ transaction, onEdit }) {
     setIsModalOpen(false);
   };
 
-  const getCategoryName = () => {
-    if (type === 'income') return '';
-    if (typeof category === 'object' && category !== null && category.name) {
-      return category.name;
-    }
-    if (typeof category === 'string') {
-      return category;
-    }
-    return 'Unknown';
-  };
+const categories = useSelector(state => state.categories.list); // <-- достаём список категорий из Redux
+
+
+                       //   const getCategoryName = () => {
+                       //     if (type === 'income') return '';
+                       //     if (typeof category === 'object' && category !== null && category.name) {
+                       //       return category.name;
+                       //     }
+                       //     if (typeof category === 'string') {
+                       //       return category;
+                       //     }
+                       //     return 'Unknown';
+                       //   };
+  
+  //  Обновлённая логика для отображения имени категории
+const getCategoryName = () => {
+  if (type === 'income') return ''; 
+  if (typeof category === 'object' && category.name) return category.name; // Если категория — объект, возвращаем name
+  if (typeof category === 'string') {
+    const found = categories.find(cat => cat._id === category); // Если строка — ищем её ID в списке
+    return found?.name || 'Unknown'; 
+  }
+  return 'Unknown';
+};
 
   const formattedDate = new Date(date).toLocaleDateString('ru-RU', {
     day: '2-digit',

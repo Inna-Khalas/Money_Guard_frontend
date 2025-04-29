@@ -23,7 +23,7 @@ export default function TransactionsList({ onEdit }) {
           <th>Category</th>
           <th>Comment</th>
           <th>Sum</th>
-          <th>Actions</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

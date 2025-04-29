@@ -51,7 +51,11 @@ export const register = async userData => {
     const response = await goItApi.post('/auth/register', userData);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Registration failed');
+    throw {
+      status: error.response?.status,
+      message: error.response?.data?.message,
+      error: error.response?.data?.error,
+    };
   }
 };
 

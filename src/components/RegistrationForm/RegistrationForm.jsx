@@ -15,7 +15,6 @@ import eyeOffIcon from '../../pages/RegistrationPage/pic/icons/eye-closed.svg';
 
 import styles from './RegistrationForm.module.css';
 
-
 const registrationSchema = yup.object().shape({
   name: yup
     .string()
@@ -81,9 +80,14 @@ const RegistrationForm = () => {
       toast.success('Registration successful');
       await dispatch(loginThunk({ email, password })).unwrap();
       localStorage.removeItem(STORAGE_KEY);
-      navigate('/dashboard');
+      navigate('/dashboard/home');
     } catch (error) {
-      toast.error(error.message || 'Registration failed');
+      const message = error?.error || error?.message || 'Registration failed';
+
+      toast.error(message);
+
+      if (error?.status === 409) return;
+
       navigate('/login');
     }
   };

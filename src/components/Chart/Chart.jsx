@@ -4,18 +4,18 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import summarySelector from '../../redux/statistics/selectors';
 import { selectBalance } from '../../redux/transactions/selectors';
-import s from './Chart.module.css'; 
+import s from './Chart.module.css';
 
 ChartJS.register(...registerables);
 
 const coloredCategories = {
-  'Entertainment': '#ff85d2',
-  'Car': 'rgb(255, 104, 109)',
-  'Products': 'rgb(255, 157, 137)',
+  Entertainment: '#ff85d2',
+  Car: 'rgb(255, 104, 109)',
+  Products: 'rgb(255, 157, 137)',
   'Main Expenses': 'rgb(254, 208, 87)',
-  'Leisure': 'rgb(91, 255, 167)',
+  Leisure: 'rgb(91, 255, 167)',
   'Other Expenses': 'rgb(0, 173, 95)',
-  'Education': 'rgb(115, 222, 255)',
+  Education: 'rgb(115, 222, 255)',
   'Self Care': 'rgb(170, 154, 255)',
   'Child Care': 'rgb(87, 101, 255)',
   'Household Products': 'rgb(114, 61, 239)',
@@ -82,7 +82,10 @@ export function Chart() {
   };
 
   return (
-    <div className={s.chartContainer} style={{ width: `${doughnutSize}px`, height: `${doughnutSize}px` }}>
+    <div
+      className={s.chartContainer}
+      style={{ width: `${doughnutSize}px`, height: `${doughnutSize}px` }}
+    >
       <Doughnut data={data} options={options} className={s.chartWrapper} />
       <div className={s.doughnutContainer}>
         <span className={s.doughnutText}>

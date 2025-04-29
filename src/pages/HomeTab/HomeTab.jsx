@@ -8,12 +8,15 @@ import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEdi
 import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
 
 import s from './HomeTab.module.css';
-
+import { useSelector } from 'react-redux';
+import { selectisLoading } from '../../redux/transactions/selectors';
+import { Loader } from 'lucide-react';
 
 const HomeTab = () => {
   const { isMobile } = useMedia();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  const [editTransaction, setEditTransaction] = useState(null);
+  const isLoading = useSelector(selectisLoading);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -23,35 +26,24 @@ const HomeTab = () => {
     }
   }, [isModalOpen]);
 
-  const mockTransaction = {
-    type: 'income',
-    sum: '0.00',
-    date: '',
-    comment: '',
-    category: '',
+  const handleEditTransaction = transaction => {
+    setEditTransaction(transaction);
   };
 
-// export default function HomeTab({ onEdit }) { //  Принимаем onEdit
-//   return (
-//     <div>
-//       <Balance />
-//       <TransactionsList onEdit={onEdit} /> {/*  Пробрасываем дальше */}
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={s.homeTab}>
       {isMobile && <Balance />}
-      <TransactionsList />
+      <TransactionsList onEdit={handleEditTransaction} />
       <ButtonAddTransactions onClick={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <ModalAddTransaction onClose={() => setIsModalOpen(false)} />
       )}
-      <div style={{ marginTop: '20px', textAlign: 'center' }}>
-        <button onClick={() => setShowEdit(true)}>Open Edit Modal</button>
-      </div>
-
-      {showEdit && (
+      {editTransaction && (
         <ModalEditTransaction
-          transaction={mockTransaction}
-          onClose={() => setShowEdit(false)}
+          transaction={editTransaction}
+          onClose={() => setEditTransaction(null)}
         />
       )}
     </div>

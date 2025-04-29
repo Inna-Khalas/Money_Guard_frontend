@@ -3,19 +3,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
+
 import { addTransaction } from '../../redux/transactions/operations';
 import './AddTransactionForm.css';
 
 const schema = Yup.object().shape({
   type: Yup.string().required('Transaction type is required'),
-  sum: Yup.number().required('Amount is required').positive().typeError('Amount must be a number'),
-  date: Yup.date().required('Date is required').typeError('Invalid date format'),
+  sum: Yup.number()
+    .required('Amount is required')
+    .positive()
+    .typeError('Amount must be a number'),
+  date: Yup.date()
+    .required('Date is required')
+    .typeError('Invalid date format'),
   category: Yup.string()
     .nullable()
     .when('type', {
       is: 'expense',
-      then: (schema) => schema.required('Category is required').notOneOf(['', null], 'Select a category'),
-      otherwise: (schema) => schema.notRequired(),
+      then: schema =>
+        schema
+          .required('Category is required')
+          .notOneOf(['', null], 'Select a category'),
+      otherwise: schema => schema.notRequired(),
     }),
 
   comment: Yup.string().required('Comment is required'),
@@ -35,8 +44,7 @@ const CATEGORIES = [
 ];
 
 const AddTransactionForm = ({ onClose, onTypeChange }) => {
-  
-  const [type, setType] = useState('income'); // 🎯 тип транзакции
+  const [type, setType] = useState('income');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const dropdownRef = useRef();
@@ -48,13 +56,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     setValue,
     formState: { errors },
     resetField,
-
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { type: 'income' },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     console.log('Form data before mapping:', data);
 
     const payload = {
@@ -69,12 +76,11 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
 
     try {
       await dispatch(addTransaction(payload)).unwrap();
-      onClose(); 
+      onClose();
     } catch (error) {
       console.error('Transaction failed:', error);
     }
   };
-
 
   useEffect(() => {
     const handleClickOutside = e => {
@@ -89,16 +95,15 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
   const toggleType = () => {
     const newType = type === 'income' ? 'expense' : 'income';
     setType(newType);
-    setValue('type', newType); 
+    setValue('type', newType);
     setSelectedCategory('');
-    resetField('category'); 
+    resetField('category');
     onTypeChange && onTypeChange(newType);
   };
 
-  const handleSelectCategory = (cat) => {
-
+  const handleSelectCategory = cat => {
     setSelectedCategory(cat);
-    setValue('category', cat, { shouldValidate: true }); 
+    setValue('category', cat, { shouldValidate: true });
     setDropdownOpen(false);
   };
 
@@ -106,10 +111,8 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="add-transaction-form">
       <h2>Add Transaction</h2>
 
-      {/*  Переключатель типа транзакции */}
       <div className="transaction-toggle-wrapper">
-        <span 
-
+        <span
           className={`toggle-label ${type === 'income' ? 'active-income' : ''}`}
           onClick={() => {
             setType('income');
@@ -130,9 +133,10 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
           />
         </div>
 
-        <span 
-          className={`toggle-label ${type === 'expense' ? 'active-expense' : ''}`}
-
+        <span
+          className={`toggle-label ${
+            type === 'expense' ? 'active-expense' : ''
+          }`}
           onClick={() => {
             setType('expense');
             setValue('type', 'expense');
@@ -147,8 +151,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
         <input type="hidden" {...register('type')} />
         {errors.type && <p className="error">{errors.type.message}</p>}
       </div>
-
-      {/* Выпадающий список категории */}
 
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
@@ -175,14 +177,19 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
               ))}
             </ul>
           )}
-          {/* Показать ошибку категории */}
-          {errors.category && <p className="error">{errors.category.message}</p>}
+          {errors.category && (
+            <p className="error">{errors.category.message}</p>
+          )}
         </div>
       )}
 
-      {/*  Ввод суммы и даты */}
       <div className="amount-date-wrapper">
-        <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
+        <input
+          type="number"
+          placeholder="0.00"
+          step="0.01"
+          {...register('sum')}
+        />
 
         {errors.sum && <p className="error">{errors.sum.message}</p>}
 
@@ -190,11 +197,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
         {errors.date && <p className="error">{errors.date.message}</p>}
       </div>
 
-      {/*  Поле комментария */}
-      <textarea placeholder="Comment" rows="3" {...register('comment')}></textarea>
+      <textarea
+        placeholder="Comment"
+        rows="3"
+        {...register('comment')}
+      ></textarea>
       {errors.comment && <p className="error">{errors.comment.message}</p>}
-
-      {/*  Кнопки */}
 
       <div className="form-buttons">
         <button type="submit">Add</button>

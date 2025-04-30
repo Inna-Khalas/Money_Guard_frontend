@@ -188,23 +188,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {/* Сумма и дата */}
       <div className="amount-date-wrapper">
         <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
-
-//           {errors.category && (
-//             <p className="error">{errors.category.message}</p>
-//           )}
-//         </div>
-//       )}
-
-//       <div className="amount-date-wrapper">
-//         <input
-//           type="number"
-//           placeholder="0.00"
-//           step="0.01"
-//           {...register('sum')}
-//         />
-
-//         {errors.sum && <p className="error">{errors.sum.message}</p>}
-
         <input type="date" {...register('date')} />
       </div>
 

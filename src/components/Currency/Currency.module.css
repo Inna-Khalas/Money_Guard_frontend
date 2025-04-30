@@ -59,46 +59,29 @@
 
 .diagram {
   display: inline-block;
-  height: 88px;
-  width: 320px;
   position: absolute;
-  top: 59%;
-  left: 0;
-  background-image: url('./diagram.svg');
-  background-repeat: no-repeat;
+  top: 60%;
 }
 .line {
   display: inline-block;
-  height: 88px;
-  width: 320px;
-  background-image: url('./line.svg');
-  background-repeat: no-repeat;
-  position: absolute;
-  top: 76%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.leftDot {
-  display: inline-block;
-  background-image: url('./dot.svg');
-  height: 6px;
-  width: 6px;
-  background-repeat: no-repeat;
-  position: absolute;
-  top: 67%;
-  left: 13%;
-  transform: translate(-50%, -50%);
-}
-.rightDot {
-  display: inline-block;
-  background-image: url('./dot.svg');
-  height: 6px;
-  width: 6px;
-  background-repeat: no-repeat;
   position: absolute;
   top: 56%;
-  left: 77%;
-  transform: translate(-50%, -50%);
+}
+.leftDot {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  position: absolute;
+  top: 66%;
+  left: 12%;
+}
+.rightDot {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  position: absolute;
+  top: 55%;
+  left: 76%;
 }
 .eurDot {
   opacity: 0;
@@ -118,34 +101,12 @@
   .wrapper {
     width: 336px;
   }
-  .diagram {
-    background-image: url('./diagram-tab.svg');
-    width: 336px;
-    top: 59%;
-    background-repeat: no-repeat;
-    position: absolute;
-  }
-  .line {
-    background-image: url('./line-tab.svg');
-    width: 336px;
-    top: 76%;
-    background-repeat: no-repeat;
-    position: absolute;
-  }
-  .leftDot {
-    top: 67%;
-  }
-  .rightDot {
-    top: 56%;
-  }
 }
 
 @media screen and (min-width: 1280px) {
   .container {
-    /* background-color: #101010dc; */
     width: 480px;
     height: 380px;
-    /* background-image: url('./currency-mob-bg.png'); */
     border-radius: 0 0 8px 8px;
   }
   .wrapper {
@@ -173,29 +134,23 @@
   .lineEur {
     margin-top: 24px;
   }
-  .diagram {
-    background-image: url('./diagram-desc.svg');
-    width: 480px;
-    height: 167px;
-    top: 59%;
+
+  .diagramDesktop {
+    position: absolute;
+    top: 60%;
   }
   .line {
-    background-image: url('./line-desc.svg');
-    width: 480px;
-    height: 102px;
-    top: 65%;
+    top: 52.5%;
   }
   .leftDot {
-    background-image: url('./dot-desc.svg');
     height: 9px;
     width: 9px;
     top: 61%;
   }
   .rightDot {
-    background-image: url('./dot-desc.svg');
     height: 9px;
     width: 9px;
-    top: 52%;
+    top: 51.9%;
   }
   .diagramNumberContainer {
     display: flex;

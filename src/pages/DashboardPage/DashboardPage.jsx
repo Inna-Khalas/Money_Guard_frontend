@@ -29,10 +29,13 @@ export default function DashboardPage() {
   const currencyActive = location.pathname === '/dashboard/currency';
 
   useEffect(() => {
+    if (homeActive || statisticActive) {
+      return;
+    }
     if (!isMobile && !homeActive) {
       navigate('/dashboard/home');     
     }  
-  }, [homeActive, isMobile, navigate]);
+  }, [statisticActive ,homeActive, isMobile, navigate]);
 
 
   return (

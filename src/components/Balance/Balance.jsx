@@ -4,7 +4,6 @@ import { selectBalance } from '../../redux/transactions/selectors';
 
 import s from './Balance.module.css';
 
-
 export default function Balance() {
   const balance = useSelector(selectBalance);
 
@@ -15,8 +14,10 @@ export default function Balance() {
 
   return (
     <div className={s.container}>
-      <h2 className={s.title}>Your balance</h2>
-      <p className={s.total}>₴ {formatBalance(balance)}</p>
+      <div className={s.test}>
+        <h2 className={s.title}>Your balance</h2>
+        <p className={s.total}>₴ {formatBalance(balance)}</p>
+      </div>
     </div>
   );
 }

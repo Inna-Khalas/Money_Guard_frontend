@@ -1,74 +1,123 @@
-.transactionsTable {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 5px;
-  color: #fff;
-  padding: 20px;
-  text-align: left;
-}
+@media (max-width: 480px) {
+  .transactionCards {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-.transactionsTable thead {
-  background-color: transparent;
-}
+  .transactionCard {
+    border-radius: 12px;
+    padding: 16px;
+    color: #ffffff;
+    font-size: 14px;
+  }
 
-.transactionsTable thead tr {
-  background-color: rgba(82, 59, 126, 0.6);
-  border-radius: 8px;
-  overflow: hidden;
-}
+  .transactionCard p {
+    margin: 4px 0;
+  }
 
-.transactionsTable thead tr th {
-  padding: 12px 20px;
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.transactionsTable thead tr:first-child {
-  border-radius: 8px;
-}
-
-.emptyText {
-  text-align: center;
-  color: #ffffff;
-  margin-top: 40px;
-  font-size: 18px;
-}
-
-/* Container for cards */
-.transactionCards {
-  display: none;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-}
-
-/* Styles for mobile card */
-.transactionCard {
-  background-color: rgba(82, 59, 126, 0.6);
-  border-radius: 12px;
-  padding: 16px;
-  color: #ffffff;
-  font-size: 14px;
-}
-
-.transactionCard p {
-  margin: 4px 0;
-}
-
-.cardActions {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-/* Show cards and hide table on small screens */
-@media screen and (max-width: 480px) {
+  .cardActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
   .transactionsTable {
     display: none;
   }
 
   .transactionCards {
     display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .transactionCards {
+    display: none;
+  }
+
+  .container {
+  }
+
+  .transactionsTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .transactionsTable thead tr {
+    background-color: rgba(82, 59, 126, 0.6);
+  }
+
+  .transactionsTable thead tr th {
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    text-align: center;
+  }
+
+  .transactionsTable thead tr th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .transactionsTable thead tr th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 800px;
+    padding-top: 46px;
+    padding-left: 69px;
+    padding-right: 16px;
+  }
+
+  .transactionsTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .transactionsTable thead tr {
+    background-color: rgba(82, 59, 126, 0.6);
+  }
+
+  .transactionsTable thead tr th {
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    text-align: center;
+  }
+
+  .transactionsTable thead tr th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .transactionsTable thead tr th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .transactionsTable th:nth-child(1) {
+    width: 120px;
+  } /* Date */
+  .transactionsTable th:nth-child(2) {
+    width: 70px;
+  } /* Type */
+  .transactionsTable th:nth-child(3) {
+    width: 150px;
+  } /* Category */
+  .transactionsTable th:nth-child(4) {
+    width: 200px;
+  } /* Comment */
+  .transactionsTable th:nth-child(5) {
+    width: 80px;
   }
 }

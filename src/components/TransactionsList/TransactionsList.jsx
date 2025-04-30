@@ -11,7 +11,7 @@ export default function TransactionsList({ onEdit }) {
   }
 
   return (
-    <>
+    <div className={styles.container}>
       {/* Version for table (desktop/tablet) */}
       <table className={styles.transactionsTable}>
         <thead>
@@ -19,7 +19,7 @@ export default function TransactionsList({ onEdit }) {
             <th>Date</th>
             <th>Type</th>
             <th>Category</th>
-            <th>Comment</th>
+            <th className={styles.commentCell}>Comment</th>
             <th>Sum</th>
             <th></th>
           </tr>
@@ -47,6 +47,6 @@ export default function TransactionsList({ onEdit }) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

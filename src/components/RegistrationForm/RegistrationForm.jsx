@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-import { register, loginThunk } from '../../redux/auth/operations';
+import { register } from '../../redux/auth/operations';
 import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
 import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
 import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
@@ -39,8 +38,8 @@ const registrationSchema = yup.object().shape({
 const STORAGE_KEY = 'registration-form-data';
 
 const RegistrationForm = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const watchRef = useRef(null);
 
   const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
 
@@ -60,6 +59,7 @@ const RegistrationForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
 
   const togglePasswordVisibility = () => setShowPassword(prev => !prev);
   const toggleConfirmPasswordVisibility = () =>
@@ -69,6 +69,7 @@ const RegistrationForm = () => {
     const subscription = watch(values => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
     });
+    watchRef.current = subscription;
     return () => subscription.unsubscribe();
   }, [watch]);
 
@@ -78,14 +79,14 @@ const RegistrationForm = () => {
     try {
       await register({ name, email, password });
       toast.success('Registration successful');
-      await dispatch(loginThunk({ email, password })).unwrap();
+
+      watchRef.current?.unsubscribe();
       localStorage.removeItem(STORAGE_KEY);
-      navigate('/dashboard/home');
+
+      navigate('/login', { state: { email } });
     } catch (error) {
       const message = error?.error || error?.message || 'Registration failed';
-
       toast.error(message);
-
       if (error?.status === 409) return;
 
       navigate('/login');
@@ -132,6 +133,8 @@ const RegistrationForm = () => {
                 ? 'new-password'
                 : 'off'
             }
+            onFocus={() => setFocusedField(field)}
+            onBlur={() => setFocusedField(null)}
           />
 
           <span
@@ -146,7 +149,11 @@ const RegistrationForm = () => {
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
 
-          <span className={styles.underline}></span>
+          <span
+            className={`${styles.underline} ${
+              focusedField === field ? styles.underlineActive : ''
+            }`}
+          />
 
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>

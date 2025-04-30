@@ -38,7 +38,7 @@
     gap: 0;
   }
   .tabContainer {
-    padding-top: 46px;
+    /* padding-top: 46px; */
 
     background-image: url(./left-side-decor.svg);
     background-repeat: no-repeat;

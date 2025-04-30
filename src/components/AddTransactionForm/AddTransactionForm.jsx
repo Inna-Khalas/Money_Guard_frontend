@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { addTransaction } from '../../redux/transactions/operations';
 import { selectAllCategories } from '../../redux/categories/selectors';
 import { fetchCategories } from '../../redux/categories/operations';
@@ -26,10 +27,12 @@ const schema = Yup.object().shape({
       schema.required('Category is required').notOneOf(['', null], 'Select a category'),
     otherwise: schema => schema.notRequired(),
   }),
+
   comment: Yup.string().required('Comment is required'),
 });
 
 const AddTransactionForm = ({ onClose, onTypeChange }) => {
+  
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategories);
 
@@ -45,12 +48,14 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     formState: { errors },
     resetField,
     trigger,
+
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { type: 'income' },
   });
 
   const onSubmit = async (data) => {
+
     const payload = {
       type: data.type,
       value: data.sum,
@@ -62,12 +67,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     try {
       await dispatch(addTransaction(payload)).unwrap();
       toast.success('Transaction added successfully!');
+
       onClose();
     } catch (error) {
       toast.error(error.message || 'Failed to add transaction');
     }
   };
-
 
   useEffect(() => {
     const handleClickOutside = e => {
@@ -102,12 +107,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     resetField('category');
     onTypeChange && onTypeChange(newType);
   };
-
-
+  
   const handleSelectCategory = (catId) => {
     setSelectedCategory(catId);
     setValue('category', catId, { shouldValidate: true });
     trigger('category');
+
     setDropdownOpen(false);
   };
 
@@ -117,7 +122,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="add-transaction-form">
       <h2 className="addTitle">Add Transaction</h2>
 
-      {/* Тип транзакции */}
       <div className="transaction-toggle-wrapper">
         <span
           className={`toggle-label ${type === 'income' ? 'active-income' : ''}`}
@@ -138,6 +142,7 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
 
         <span
           className={`toggle-label ${type === 'expense' ? 'active-expense' : ''}`}
+
           onClick={() => {
             setType('expense');
             setValue('type', 'expense');
@@ -152,7 +157,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
         <input type="hidden" {...register('type')} />
       </div>
 
-      {/* Категория */}
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
           <div
@@ -184,6 +188,23 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {/* Сумма и дата */}
       <div className="amount-date-wrapper">
         <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
+
+//           {errors.category && (
+//             <p className="error">{errors.category.message}</p>
+//           )}
+//         </div>
+//       )}
+
+//       <div className="amount-date-wrapper">
+//         <input
+//           type="number"
+//           placeholder="0.00"
+//           step="0.01"
+//           {...register('sum')}
+//         />
+
+//         {errors.sum && <p className="error">{errors.sum.message}</p>}
+
         <input type="date" {...register('date')} />
       </div>
 
@@ -191,6 +212,13 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       <textarea placeholder="Comment" rows="3" {...register('comment')}></textarea>
 
       {/* Кнопки */}
+//       <textarea
+//         placeholder="Comment"
+//         rows="3"
+//         {...register('comment')}
+//       ></textarea>
+//       {errors.comment && <p className="error">{errors.comment.message}</p>}
+
       <div className="form-buttons">
         <button type="submit">Add</button>
         <button type="button" onClick={onClose}>Cancel</button>

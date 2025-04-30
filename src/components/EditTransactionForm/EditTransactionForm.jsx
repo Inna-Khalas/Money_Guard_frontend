@@ -17,24 +17,26 @@ const schema = Yup.object().shape({
   date: Yup.date()
     .typeError('Invalid date format')
     .required('Date is required'),
+  
   comment: Yup.string().required('Comment is required'),
   type: Yup.string().oneOf(['income', 'expense']).required('Transaction type is required'),
   category: Yup.string().when('type', {
     is: 'expense',
     then: schema => schema.required('Category is required'),
+
     otherwise: schema => schema.notRequired(),
   }),
 });
 
 const EditTransactionForm = ({ onClose, transaction }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const categories = useSelector(state => state.categories.list);
+
   const { _id, type: initType, value, date, comment, category } = transaction;
 
   const [type, setType] = useState(initType);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
-
 
   const resolvedCategoryName =
     typeof category === 'object' && category?.name
@@ -51,12 +53,14 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     setValue,
     formState: { errors },
     trigger,
+
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       type: initType,
       sum: value,
       date: date?.slice(0, 10),
+
       comment: comment,
       category: typeof category === 'object' ? category._id : category || '',
     },
@@ -83,6 +87,7 @@ const EditTransactionForm = ({ onClose, transaction }) => {
 
 
   const onSubmit = async (data) => {
+
     try {
       const payload = {
         type: data.type,
@@ -99,7 +104,9 @@ const EditTransactionForm = ({ onClose, transaction }) => {
         payload.category = data.category;
       }
 
-      await dispatch(editTransaction({ id: _id, updatedData: payload })).unwrap();
+      await dispatch(
+        editTransaction({ id: _id, updatedData: payload })
+      ).unwrap();
       toast.success('Transaction updated successfully!');
       onClose();
     } catch (error) {
@@ -115,6 +122,7 @@ const EditTransactionForm = ({ onClose, transaction }) => {
   };
 
   const handleTypeChange = (newType) => {
+
     setType(newType);
     setValue('type', newType);
     setSelectedCategoryName('');
@@ -134,7 +142,9 @@ const EditTransactionForm = ({ onClose, transaction }) => {
         </span>
         <span className="toggle-divider"></span>
         <span
-          className={`toggle-label ${type === 'expense' ? 'active-expense' : ''}`}
+          className={`toggle-label ${
+            type === 'expense' ? 'active-expense' : ''
+          }`}
           onClick={() => handleTypeChange('expense')}
         >
           Expense
@@ -146,6 +156,7 @@ const EditTransactionForm = ({ onClose, transaction }) => {
         <div className="custom-select-wrapper" ref={dropdownRef}>
           <div
             className={`custom-select-display ${selectedCategoryName ? 'selected' : ''} ${dropdownOpen ? 'open' : ''}`}
+
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {selectedCategoryName || 'Select a category'}
@@ -178,7 +189,9 @@ const EditTransactionForm = ({ onClose, transaction }) => {
 
       <div className="form-buttons">
         <button type="submit">Save</button>
-        <button type="button" onClick={onClose}>Cancel</button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
       </div>
 
 

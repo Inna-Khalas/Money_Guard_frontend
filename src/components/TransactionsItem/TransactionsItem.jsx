@@ -85,7 +85,7 @@ const getCategoryName = () => {
         </td>
         <td className={styles.transactionActions}>
           <button type="button" className={styles.editBtn} onClick={handleEdit}>
-            <img src={pencil} alt="Edit" width="11" height="11" />
+            <img src={pencil} alt="Edit" width="14" height="14" />
           </button>
           <button
             type="button"
@@ -96,26 +96,36 @@ const getCategoryName = () => {
           </button>
         </td>
       </tr>
+
       {/* Version for mobile devices (card layout) */}
-      <div className={styles.transactionCard}>
+      <div
+        className={styles.transactionCard}
+        style={{
+          borderLeft: `5px solid ${
+            type === 'income'
+              ? 'rgba(255, 182, 39, 1)'
+              : 'rgba(255, 134, 141, 1)'
+          }`,
+        }}
+      >
         <p>
-          <strong>Date:</strong> {formattedDate}
+          <strong>Date</strong> {formattedDate}
         </p>
         <p>
-          <strong>Type:</strong> {type === 'income' ? '+' : '-'}
+          <strong>Type</strong> {type === 'income' ? '+' : '-'}
         </p>
         <p>
-          <strong>Category:</strong> {getCategoryName()}
+          <strong>Category</strong> {getCategoryName()}
         </p>
         <p>
-          <strong>Comment:</strong> {comment}
+          <strong className={styles.comment}>Comment</strong> {comment}
         </p>
         <p
           className={
             type === 'income' ? styles.sumPositive : styles.sumNegative
           }
         >
-          <strong>Sum:</strong> {value}
+          <strong>Sum</strong> {value}
         </p>
         <div className={styles.cardActions}>
           <button
@@ -126,7 +136,7 @@ const getCategoryName = () => {
             Delete
           </button>
           <button type="button" className={styles.editBtn} onClick={handleEdit}>
-            <img src={pencil} alt="Edit" width="11" height="11" />
+            <img src={pencil} alt="Edit" width="14" height="14" />
           </button>
         </div>
       </div>

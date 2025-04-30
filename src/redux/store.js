@@ -20,8 +20,24 @@ import {
 
 const authPersistConfig = {
   key: 'auth',
-  storage,
-  whitelist: ['accessToken', 'refreshToken', 'isLoggedIn'],
+  storage: {
+    ...storage,
+    setItem: (key, item) => {
+      return new Promise(resolve => {
+        resolve(storage.setItem(key, JSON.stringify(item)));
+      });
+    },
+    getItem: key => {
+      return new Promise(resolve => {
+        resolve(
+          storage.getItem(key).then(value => (value ? JSON.parse(value) : null))
+        );
+      });
+    },
+  },
+  serialize: false,
+  deserialize: false,
+  whitelist: ['accessToken', 'refreshToken', 'sessionId', 'isLoggedIn'],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);

@@ -1,6 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { goItApi } from '../auth/operations';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { goItApi } from '../api/goiItApiInstance';
 
 export const getBalance = createAsyncThunk(
   'transactions/summary',
@@ -34,14 +34,14 @@ export const fetchMonoCurrThunk = createAsyncThunk(
         geatheredData.creationDate = Date.now();
         geatheredData.monoData = data;
         localStorage.setItem(storage_key, JSON.stringify(geatheredData));
-        const savedData = localStorage.getItem(storage_key); // ось що я маю на увазі
+        const savedData = localStorage.getItem(storage_key);
         return JSON.parse(savedData);
       } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
       }
     } else {
-      const savedData = localStorage.getItem(storage_key); // мені здається це лишне
-      return JSON.parse(savedData); // тут ти вже повертаешь те що берешь з локал стор  на 32 рядку
+      const savedData = localStorage.getItem(storage_key);
+      return JSON.parse(savedData);
     }
   }
 );
@@ -49,13 +49,11 @@ export const fetchMonoCurrThunk = createAsyncThunk(
 //---- addTR
 
 export const addTransaction = createAsyncThunk(
-  'transactions/add', // название экшена
+  'transactions/add',
   async (transactionData, thunkAPI) => {
     try {
-      //  POST-запрос на создание новой транзакции
       const { data } = await goItApi.post('/transactions', transactionData);
 
-      //  Возвращаем именно объект транзакции (не весь ответ, а data.data)
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -64,7 +62,6 @@ export const addTransaction = createAsyncThunk(
     }
   }
 );
-//----
 
 //-- editTR
 export const editTransaction = createAsyncThunk(
@@ -103,8 +100,8 @@ export const deleteTransaction = createAsyncThunk(
   'transactions/delete',
   async (transactionId, thunkAPI) => {
     try {
-      await goItApi.delete(`/transactions/${transactionId}`); //  исправил на goItApi вместо axios
-      return transactionId; //  Вернем только ID
+      await goItApi.delete(`/transactions/${transactionId}`);
+      return transactionId;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message

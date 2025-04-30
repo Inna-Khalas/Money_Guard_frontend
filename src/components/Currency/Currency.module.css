@@ -1,8 +1,9 @@
 .container {
   background-color: #101010dc;
   width: 320px;
-  height: 428px;
+  height: 214px;
   background-image: url('./currency-mob-bg.png');
+  border-radius: 0 0 8px 8px;
 }
 .wrapper {
   width: 320px;
@@ -60,6 +61,9 @@
   display: inline-block;
   height: 88px;
   width: 320px;
+  position: absolute;
+  top: 59%;
+  left: 0;
   background-image: url('./diagram.svg');
   background-repeat: no-repeat;
 }
@@ -70,7 +74,7 @@
   background-image: url('./line.svg');
   background-repeat: no-repeat;
   position: absolute;
-  top: 75%;
+  top: 76%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -81,7 +85,7 @@
   width: 6px;
   background-repeat: no-repeat;
   position: absolute;
-  top: 66%;
+  top: 67%;
   left: 13%;
   transform: translate(-50%, -50%);
 }
@@ -92,7 +96,7 @@
   width: 6px;
   background-repeat: no-repeat;
   position: absolute;
-  top: 55%;
+  top: 56%;
   left: 77%;
   transform: translate(-50%, -50%);
 }

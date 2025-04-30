@@ -50,8 +50,8 @@ export default function Currency() {
             <div className={s.eurDot}>{eur?.rateSell.toFixed(2)}</div>
           </div>        
           <div className={s.rightDot}></div>
-          <div className={s.leftDot}></div>
-        </div>
+        <div className={s.leftDot}></div>
+      </div>
       </div>
     </>
   );

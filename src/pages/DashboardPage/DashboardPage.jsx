@@ -12,11 +12,12 @@ import StatisticsTab from '../StatisticsTab/StatisticsTab';
 import { useEffect } from 'react';
 import { fetchTransactions } from '../../redux/transactions/operations';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function DashboardPage() {
   const { isMobile } = useMedia();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -26,6 +27,13 @@ export default function DashboardPage() {
   const homeActive = location.pathname === '/dashboard/home';
   const statisticActive = location.pathname === '/dashboard/statistics';
   const currencyActive = location.pathname === '/dashboard/currency';
+
+  useEffect(() => {
+    if (!isMobile && !homeActive) {
+      navigate('/dashboard/home');     
+    }  
+  }, [homeActive, isMobile, navigate]);
+
 
   return (
     <>

@@ -7,15 +7,15 @@ import { deleteTransaction } from '../../redux/transactions/operations';
 import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
 import pencil from './edit.svg';
 
-export default function TransactionsItem({ transaction, onEdit }) {
+export default function TransactionsItem({ transaction, onEdit, isMobile }) {
   const { _id, date, type, category, comment, value } = transaction;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const categories = useSelector(state => state.categories.list);
 
   const handleDelete = async () => {
     try {
       const resultAction = await dispatch(deleteTransaction(_id));
-
       if (resultAction.type === 'transactions/delete/fulfilled') {
         toast.success('Transaction deleted successfully!');
       } else {
@@ -37,8 +37,6 @@ export default function TransactionsItem({ transaction, onEdit }) {
     setIsModalOpen(false);
   };
 
-  const categories = useSelector(state => state.categories.list);
-
   const getCategoryName = () => {
     if (type === 'income') return '';
     if (typeof category === 'object' && category.name) return category.name;
@@ -57,76 +55,85 @@ export default function TransactionsItem({ transaction, onEdit }) {
 
   return (
     <>
-      {/* Version for table (desktop/tablet) */}
-      <tr className={styles.transactionItem}>
-        <td>{formattedDate}</td>
-        <td>{type === 'income' ? '+' : '-'}</td>
-        <td>{getCategoryName()}</td>
-        <td>{comment}</td>
-        <td
-          className={
-            type === 'income' ? styles.sumPositive : styles.sumNegative
-          }
+      {isMobile ? (
+        <div
+          className={styles.transactionCard}
+          style={{
+            borderLeft: `5px solid ${
+              type === 'income'
+                ? 'rgba(255, 182, 39, 1)'
+                : 'rgba(255, 134, 141, 1)'
+            }`,
+          }}
         >
-          {value}
-        </td>
-        <td className={styles.transactionActions}>
-          <button type="button" className={styles.editBtn} onClick={handleEdit}>
-            <img src={pencil} alt="Edit" width="14" height="14" />
-          </button>
-          <button
-            type="button"
-            className={styles.deleteBtn}
-            onClick={handleDelete}
+          <p>
+            <strong>Date</strong> {formattedDate}
+          </p>
+          <p>
+            <strong>Type</strong> {type === 'income' ? '+' : '-'}
+          </p>
+          <p>
+            <strong>Category</strong> {getCategoryName()}
+          </p>
+          <p>
+            <strong className={styles.comment}>Comment</strong> {comment}
+          </p>
+          <p
+            className={
+              type === 'income' ? styles.sumPositive : styles.sumNegative
+            }
           >
-            Delete
-          </button>
-        </td>
-      </tr>
-
-      {/* Version for mobile devices (card layout) */}
-      <div
-        className={styles.transactionCard}
-        style={{
-          borderLeft: `5px solid ${
-            type === 'income'
-              ? 'rgba(255, 182, 39, 1)'
-              : 'rgba(255, 134, 141, 1)'
-          }`,
-        }}
-      >
-        <p>
-          <strong>Date</strong> {formattedDate}
-        </p>
-        <p>
-          <strong>Type</strong> {type === 'income' ? '+' : '-'}
-        </p>
-        <p>
-          <strong>Category</strong> {getCategoryName()}
-        </p>
-        <p>
-          <strong className={styles.comment}>Comment</strong> {comment}
-        </p>
-        <p
-          className={
-            type === 'income' ? styles.sumPositive : styles.sumNegative
-          }
-        >
-          <strong>Sum</strong> {value}
-        </p>
-        <div className={styles.cardActions}>
-          <button
-            type="button"
-            className={styles.deleteBtn}
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
-          <button type="button" className={styles.editBtn} onClick={handleEdit}>
-            <img src={pencil} alt="Edit" width="14" height="14" />
-          </button>
+            <strong>Sum</strong> {value}
+          </p>
+          <div className={styles.cardActions}>
+            <button
+              type="button"
+              className={styles.deleteBtn}
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className={styles.editBtn}
+              onClick={handleEdit}
+            >
+              <img src={pencil} alt="Edit" width="14" height="14" />
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <tr className={styles.transactionItem}>
+          <td>{formattedDate}</td>
+          <td>{type === 'income' ? '+' : '-'}</td>
+          <td>{getCategoryName()}</td>
+          <td>{comment}</td>
+          <td
+            className={
+              type === 'income' ? styles.sumPositive : styles.sumNegative
+            }
+          >
+            {value}
+          </td>
+          <td className={styles.transactionActions}>
+            <button
+              type="button"
+              className={styles.editBtn}
+              onClick={handleEdit}
+            >
+              <img src={pencil} alt="Edit" width="14" height="14" />
+            </button>
+            <button
+              type="button"
+              className={styles.deleteBtn}
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      )}
+
       {isModalOpen && (
         <ModalEditTransaction
           onClose={handleCloseModal}

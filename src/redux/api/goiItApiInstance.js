@@ -3,8 +3,8 @@ import { store } from '../store';
 import { logout, setAuth } from '../auth/slice';
 
 export const goItApi = axios.create({
-  // baseURL: 'https://money-guard-backend-xmem.onrender.com',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://money-guard-backend-xmem.onrender.com',
+  //   baseURL: 'http://localhost:3000',
 });
 
 export const setAuthHeader = token => {

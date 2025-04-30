@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { goItApi } from '../auth/operations';
+import { goItApi } from '../api/goiItApiInstance';
 
 //  Получаем категории с бека
 export const fetchCategories = createAsyncThunk(

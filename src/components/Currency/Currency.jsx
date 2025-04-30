@@ -3,18 +3,17 @@ import { useEffect } from 'react';
 
 import { fetchMonoCurrThunk } from '../../redux/transactions/operations';
 import { selectMonoBank } from '../../redux/transactions/selectors';
+import { useMedia } from '../../hooks/useMedia';
 
 import s from './Currency.module.css';
-import { useMedia } from '../../hooks/useMedia';
 
 
 export default function Currency() {
   const dispatch = useDispatch();
   const data = useSelector(selectMonoBank);
+  const { isMobile } = useMedia();
+  const { isTablet } = useMedia();
   const { isDesktop } = useMedia();
-  console.log(isDesktop);
-  
-
 
   useEffect(() => {
     dispatch(fetchMonoCurrThunk());
@@ -49,11 +48,18 @@ export default function Currency() {
               <p className={s.lineEur}>{eur?.rateSell.toFixed(2)}</p>
            </div>
          </div>
-          {!isDesktop ? (<svg className={s.diagram} viewBox="0 0 320 88">
-            <use href='/sprite.svg#diagram'></use>
-          </svg>) : (<svg className={s.diagramDesktop} viewBox="0 0 480 167">
-            <use href='../../../public/sprite.svg#diagramDesktop'></use>
-          </svg>)}
+          {isMobile &&
+            <svg className={s.diagram} viewBox="0 0 320 88">
+              <use href='../../../public/sprite.svg#diagram'></use>
+            </svg>}
+          {isTablet &&
+            <svg className={s.diagramTab} viewBox="0 0 336 88">
+              <use href='../../../public/sprite.svg#diagramTab'></use>
+            </svg>}
+          {isDesktop &&
+            <svg className={s.diagramDesktop} viewBox="0 0 480 167">
+              <use href='../../../public/sprite.svg#diagramDesktop'></use>
+            </svg>}
           <svg className={s.line} viewBox="0 0 320 72">
             <use href='/sprite.svg#line'></use>
           </svg>
@@ -72,3 +78,9 @@ export default function Currency() {
     </>
   );
 }
+
+// {!isDesktop ? (<svg className={s.diagram}>
+//             <use href='/sprite.svg#diagram'></use>
+//           </svg>) : (<svg className={s.diagramDesktop} viewBox="0 0 480 167">
+//             <use href='../../../public/sprite.svg#diagramDesktop'></use>
+//           </svg>)}

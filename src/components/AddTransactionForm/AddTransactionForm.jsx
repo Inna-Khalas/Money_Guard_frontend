@@ -194,14 +194,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
       {/* Комментарий */}
       <textarea placeholder="Comment" rows="3" {...register('comment')}></textarea>
 
-      {/* Кнопки */}
-//       <textarea
-//         placeholder="Comment"
-//         rows="3"
-//         {...register('comment')}
-//       ></textarea>
-//       {errors.comment && <p className="error">{errors.comment.message}</p>}
-
       <div className="form-buttons">
         <button type="submit">Add</button>
         <button type="button" onClick={onClose}>Cancel</button>

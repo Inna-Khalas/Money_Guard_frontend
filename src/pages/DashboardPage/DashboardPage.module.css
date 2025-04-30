@@ -6,11 +6,25 @@
   gap: 0;
 }
 
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media screen and (min-width: 768px) {
   .dashBoardContainer {
     display: flex;
     flex-direction: column;
     width: 704px;
+  }
+  .loaderWrapper {
+    top: 60%;
+    left: 50%;
   }
   .leftSide {
     display: flex;
@@ -32,6 +46,11 @@
     padding-right: 0;
     gap: 0;
   }
+  .loaderWrapper {
+    top: 70%;
+    left: 70%;
+  }
+
   .leftSide {
     display: flex;
     flex-direction: column;

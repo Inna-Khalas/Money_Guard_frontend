@@ -8,15 +8,11 @@ import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEdi
 import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
 
 import s from './HomeTab.module.css';
-import { useSelector } from 'react-redux';
-import { selectisLoading } from '../../redux/transactions/selectors';
-import { Loader } from 'lucide-react';
 
 const HomeTab = () => {
   const { isMobile } = useMedia();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTransaction, setEditTransaction] = useState(null);
-  const isLoading = useSelector(selectisLoading);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -30,9 +26,7 @@ const HomeTab = () => {
     setEditTransaction(transaction);
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <div className={s.homeTab}>
       {isMobile && <Balance />}
       <TransactionsList onEdit={handleEditTransaction} />

@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 import { fetchTransactions } from '../../redux/transactions/operations';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectisLoading } from '../../redux/transactions/selectors';
+import { Loader } from 'lucide-react';
 
 export default function DashboardPage() {
   const { isMobile } = useMedia();
@@ -24,6 +27,8 @@ export default function DashboardPage() {
     dispatch(fetchTransactions());
   }, [dispatch]);
 
+  const isLoading = useSelector(selectisLoading);
+
   const homeActive = location.pathname === '/dashboard/home';
   const statisticActive = location.pathname === '/dashboard/statistics';
   const currencyActive = location.pathname === '/dashboard/currency';
@@ -33,10 +38,9 @@ export default function DashboardPage() {
       return;
     }
     if (!isMobile && !homeActive) {
-      navigate('/dashboard/home');     
-    }  
-  }, [statisticActive ,homeActive, isMobile, navigate]);
-
+      navigate('/dashboard/home');
+    }
+  }, [statisticActive, homeActive, isMobile, navigate]);
 
   return (
     <>
@@ -51,7 +55,13 @@ export default function DashboardPage() {
             {!isMobile ? <CurrencyTab /> : currencyActive && <CurrencyTab />}
           </div>
           <div className={s.tabContainer}>
-            {homeActive && <HomeTab />}
+            {isLoading ? (
+              <div className={s.loaderWrapper}>
+                <Loader size={28} />
+              </div>
+            ) : (
+              <>{homeActive && <HomeTab />}</>
+            )}
             {statisticActive && <StatisticsTab />}
           </div>
           {/* <div className={s.tabContainer}>
@@ -62,4 +72,3 @@ export default function DashboardPage() {
     </>
   );
 }
-

@@ -59,6 +59,7 @@ const RegistrationForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
 
   const togglePasswordVisibility = () => setShowPassword(prev => !prev);
   const toggleConfirmPasswordVisibility = () =>
@@ -132,6 +133,8 @@ const RegistrationForm = () => {
                 ? 'new-password'
                 : 'off'
             }
+            onFocus={() => setFocusedField(field)}
+            onBlur={() => setFocusedField(null)}
           />
 
           <span
@@ -146,7 +149,11 @@ const RegistrationForm = () => {
               : field.charAt(0).toUpperCase() + field.slice(1)}
           </span>
 
-          <span className={styles.underline}></span>
+          <span
+            className={`${styles.underline} ${
+              focusedField === field ? styles.underlineActive : ''
+            }`}
+          />
 
           {errors[field] && (
             <span className={styles.error}>{errors[field].message}</span>

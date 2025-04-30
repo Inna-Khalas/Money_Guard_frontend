@@ -28,11 +28,19 @@
   .transactionCards {
     display: flex;
   }
+
+  .emptyText {
+    text-align: center;
+  }
 }
 
 @media (min-width: 768px) {
   .transactionCards {
     display: none;
+  }
+
+  .emptyText {
+    text-align: center;
   }
 
   .container {
@@ -119,5 +127,13 @@
   } /* Comment */
   .transactionsTable th:nth-child(5) {
     width: 80px;
+  }
+
+  .emptyWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
+    margin-left: 300px;
   }
 }

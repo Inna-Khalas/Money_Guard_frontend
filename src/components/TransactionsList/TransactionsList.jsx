@@ -7,7 +7,11 @@ export default function TransactionsList({ onEdit }) {
   const transactions = useSelector(selectAllTransactions);
 
   if (!transactions.length) {
-    return <p className={styles.emptyText}>No transactions yet</p>;
+    return (
+      <div className={styles.emptyWrapper}>
+        <p className={styles.emptyText}>No transactions yet</p>
+      </div>
+    );
   }
 
   return (

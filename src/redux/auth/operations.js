@@ -1,40 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { setAuth, logout } from './slice';
-
-export const goItApi = axios.create({
-  baseURL: 'https://money-guard-backend-xmem.onrender.com',
-  // baseURL: 'http://localhost:3000',
-});
-
-const persistedAuthRaw = localStorage.getItem('persist:auth');
-if (persistedAuthRaw) {
-  const persistedAuth = JSON.parse(persistedAuthRaw);
-  const accessTokenString = persistedAuth?.accessToken;
-  const accessToken = accessTokenString?.replace(/^"|"$/g, '');
-
-  if (accessToken) {
-    goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-  }
-}
-
-const setAuthHeader = token => {
-  goItApi.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-// const clearAuthHeader = () => {
-//   delete goItApi.defaults.headers.common.Authorization;
-// };
+import {
+  goItApi,
+  LOCAL_STORAGE_PERSIST_AUTH_KEY,
+  setAuthHeader,
+} from '../api/goiItApiInstance';
 
 export const loginThunk = createAsyncThunk(
   '/api/auth/login',
   async (credentials, thunkAPI) => {
     try {
       const response = await goItApi.post('/auth/login', credentials);
-      const { accessToken, refreshToken } = response.data.data;
+      const { accessToken, refreshToken, sessionId } = response.data.data;
+
+      const authData = { accessToken, refreshToken, sessionId };
 
       setAuthHeader(accessToken);
-      thunkAPI.dispatch(setAuth({ accessToken, refreshToken }));
+
+      thunkAPI.dispatch(setAuth(authData));
 
       return response.data;
     } catch (error) {
@@ -82,10 +65,14 @@ export const logoutThunk = createAsyncThunk(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      const persistedAuthRaw = localStorage.getItem('persist:auth');
+      const persistedAuthRaw = localStorage.getItem(
+        LOCAL_STORAGE_PERSIST_AUTH_KEY
+      );
+
       if (!persistedAuthRaw) {
         console.warn('No persisted auth found.');
         thunkAPI.dispatch(logout());
+
         return;
       }
 
@@ -95,12 +82,13 @@ export const logoutThunk = createAsyncThunk(
       if (!accessTokenString) {
         console.warn('No access token found.');
         thunkAPI.dispatch(logout());
+
         return;
       }
 
-      const accessToken = accessTokenString.replace(/^"|"$/g, '');
+      // const accessToken = accessTokenString.replace(/^"|"$/g, '');
 
-      goItApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      goItApi.defaults.headers.common.Authorization = `Bearer ${accessTokenString}`;
 
       try {
         await goItApi.post('/auth/logout');
@@ -114,7 +102,7 @@ export const logoutThunk = createAsyncThunk(
 
       //
       thunkAPI.dispatch(logout());
-      localStorage.removeItem('persist:auth');
+      localStorage.removeItem(LOCAL_STORAGE_PERSIST_AUTH_KEY);
 
       //
       delete goItApi.defaults.headers.common.Authorization;
@@ -127,51 +115,3 @@ export const logoutThunk = createAsyncThunk(
 );
 
 // -------
-
-// goItApi.interceptors.response.use(
-//   response => response,
-//   async error => {
-//     const originalRequest = error.config;
-//     if (
-//       error.response?.status === 401 &&
-//       !originalRequest._retry &&
-//       localStorage.getItem('persist:auth')
-//     ) {
-//       originalRequest._retry = true;
-//       try {
-//         const persistedAuth = JSON.parse(localStorage.getItem('persist:auth'));
-//         const refreshTokenString = persistedAuth?.refreshToken;
-
-//         if (!refreshTokenString || refreshTokenString === 'null') {
-//           throw new Error('No refresh token available');
-//         }
-
-//         const refreshToken = JSON.parse(refreshTokenString);
-
-//         const refreshResponse = await goItApi.post('/auth/refresh', {
-//           refreshToken,
-//         });
-
-//         const { accessToken } = refreshResponse.data.data;
-//         setAuthHeader(accessToken);
-
-//         const updatedAuth = {
-//           ...persistedAuth,
-//           accessToken: JSON.stringify(accessToken),
-//         };
-//         localStorage.setItem('persist:auth', JSON.stringify(updatedAuth));
-
-//         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-//         return goItApi(originalRequest);
-//       } catch (refreshError) {
-//         clearAuthHeader();
-//         localStorage.removeItem('persist:auth');
-//         logout();
-
-//         return Promise.reject(refreshError);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );

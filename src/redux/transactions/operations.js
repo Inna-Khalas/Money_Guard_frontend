@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { goItApi } from '../auth/operations';
+import { goItApi } from '../api/goiItApiInstance';
 
 export const getBalance = createAsyncThunk(
   'transactions/summary',

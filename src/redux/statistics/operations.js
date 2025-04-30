@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { goItApi } from '../auth/operations';
 import { toast } from 'react-toastify';
+import { goItApi } from '../api/goiItApiInstance';
 
 export const SummaryStatistics = createAsyncThunk(
   'transactions/summary',

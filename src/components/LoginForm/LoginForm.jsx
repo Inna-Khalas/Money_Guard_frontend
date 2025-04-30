@@ -45,7 +45,7 @@ export const LoginForm = () => {
   const onSubmit = async data => {
     try {
       const userData = await dispatch(loginThunk(data)).unwrap();
-      localStorage.setItem('token', userData.token);
+      // localStorage.setItem('token', userData.accessToken);
       toast.success('Login successful!', {
         style: {
           border: '3px solid #734aef',
@@ -54,7 +54,7 @@ export const LoginForm = () => {
           backgroundColor: 'rgba(255, 255, 255, 0.4)',
         },
       });
-      reset();
+      // reset();
       navigate('/dashboard/home', { replace: true });
     } catch (error) {
       toast.error('Incorrect email or password. Please try again.', {

@@ -6,6 +6,7 @@ const initialState = {
   user: { name: '', email: '' },
   accessToken: null,
   refreshToken: null,
+  sessionId: null,
   isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
@@ -19,6 +20,7 @@ export const slice = createSlice({
     setAuth(state, action) {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      state.sessionId = action.payload.sessionId;
       state.isLoggedIn = true;
     },
     setLoading(state, action) {
@@ -27,6 +29,7 @@ export const slice = createSlice({
     logout(state) {
       state.accessToken = null;
       state.refreshToken = null;
+      state.sessionId = null;
       state.isLoggedIn = false;
       state.error = null;
     },
@@ -41,6 +44,7 @@ export const slice = createSlice({
         state.isLoading = false;
         state.accessToken = null;
         state.refreshToken = null;
+        state.sessionId = null;
         state.isLoggedIn = false;
       })
       .addCase(logoutThunk.rejected, (state, action) => {

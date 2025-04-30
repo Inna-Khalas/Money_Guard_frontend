@@ -2,73 +2,67 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editTransaction } from '../../redux/transactions/operations';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './EditTransactionForm.css';
 
-const CATEGORIES = [
-  'Main expenses',
-  'Products',
-  'Car',
-  'Self care',
-  'Child care',
-  'Household products',
-  'Education',
-  'Leisure',
-  'Other expenses',
-  'Entertainment',
-];
 
 const schema = Yup.object().shape({
   sum: Yup.number()
     .typeError('Amount must be a number')
     .positive('Amount must be positive')
     .required('Amount is required'),
-
   date: Yup.date()
     .typeError('Invalid date format')
     .required('Date is required'),
-
+  
   comment: Yup.string().required('Comment is required'),
-
-  type: Yup.string()
-    .oneOf(['income', 'expense'])
-    .required('Transaction type is required'),
-
+  type: Yup.string().oneOf(['income', 'expense']).required('Transaction type is required'),
   category: Yup.string().when('type', {
-    is: val => val === 'expense',
-    then: schema => schema.required('Category is required for expenses'),
+    is: 'expense',
+    then: schema => schema.required('Category is required'),
+
     otherwise: schema => schema.notRequired(),
   }),
 });
 
 const EditTransactionForm = ({ onClose, transaction }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
+  const categories = useSelector(state => state.categories.list);
 
   const { _id, type: initType, value, date, comment, category } = transaction;
 
   const [type, setType] = useState(initType);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(
-    typeof category === 'object' ? category.name : category
-  );
   const dropdownRef = useRef();
+
+  const resolvedCategoryName =
+    typeof category === 'object' && category?.name
+      ? category.name
+      : typeof category === 'string'
+        ? categories.find(c => c._id === category)?.name
+        : '';
+
+  const [selectedCategoryName, setSelectedCategoryName] = useState(resolvedCategoryName);
 
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
+    trigger,
+
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       type: initType,
       sum: value,
-      date: date.slice(0, 10),
+      date: date?.slice(0, 10),
+
       comment: comment,
-      category: typeof category === 'object' ? category.name : category || '',
+      category: typeof category === 'object' ? category._id : category || '',
     },
   });
 
@@ -82,10 +76,19 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const onSubmit = async data => {
-    try {
-      console.log('Submitting edit form:', data);
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach(error => {
+        toast.error(error.message);
+      });
+    }
+  }, [errors]);
+
+
+  const onSubmit = async (data) => {
+
+    try {
       const payload = {
         type: data.type,
         value: data.sum,
@@ -94,8 +97,8 @@ const EditTransactionForm = ({ onClose, transaction }) => {
       };
 
       if (data.type === 'expense') {
-        if (!data.category) {
-          toast.error('Please select a category for expenses');
+        if (!data.category || typeof data.category !== 'string') {
+          toast.error('Please select a valid category');
           return;
         }
         payload.category = data.category;
@@ -107,27 +110,28 @@ const EditTransactionForm = ({ onClose, transaction }) => {
       toast.success('Transaction updated successfully!');
       onClose();
     } catch (error) {
-      console.error('Edit transaction failed:', error);
       toast.error(error.message || 'Something went wrong');
     }
   };
 
-  const handleSelectCategory = cat => {
-    setSelectedCategory(cat);
-    setValue('category', cat);
+  const handleSelectCategory = (cat) => {
+    setSelectedCategoryName(cat.name);
+    setValue('category', cat._id, { shouldValidate: true });
+    trigger('category');
     setDropdownOpen(false);
   };
 
-  const handleTypeChange = newType => {
+  const handleTypeChange = (newType) => {
+
     setType(newType);
     setValue('type', newType);
-    setSelectedCategory('');
+    setSelectedCategoryName('');
     setValue('category', '');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="edit-transaction-form">
-      <h2>Edit Transaction</h2>
+      <h2 className="editTitle">Edit Transaction</h2>
 
       <div className="edit-toggle-wrapper">
         <span
@@ -136,9 +140,7 @@ const EditTransactionForm = ({ onClose, transaction }) => {
         >
           Income
         </span>
-
         <span className="toggle-divider"></span>
-
         <span
           className={`toggle-label ${
             type === 'expense' ? 'active-expense' : ''
@@ -147,57 +149,43 @@ const EditTransactionForm = ({ onClose, transaction }) => {
         >
           Expense
         </span>
-
         <input type="hidden" {...register('type')} />
       </div>
 
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
           <div
-            className={`custom-select-display ${
-              selectedCategory ? 'selected' : ''
-            } ${dropdownOpen ? 'open' : ''}`}
+            className={`custom-select-display ${selectedCategoryName ? 'selected' : ''} ${dropdownOpen ? 'open' : ''}`}
+
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            {selectedCategory || 'Select a category'}
+            {selectedCategoryName || 'Select a category'}
             <span className="arrow-down"></span>
           </div>
 
           {dropdownOpen && (
-            <ul className="custom-select-dropdown">
-              {CATEGORIES.map((cat, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => handleSelectCategory(cat)}
-                  className={cat === selectedCategory ? 'selected' : ''}
-                >
-                  {cat}
-                </li>
-              ))}
-            </ul>
-          )}
+  <ul className="custom-select-dropdown">
+    {categories.map((cat) => (
+      <li
+        key={cat._id}
+        onClick={() => handleSelectCategory(cat)}
+        className={cat.name === selectedCategoryName ? 'selected' : ''}
+      >
+        {cat.name}
+      </li>
+    ))}
+  </ul>
+)}
+
         </div>
       )}
 
       <div className="amount-date-wrapper">
-        <input
-          type="number"
-          placeholder="0.00"
-          step="0.01"
-          {...register('sum')}
-        />
-        {errors.sum && <p className="error">{errors.sum.message}</p>}
-
+        <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
         <input type="date" {...register('date')} />
-        {errors.date && <p className="error">{errors.date.message}</p>}
       </div>
 
-      <textarea
-        placeholder="Comment"
-        rows="3"
-        {...register('comment')}
-      ></textarea>
-      {errors.comment && <p className="error">{errors.comment.message}</p>}
+      <textarea placeholder="Comment" rows="3" {...register('comment')}></textarea>
 
       <div className="form-buttons">
         <button type="submit">Save</button>
@@ -205,6 +193,9 @@ const EditTransactionForm = ({ onClose, transaction }) => {
           Cancel
         </button>
       </div>
+
+
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </form>
   );
 };

@@ -28,10 +28,18 @@
 .modal-add-content {
   max-width: 320px;
   width: 100%;
-  background: linear-gradient(
+  /*background: linear-gradient(
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.1)
-  ), #734aef;
+  ), #734aef;*/
+background: linear-gradient(
+  180deg,
+  #503aa9 0%,
+  #4c37b0 20%,
+  #4d3ab0 45%,
+  #5b4590 75%,
+  #5e44a5 100%
+);
   box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
   position: relative;
   padding: 28px 20px;
@@ -56,6 +64,9 @@
 .modal-add-content.expense-mode {
   padding: 40px 20px;
 }
+
+
+
 
 
 .modal-add-close-button {
@@ -94,18 +105,18 @@
 }
 
 
-.modal-add-content h2 {
+.modal-add-content .addTitle {
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 24px;
   text-align: center;
   color: white;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
 }
 
 
-.modal-add-content.expense-mode h2 {
-  margin-bottom: 32px;
+.modal-add-content.expense-mode .addTitle {
+  margin: 0 auto 32px ;
 }
 
 

@@ -59,7 +59,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
   });
 
   const onSubmit = async data => {
-    console.log('Selected Category ID:', data.category);
     const payload = {
       type: data.type,
       value: data.sum,
@@ -125,7 +124,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-transaction-form">
       <h2 className="addTitle">Add Transaction</h2>
-
       <div className="transaction-toggle-wrapper">
         <span
           className={`toggle-label ${type === 'income' ? 'active-income' : ''}`}
@@ -165,7 +163,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
 
         <input type="hidden" {...register('type')} />
       </div>
-
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
           <div
@@ -180,8 +177,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
 
           {dropdownOpen && (
             <ul className="custom-select-dropdown">
-              {console.log('currentCategories:', currentCategories)}
-
               {currentCategories.map(cat => (
                 <li
                   key={cat._id} // Use _id here for key
@@ -195,7 +190,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
           )}
         </div>
       )}
-
       {/* Сумма и дата */}
       <div className="amount-date-wrapper">
         <input
@@ -211,22 +205,31 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
           {...register('date')} // Держите привязку с react-hook-form
         />
       </div>
-
       {/* Комментарий */}
       <textarea
         placeholder="Comment"
         rows="3"
         {...register('comment')}
       ></textarea>
-
       <div className="form-buttons">
         <button type="submit">Add</button>
         <button type="button" onClick={onClose}>
           Cancel
         </button>
       </div>
-
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        className="custom-toast-container"
+        toastClassName="custom-toast"
+      />{' '}
     </form>
   );
 };

@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { MdOutlineMailOutline, MdLock } from 'react-icons/md';
 import { Toaster, toast } from 'react-hot-toast';
+import logo from '../../assets/favicon.svg';
 
 import { loginThunk } from '../../redux/auth/operations';
 
@@ -16,7 +17,7 @@ const loginValSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup
     .string()
-    .min(6, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
     .max(12, 'Password must be at most 12 characters')
     .required('Password is required'),
 });
@@ -29,7 +30,6 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(loginValSchema),
     mode: 'onChange',
@@ -44,8 +44,7 @@ export const LoginForm = () => {
 
   const onSubmit = async data => {
     try {
-      const userData = await dispatch(loginThunk(data)).unwrap();
-      // localStorage.setItem('token', userData.accessToken);
+      await dispatch(loginThunk(data)).unwrap();
       toast.success('Login successful!', {
         style: {
           border: '3px solid #734aef',
@@ -54,7 +53,6 @@ export const LoginForm = () => {
           backgroundColor: 'rgba(255, 255, 255, 0.4)',
         },
       });
-      // reset();
       navigate('/dashboard/home', { replace: true });
     } catch (error) {
       toast.error('Incorrect email or password. Please try again.', {
@@ -65,7 +63,6 @@ export const LoginForm = () => {
           backgroundColor: 'rgba(255, 255, 255, 0.4)',
         },
       });
-      console.log(error);
     }
   };
 
@@ -74,7 +71,7 @@ export const LoginForm = () => {
       <Toaster position="top-center" reverseOrder={false} />
       <div className={s.modal}>
         <div className={s.logo}>
-          <img src="/src/assets/favicon.svg" alt="Money Guard Logo" />
+          <img src={logo} alt="Money Guard Logo" />
           <h2 className={s.textLogo}>Money Guard</h2>
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>

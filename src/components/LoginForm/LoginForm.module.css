@@ -283,3 +283,11 @@
     width: 300px;
   }
 }
+.inputError {
+  color: #ff4d4f; /* ярко-красный */
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  font-weight: 500;
+  line-height: 1.4;
+}

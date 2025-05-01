@@ -179,9 +179,9 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
             <ul className="custom-select-dropdown">
               {currentCategories.map(cat => (
                 <li
-                  key={cat._id} // Use _id here for key
-                  onClick={() => handleSelectCategory(cat)} // Pass the whole category object
-                  className={cat._id === selectedCategory ? 'selected' : ''} // Compare with _id
+                  key={cat._id}
+                  onClick={() => handleSelectCategory(cat)}
+                  className={cat._id === selectedCategory ? 'selected' : ''}
                 >
                   {cat.name}
                 </li>
@@ -190,7 +190,6 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
           )}
         </div>
       )}
-      {/* Сумма и дата */}
       <div className="amount-date-wrapper">
         <input
           type="number"
@@ -199,13 +198,12 @@ const AddTransactionForm = ({ onClose, onTypeChange }) => {
           {...register('sum')}
         />
         <DatePicker
-          selected={getValues('date') || new Date()} // Смотрите на значение из формы, если оно есть
-          onChange={date => setValue('date', date)} // Обновляйте форму при изменении
+          selected={getValues('date') || new Date()}
+          onChange={date => setValue('date', date)}
           dateFormat="yyyy-MM-dd"
-          {...register('date')} // Держите привязку с react-hook-form
+          {...register('date')}
         />
       </div>
-      {/* Комментарий */}
       <textarea
         placeholder="Comment"
         rows="3"

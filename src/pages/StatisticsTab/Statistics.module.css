@@ -52,7 +52,7 @@ h2 {
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1278px) {
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
   .table {
     margin-top: -45px;
     width: 336px;
@@ -63,14 +63,14 @@ h2 {
   .content {
     flex-direction: row;
     width: 100%;
-    padding: 20px;
+    padding: 0 20px 0 20px;
     align-items: flex-start;
   }
   .container {
     padding: 32px 0 46px 39px;
   }
   h2 {
-    padding: 0 0 20px 0;
+    padding: 0;
   }
   .table {
     width: 395px;

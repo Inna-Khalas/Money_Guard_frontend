@@ -108,7 +108,6 @@ export const LoginForm = () => {
                   {...register('password')}
                   className={s.input}
                 />
-              </div>
               {isPassword && (
                 <button
                   type="button"
@@ -118,6 +117,7 @@ export const LoginForm = () => {
                   {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </button>
               )}
+              </div>
               {errors.password && (
                 <p className={s.inputError}>{errors.password.message}</p>
               )}

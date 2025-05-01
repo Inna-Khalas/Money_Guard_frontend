@@ -8,6 +8,11 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
+  font-weight: 400px;
+}
+.table tbody tr {
+  height: 28px;
 }
 
 .table th,
@@ -16,11 +21,23 @@
   text-align: left;
 }
 
+.categorName {
+  display: flex;
+  align-items: center;
+}
+.tableHeader {
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .table th {
   font-weight: bold;
   background-color: #523b7e;
   color: #fff;
   border-bottom: none;
+}
+.table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .table td:first-child,
@@ -79,11 +96,14 @@
   font-weight: bold;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600px;
+  padding: 0 10px;
 }
-.expenses {
+.expenses p {
   color: #ff868d;
 }
-.income {
+.income p {
   color: #ffb627;
 }
 

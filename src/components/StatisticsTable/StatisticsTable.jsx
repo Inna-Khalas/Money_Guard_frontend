@@ -47,7 +47,7 @@ const StatisticsTable = () => {
   return (
     <section className={styles.tableContainer}>
       <table className={styles.table}>
-        <thead>
+        <thead className={styles.tableHeader}>
           <tr>
             <th>Category</th>
             <th className={styles.sum}>sum</th> 
@@ -57,7 +57,7 @@ const StatisticsTable = () => {
           {periodSummary.length ? (
             periodSummary.map((category, index) => (
               <tr key={index}>
-                <td>
+                <td className={styles.categorName}>
                   <span
                     className={styles.colorIndicator}
                     style={{

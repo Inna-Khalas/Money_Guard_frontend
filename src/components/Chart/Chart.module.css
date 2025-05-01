@@ -22,7 +22,8 @@
 }
 
 .doughnutText {
+  font-weight: 600;
   font-size: 18px;
-  font-family: 'Poppins-SemiBold', sans-serif;
+  text-align: center;
   color: var(--white);
 }

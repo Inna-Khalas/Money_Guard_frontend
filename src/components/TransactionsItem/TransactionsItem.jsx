@@ -7,11 +7,12 @@ import { deleteTransaction } from '../../redux/transactions/operations';
 import ModalEditTransaction from '../ModalEditTransaction/ModalEditTransaction';
 import pencil from './edit.svg';
 
-export default function TransactionsItem({ transaction, onEdit, isMobile }) {
+export default function TransactionsItem({ transaction, isMobile }) {
   const { _id, date, type, category, comment, value } = transaction;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const categories = useSelector(state => state.categories.list);
+  const [editTransaction, setEditTransaction] = useState(null);
 
   const handleDelete = async () => {
     try {
@@ -29,7 +30,7 @@ export default function TransactionsItem({ transaction, onEdit, isMobile }) {
   };
 
   const handleEdit = () => {
-    onEdit(transaction);
+    setEditTransaction(transaction);
     setIsModalOpen(true);
   };
 

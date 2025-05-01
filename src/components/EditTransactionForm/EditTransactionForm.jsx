@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,8 @@ import { editTransaction } from '../../redux/transactions/operations';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './EditTransactionForm.css';
-
+import DatePicker from 'react-datepicker';
+import { fetchCategories } from '../../redux/categories/operations';
 
 const schema = Yup.object().shape({
   sum: Yup.number()
@@ -17,9 +18,11 @@ const schema = Yup.object().shape({
   date: Yup.date()
     .typeError('Invalid date format')
     .required('Date is required'),
-  
+
   comment: Yup.string().required('Comment is required'),
-  type: Yup.string().oneOf(['income', 'expense']).required('Transaction type is required'),
+  type: Yup.string()
+    .oneOf(['income', 'expense'])
+    .required('Transaction type is required'),
   category: Yup.string().when('type', {
     is: 'expense',
     then: schema => schema.required('Category is required'),
@@ -29,38 +32,53 @@ const schema = Yup.object().shape({
 });
 
 const EditTransactionForm = ({ onClose, transaction }) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const categories = useSelector(state => state.categories.list);
 
   const { _id, type: initType, value, date, comment, category } = transaction;
 
   const [type, setType] = useState(initType);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const dropdownRef = useRef();
 
-  const resolvedCategoryName =
-    typeof category === 'object' && category?.name
-      ? category.name
-      : typeof category === 'string'
-        ? categories.find(c => c._id === category)?.name
-        : '';
+  // const resolvedCategoryName =
+  //   typeof category === 'object' && category?.name
+  //     ? category.name
+  //     : typeof category === 'string'
+  //     ? categories.find(c => c._id === category)?.name
+  //     : '';
 
-  const [selectedCategoryName, setSelectedCategoryName] = useState(resolvedCategoryName);
+  const resolvedCategoryName = (() => {
+    if (typeof category === 'object' && category?.name) {
+      return category.name;
+    }
+
+    if (typeof category === 'string' && Array.isArray(categories)) {
+      const found = categories.find(c => c._id === category);
+      return found?.name || '';
+    }
+
+    return '';
+  })();
+
+  const [selectedCategoryName, setSelectedCategoryName] =
+    useState(resolvedCategoryName);
 
   const {
     register,
     handleSubmit,
     setValue,
+    // getValues,
     formState: { errors },
     trigger,
-
+    control,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       type: initType,
       sum: value,
-      date: date?.slice(0, 10),
-
+      date: date ? date.slice(0, 10) : '',
       comment: comment,
       category: typeof category === 'object' ? category._id : category || '',
     },
@@ -76,7 +94,6 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach(error => {
@@ -85,9 +102,13 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, categories]);
 
-  const onSubmit = async (data) => {
-
+  const onSubmit = async data => {
     try {
       const payload = {
         type: data.type,
@@ -114,15 +135,18 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     }
   };
 
-  const handleSelectCategory = (cat) => {
-    setSelectedCategoryName(cat.name);
-    setValue('category', cat._id, { shouldValidate: true });
-    trigger('category');
-    setDropdownOpen(false);
+  const handleSelectCategory = cat => {
+    if (cat && cat.name && cat._id) {
+      setSelectedCategoryName(cat.name);
+      setValue('category', cat._id, { shouldValidate: true });
+      trigger('category');
+      setDropdownOpen(false);
+    } else {
+      console.error('Invalid category data:', cat);
+    }
   };
 
-  const handleTypeChange = (newType) => {
-
+  const handleTypeChange = newType => {
     setType(newType);
     setValue('type', newType);
     setSelectedCategoryName('');
@@ -155,8 +179,9 @@ const EditTransactionForm = ({ onClose, transaction }) => {
       {type === 'expense' && (
         <div className="custom-select-wrapper" ref={dropdownRef}>
           <div
-            className={`custom-select-display ${selectedCategoryName ? 'selected' : ''} ${dropdownOpen ? 'open' : ''}`}
-
+            className={`custom-select-display ${
+              selectedCategoryName ? 'selected' : ''
+            } ${dropdownOpen ? 'open' : ''}`}
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {selectedCategoryName || 'Select a category'}
@@ -164,28 +189,51 @@ const EditTransactionForm = ({ onClose, transaction }) => {
           </div>
 
           {dropdownOpen && (
-  <ul className="custom-select-dropdown">
-    {categories.map((cat) => (
-      <li
-        key={cat._id}
-        onClick={() => handleSelectCategory(cat)}
-        className={cat.name === selectedCategoryName ? 'selected' : ''}
-      >
-        {cat.name}
-      </li>
-    ))}
-  </ul>
-)}
-
+            <ul className="custom-select-dropdown">
+              {categories.map(cat => (
+                <li
+                  key={cat._id}
+                  onClick={() => handleSelectCategory(cat)}
+                  className={
+                    cat.name === selectedCategoryName ? 'selected' : ''
+                  }
+                >
+                  {cat.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 
       <div className="amount-date-wrapper">
-        <input type="number" placeholder="0.00" step="0.01" {...register('sum')} />
-        <input type="date" {...register('date')} />
+        <input
+          type="number"
+          placeholder="0.00"
+          step="0.01"
+          {...register('sum')}
+        />
+        <Controller
+          name="date"
+          control={control}
+          defaultValue={new Date()}
+          render={({ field }) => (
+            <DatePicker
+              {...field}
+              selected={field.value}
+              onChange={date => field.onChange(date)}
+              dateFormat="yyyy-MM-dd"
+            />
+          )}
+        />
       </div>
 
-      <textarea placeholder="Comment" rows="3" {...register('comment')}></textarea>
+      <textarea
+        placeholder="Comment"
+        rows="3"
+        {...register('comment')}
+        style={{ overflow: 'hidden' }}
+      ></textarea>
 
       <div className="form-buttons">
         <button type="submit">Save</button>
@@ -193,7 +241,6 @@ const EditTransactionForm = ({ onClose, transaction }) => {
           Cancel
         </button>
       </div>
-
 
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </form>

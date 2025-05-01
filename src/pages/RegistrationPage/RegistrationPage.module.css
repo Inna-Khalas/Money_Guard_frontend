@@ -96,7 +96,10 @@
 
 @media (max-width: 320px) {
   body {
-    background-image: url('/src/images/gradient-mobile.webp');
+    background-image: image-set(
+      url('/src/images/gradient-mobile.webp') 1x,
+      url('/src/images/gradient-mobile@2x.webp') 2x
+    );
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -105,7 +108,10 @@
 
 @media screen and (min-width: 768px) {
   .background {
-    background: url('../../pages/RegistrationPage/pic/background/page-bg_768.webp')
+    background: image-set(
+        url('/src/images/page-bg_768.webp') 1x,
+        url('/src/images/page-bg_768@2x.webp') 2x
+      )
       center/cover no-repeat;
   }
 
@@ -137,7 +143,10 @@
 
 @media screen and (min-width: 1280px) {
   .background {
-    background: url('../../pages/RegistrationPage/pic/background/page-bg_1280.webp')
+    background: image-set(
+        url('/src/images/page-bg_1280.webp') 1x,
+        url('/src/images/page-bg_1280@2x.webp') 2x
+      )
       center/cover no-repeat;
   }
 }

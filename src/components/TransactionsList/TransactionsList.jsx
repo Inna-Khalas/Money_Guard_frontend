@@ -16,31 +16,33 @@ export default function TransactionsList({ onEdit }) {
 
   return (
     <div className={styles.container}>
-      {/* Version for table (desktop/tablet) */}
-      <table className={styles.transactionsTable}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th className={styles.commentCell}>Comment</th>
-            <th>Sum</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map(transaction => (
-            <TransactionsItem
-              key={transaction._id || transaction.id}
-              transaction={transaction}
-              onEdit={onEdit}
-              isMobile={false}
-            />
-          ))}
-        </tbody>
-      </table>
+      {/* Table layout for tablet/desktop */}
+      <div className={styles.scrollableTableWrapper}>
+        <table className={styles.transactionsTable}>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th className={styles.commentCell}>Comment</th>
+              <th>Sum</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map(transaction => (
+              <TransactionsItem
+                key={transaction._id || transaction.id}
+                transaction={transaction}
+                onEdit={onEdit}
+                isMobile={false}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Version for mobile devices (card layout) */}
+      {/* Card layout for mobile */}
       <div className={styles.transactionCards}>
         {transactions.map(transaction => (
           <TransactionsItem

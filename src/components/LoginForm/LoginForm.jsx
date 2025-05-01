@@ -55,6 +55,8 @@ export const LoginForm = () => {
       });
       navigate('/dashboard/home', { replace: true });
     } catch (error) {
+      console.log(error);
+
       toast.error('Incorrect email or password. Please try again.', {
         style: {
           border: '3px solid rgba(255, 255, 255, 0.1)',
@@ -108,15 +110,19 @@ export const LoginForm = () => {
                   {...register('password')}
                   className={s.input}
                 />
-              {isPassword && (
-                <button
-                  type="button"
-                  onClick={toggleShowPassword}
-                  className={s.toggleBtn}
-                >
-                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                </button>
-              )}
+                {isPassword && (
+                  <button
+                    type="button"
+                    onClick={toggleShowPassword}
+                    className={s.toggleBtn}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                )}
               </div>
               {errors.password && (
                 <p className={s.inputError}>{errors.password.message}</p>

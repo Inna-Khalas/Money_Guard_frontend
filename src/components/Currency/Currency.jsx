@@ -50,24 +50,24 @@ export default function Currency() {
          </div>
           {isMobile &&
             <svg className={s.diagram} viewBox="0 0 320 88">
-              <use href='../../../public/sprite.svg#diagram'></use>
+              <use href='/sprite.svg#diagram'></use>
             </svg>}
           {isTablet &&
             <svg className={s.diagramTab} viewBox="0 0 336 88">
-              <use href='../../../public/sprite.svg#diagramTab'></use>
+              <use href='/sprite.svg#diagramTab'></use>
             </svg>}
           {isDesktop &&
             <svg className={s.diagramDesktop} viewBox="0 0 480 167">
-              <use href='../../../public/sprite.svg#diagramDesktop'></use>
+              <use href='/sprite.svg#diagramDesktop'></use>
             </svg>}
           <svg className={s.line} viewBox="0 0 320 72">
             <use href='/sprite.svg#line'></use>
           </svg>
           <svg className={s.leftDot} viewBox="0 0 6 6">
-            <use href='../../../public/sprite.svg#dot'></use>
+            <use href='/sprite.svg#dot'></use>
           </svg>
           <svg className={s.rightDot} viewBox="0 0 6 6">
-            <use href='../../../public/sprite.svg#dot'></use>
+            <use href='/sprite.svg#dot'></use>
           </svg>
           <div className={s.diagramNumberContainer}>
             <div className={s.usdDot}>{usd?.rateSell.toFixed(2)}</div>

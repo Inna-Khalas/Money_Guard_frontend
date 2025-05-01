@@ -19,7 +19,6 @@ const Header = () => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
   const handleLogout = () => {
-    console.log('User logged out!');
     setShowLogout(false);
   };
 

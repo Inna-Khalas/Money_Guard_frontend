@@ -9,7 +9,6 @@ export const SummaryStatistics = createAsyncThunk(
       const { auth } = thunkAPI.getState();
       const token = auth.accessToken;
       if (!token) {
-        console.log('User is not authorized');
         return thunkAPI.rejectWithValue('User is not authorized');
       }
 
@@ -18,7 +17,6 @@ export const SummaryStatistics = createAsyncThunk(
       const { data } = await goItApi.get('/transactions/summary', {
         params: { period },
       });
-      console.log('Server unswer:', data);
 
       const transformedData = {
         expenseSummary: data.expense,

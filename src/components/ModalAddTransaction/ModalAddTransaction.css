@@ -1,29 +1,26 @@
-
 .modal-add-overlay {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: calc(100% - 60px);
+  height: 100%;
   backdrop-filter: blur(7px);
   background: rgba(34, 13, 91, 0.23);
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0; /* Сначала невидимый */
+  opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
   z-index: 9990;
 }
 
-
 .modal-add-overlay.show {
   opacity: 1;
   pointer-events: auto;
 }
-
 
 .modal-add-content {
   max-width: 320px;
@@ -32,14 +29,14 @@
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.1)
   ), #734aef;*/
-background: linear-gradient(
-  180deg,
-  #503aa9 0%,
-  #4c37b0 20%,
-  #4d3ab0 45%,
-  #5b4590 75%,
-  #5e44a5 100%
-);
+  background: linear-gradient(
+    180deg,
+    #503aa9 0%,
+    #4c37b0 20%,
+    #4d3ab0 45%,
+    #5b4590 75%,
+    #5e44a5 100%
+  );
   box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
   position: relative;
   padding: 28px 20px;
@@ -48,29 +45,22 @@ background: linear-gradient(
   overflow: auto;
   border-radius: 8px;
 
- 
   transform: scale(0.95);
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
 
 .modal-add-content.show {
   transform: scale(1);
   opacity: 1;
 }
 
-
 .modal-add-content.expense-mode {
   padding: 40px 20px;
 }
 
-
-
-
-
 .modal-add-close-button {
-  display: none; 
+  display: none;
   position: absolute;
   top: 20px;
   right: 20px;
@@ -82,10 +72,9 @@ background: linear-gradient(
   height: 16px;
 }
 
-
 .modal-add-inside-button::before,
 .modal-add-inside-button::after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: white;
   width: 16px;
@@ -104,7 +93,6 @@ background: linear-gradient(
   transform: translate(-50%, -50%) rotate(315deg);
 }
 
-
 .modal-add-content .addTitle {
   font-family: var(--font-family);
   font-weight: 400;
@@ -114,15 +102,13 @@ background: linear-gradient(
   margin: 0 auto 40px;
 }
 
-
 .modal-add-content.expense-mode .addTitle {
-  margin: 0 auto 32px ;
+  margin: 0 auto 32px;
 }
-
 
 @media screen and (min-width: 768px) {
   .modal-add-close-button {
-    display: block; 
+    display: block;
   }
 
   .modal-add-content {
@@ -136,7 +122,6 @@ background: linear-gradient(
     padding: 40px 73px;
   }
 }
-
 
 @media screen and (min-width: 1280px) {
   .modal-add-content {

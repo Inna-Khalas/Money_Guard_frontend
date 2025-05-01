@@ -55,12 +55,16 @@ export default function DashboardPage() {
             {!isMobile ? <CurrencyTab /> : currencyActive && <CurrencyTab />}
           </div>
           <div className={s.tabContainer}>
-            {isLoading ? (
-              <div className={s.loaderWrapper}>
-                <Loader size={28} />
-              </div>
-            ) : (
-              <>{homeActive && <HomeTab />}</>
+            {homeActive && (
+              <>
+                {isLoading ? (
+                  <div className={s.loaderWrapper}>
+                    <Loader size={28} />
+                  </div>
+                ) : (
+                  <HomeTab />
+                )}
+              </>
             )}
             {statisticActive && <StatisticsTab />}
           </div>

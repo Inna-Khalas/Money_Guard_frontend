@@ -86,7 +86,6 @@ export const fetchTransactions = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await goItApi.get('/transactions');
-      console.log(response.data);
 
       return response.data;
     } catch (error) {

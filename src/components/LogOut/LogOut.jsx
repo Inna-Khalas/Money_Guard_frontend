@@ -1,13 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { toast } from 'react-hot-toast';
-import { useDispatch } from "react-redux"; 
+import { useDispatch } from 'react-redux';
 
-import { logoutThunk } from "../../redux/auth/operations"; 
+import { logoutThunk } from '../../redux/auth/operations';
 
-import MoLogo from "../../pages/RegistrationPage/pic/icons/mg-logo.svg"; 
-import "./LogOut.css";
-
+import './LogOut.css';
 
 const LogOut = ({ onClose, onLogout }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,48 +15,56 @@ const LogOut = ({ onClose, onLogout }) => {
     setIsVisible(false);
     setTimeout(() => {
       onClose();
-    }, 300); 
+    }, 300);
   }, [onClose]);
-
 
   useEffect(() => {
     setIsVisible(true);
 
-    const handleEscape = (e) => {
-      if (e.key === "Escape") {
+    const handleEscape = e => {
+      if (e.key === 'Escape') {
         handleClose();
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener('keydown', handleEscape);
 
     return () => {
-      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener('keydown', handleEscape);
     };
   }, [handleClose]);
 
-
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
   };
 
-
   const handleLogout = async () => {
     try {
-      await dispatch(logoutThunk()).unwrap(); 
+      await dispatch(logoutThunk()).unwrap();
       onLogout();
     } catch (error) {
       toast.error('Logout failed. Please try again.');
-      console.error("Logout error:", error); 
+      console.error('Logout error:', error);
     }
   };
 
   return createPortal(
-    <div className={`logout-overlay ${isVisible ? "show" : ""}`} onClick={handleBackdropClick}>
-      <div className={`logout-content logout-modal ${isVisible ? "show" : ""}`}>
-        <img src={MoLogo} alt="Money Guard Logo" className="logout-logo" />
+    <div
+      className={`logout-overlay ${isVisible ? 'show' : ''}`}
+      onClick={handleBackdropClick}
+    >
+      <div className={`logout-content logout-modal ${isVisible ? 'show' : ''}`}>
+        <svg
+          className="logout-logo"
+          viewBox="0 0 27 26"
+          role="img"
+          aria-label="Money Guard Logo"
+        >
+          <use href="/sprite.svg#mg-logo" />
+        </svg>
+
         <h2 className="logout-title">Money Guard</h2>
         <p className="logout-question">Are you sure you want to log out?</p>
 

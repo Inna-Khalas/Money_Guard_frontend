@@ -1,6 +1,4 @@
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm.jsx';
-
-import mgLogo from '../../pages/RegistrationPage/pic/icons/mg-logo.svg';
 import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
@@ -10,11 +8,9 @@ const RegistrationPage = () => {
 
       <div className={styles.container}>
         <div className={styles.logoBlock}>
-          <img
-            src={mgLogo}
-            alt="Money Guard Logo"
-            className={styles.logoIcon}
-          />
+          <svg className={styles.logoIcon} viewBox="0 0 27 26">
+            <use href="/sprite.svg#mg-logo" />
+          </svg>
           <span className={styles.logoWrapper}>
             <span className={styles.word}>Money Guard</span>
           </span>

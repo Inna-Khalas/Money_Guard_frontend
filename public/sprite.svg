@@ -44,4 +44,33 @@
             </linearGradient>
         </defs>
     </symbol>
+    <symbol id="mg-logo" viewBox="0 0 27 26" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#clip0_34_6804)">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2328 3.50029C16.4298 3.04956 14.6269 2.1481 13.2747 0.795898C11.9225 2.1481 10.1196 3.04956 8.31665 3.50029C8.76738 7.55689 10.1196 10.2613 13.2747 12.5149C16.4298 10.2613 18.2328 7.55689 18.2328 3.50029Z" fill="#FFC727" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4296 20.2824L3.80908 5.4082V12.6199L13.7252 23.8882L16.4296 20.2824Z" fill="#FBFBFB" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.782 18.9306L23.1908 12.6204V5.85938L14.6268 15.7755L17.782 18.9306Z" fill="#FBFBFB" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2327 21.1842V25.2408L23.1907 19.3813V15.3247L18.2327 21.1842Z" fill="#FBFBFB" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.76714 21.1842L3.80908 15.3247V19.3813L8.76714 25.2408V21.1842Z" fill="#FBFBFB" />
+  </g>
+  <defs>
+    <clipPath id="clip0_34_6804">
+      <rect width="25.4605" height="25.4605" fill="white" transform="translate(0.769775)" />
+    </clipPath>
+  </defs>
+</symbol>
+<symbol id='user' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+  <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+</symbol>
+<symbol id='lock' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+  <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9v-2a2 2 0 1 1 4 0v2a2 2 0 1 1-4 0zm4-9H9V6a3 3 0 0 1 6 0v2z"/>
+</symbol>
+<symbol id='eye-open' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+  <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8a3 3 0 100 6 3 3 0 000-6z"/>
+</symbol>
+<symbol id='eye-closed' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+  <path d="M2 5.3L5.2 8.5C3.8 9.7 2.8 11.2 2 12c2 2.5 6 7 10 7 1.7 0 3.3-.5 4.7-1.3l2.7 2.7 1.3-1.3L3.3 4 2 5.3zM12 17c-2.8 0-5-2.2-5-5 0-.9.3-1.7.7-2.4l6.7 6.7c-.7.4-1.5.7-2.4.7zm5-5c0 .9-.3 1.7-.7 2.4l1.5 1.5c1-.9 2-2.2 2.7-3.4-1.4-2-3.5-4.5-7.5-5-.3 0-.5 0-.7.1l1.5 1.5c.5.4.9 1 1.2 1.5.4.7.7 1.5.7 2.4z"/>
+</symbol>
+<symbol id='email' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+  <path d="M12 13 2 6.76V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6.76L12 13zm10-9H2a2 2 0 0 0-2 2v.01L12 12l12-6.99V6a2 2 0 0 0-2-2z"/>
+</symbol>
 </svg>

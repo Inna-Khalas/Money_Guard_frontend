@@ -22,6 +22,7 @@ const registrationSchema = yup.object().shape({
     .string()
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
+    .max(12, 'Password must be at most 12 characters')
     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
   confirmPassword: yup
     .string()

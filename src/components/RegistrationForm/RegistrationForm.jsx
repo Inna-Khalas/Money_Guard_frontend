@@ -208,11 +208,11 @@ const RegistrationForm = () => {
                   href={
                     field === 'password'
                       ? showPassword
-                        ? '/sprite.svg#eye-closed'
-                        : '/sprite.svg#eye-open'
+                        ? '/sprite.svg#eye-open'
+                        : '/sprite.svg#eye-closed'
                       : showConfirmPassword
-                      ? '/sprite.svg#eye-closed'
-                      : '/sprite.svg#eye-open'
+                      ? '/sprite.svg#eye-open'
+                      : '/sprite.svg#eye-closed'
                   }
                 />
               </svg>

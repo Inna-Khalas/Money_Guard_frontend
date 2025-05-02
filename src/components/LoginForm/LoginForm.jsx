@@ -117,9 +117,9 @@ export const LoginForm = () => {
                     className={s.toggleBtn}
                   >
                     {showPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
                       <AiOutlineEye />
+                    ) : (
+                      <AiOutlineEyeInvisible />
                     )}
                   </button>
                 )}

@@ -6,12 +6,6 @@ import { toast } from 'react-hot-toast';
 import { useState, useEffect, useRef } from 'react';
 
 import { register } from '../../redux/auth/operations';
-import userIcon from '../../pages/RegistrationPage/pic/icons/user.svg';
-import emailIcon from '../../pages/RegistrationPage/pic/icons/email.svg';
-import lockIcon from '../../pages/RegistrationPage/pic/icons/lock.svg';
-import eyeIcon from '../../pages/RegistrationPage/pic/icons/eye-open.svg';
-import eyeOffIcon from '../../pages/RegistrationPage/pic/icons/eye-closed.svg';
-
 import styles from './RegistrationForm.module.css';
 
 const registrationSchema = yup.object().shape({
@@ -106,11 +100,29 @@ const RegistrationForm = () => {
               field === 'confirmPassword' ? styles.offsetFix : ''
             }`}
           >
-            {field === 'name' && <img src={userIcon} alt="User Icon" />}
-            {field === 'email' && <img src={emailIcon} alt="Email Icon" />}
-            {field === 'password' && <img src={lockIcon} alt="Password Icon" />}
+            {field === 'name' && (
+              <svg viewBox="0 0 24 24" role="img" aria-label="User Icon">
+                <use href="/public/sprite.svg#user" />
+              </svg>
+            )}
+            {field === 'email' && (
+              <svg viewBox="0 0 24 24" role="img" aria-label="Email Icon">
+                <use href="/public/sprite.svg#email" />
+              </svg>
+            )}
+            {field === 'password' && (
+              <svg viewBox="0 0 24 24" role="img" aria-label="Password Icon">
+                <use href="/public/sprite.svg#lock" />
+              </svg>
+            )}
             {field === 'confirmPassword' && (
-              <img src={lockIcon} alt="Confirm Password Icon" />
+              <svg
+                viewBox="0 0 24 24"
+                role="img"
+                aria-label="Confirm Password Icon"
+              >
+                <use href="/public/sprite.svg#lock" />
+              </svg>
             )}
           </div>
 
@@ -191,14 +203,19 @@ const RegistrationForm = () => {
               }
               tabIndex={-1}
             >
-              <img
-                src={
-                  (field === 'password' ? showPassword : showConfirmPassword)
-                    ? eyeOffIcon
-                    : eyeIcon
-                }
-                alt="Toggle visibility"
-              />
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <use
+                  href={
+                    field === 'password'
+                      ? showPassword
+                        ? '/public/sprite.svg#eye-closed'
+                        : '/public/sprite.svg#eye-open'
+                      : showConfirmPassword
+                      ? '/public/sprite.svg#eye-closed'
+                      : '/public/sprite.svg#eye-open'
+                  }
+                />
+              </svg>
             </button>
           )}
         </label>

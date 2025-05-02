@@ -102,17 +102,17 @@ const RegistrationForm = () => {
           >
             {field === 'name' && (
               <svg viewBox="0 0 24 24" role="img" aria-label="User Icon">
-                <use href="/public/sprite.svg#user" />
+                <use href="/sprite.svg#user" />
               </svg>
             )}
             {field === 'email' && (
               <svg viewBox="0 0 24 24" role="img" aria-label="Email Icon">
-                <use href="/public/sprite.svg#email" />
+                <use href="/sprite.svg#email" />
               </svg>
             )}
             {field === 'password' && (
               <svg viewBox="0 0 24 24" role="img" aria-label="Password Icon">
-                <use href="/public/sprite.svg#lock" />
+                <use href="/sprite.svg#lock" />
               </svg>
             )}
             {field === 'confirmPassword' && (
@@ -121,7 +121,7 @@ const RegistrationForm = () => {
                 role="img"
                 aria-label="Confirm Password Icon"
               >
-                <use href="/public/sprite.svg#lock" />
+                <use href="/sprite.svg#lock" />
               </svg>
             )}
           </div>
@@ -208,11 +208,11 @@ const RegistrationForm = () => {
                   href={
                     field === 'password'
                       ? showPassword
-                        ? '/public/sprite.svg#eye-closed'
-                        : '/public/sprite.svg#eye-open'
+                        ? '/sprite.svg#eye-closed'
+                        : '/sprite.svg#eye-open'
                       : showConfirmPassword
-                      ? '/public/sprite.svg#eye-closed'
-                      : '/public/sprite.svg#eye-open'
+                      ? '/sprite.svg#eye-closed'
+                      : '/sprite.svg#eye-open'
                   }
                 />
               </svg>

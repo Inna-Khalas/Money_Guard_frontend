@@ -84,23 +84,26 @@ const EditTransactionForm = ({ onClose, transaction }) => {
     },
   });
 
-  useEffect(() => {
-    const handleClickOutside = e => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      Object.values(errors).forEach(error => {
-        toast.error(error.message);
-      });
+useEffect(() => {
+  const handleClickOutside = e => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setDropdownOpen(false);
     }
-  }, [errors]);
+  };
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
+useEffect(() => {
+  if (type === 'expense' && resolvedCategoryName && categories.length > 0) {
+    const resolvedCategory = categories.find(
+      c => c.name === resolvedCategoryName
+    );
+    if (resolvedCategory) {
+      setValue('category', resolvedCategory._id, { shouldValidate: true });
+    }
+  }
+}, [categories, resolvedCategoryName, setValue, type]);
 
   useEffect(() => {
     if (categories.length === 0) {

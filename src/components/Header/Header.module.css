@@ -1,6 +1,6 @@
 .header {
   height: 60px;
-  width: 320px;
+  min-width: 320px;
   background: linear-gradient(90deg, #2e1746, #2e225f);
   display: flex;
   justify-content: space-between;
@@ -59,7 +59,7 @@
   .header {
     height: 80px;
     padding: 0 24px;
-    width: 768px;
+    min-width: 768px;
   }
 
   .logo {

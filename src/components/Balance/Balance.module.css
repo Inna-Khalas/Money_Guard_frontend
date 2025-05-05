@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 8px 32px;
-  background: linear-gradient(90deg, #4b2a99, #3e1d74); /* Градиент */
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Мягкая тень */
+  background: linear-gradient(90deg, #4b2a99, #3e1d74);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   color: #ffffff;
   width: 280px;
@@ -16,7 +16,7 @@
 .title {
   font-size: 12px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.5); /* светло-серый */
+  color: rgba(255, 255, 255, 0.5);
   margin: 0 0 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
